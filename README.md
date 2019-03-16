@@ -30,14 +30,14 @@
 
 
   - database [(이동)](https://github.com/BJ-Lim/Capstone_Design/tree/master/database)
-    - ~~~스키마 구상 ~~~19.03.16 완료
+    - 스키마구상   (19.03.16 완료)
   
   - web page [(이동)](https://github.com/BJ-Lim/Capstone_Design/tree/master/web)
-    - ~~~web page depth 구상~~~19.03.16 완료
+    - web page depth 구상 (19.03.16 완료)
   
   - server [(이동)](https://github.com/BJ-Lim/Capstone_Design/tree/master/server)
-    - ~~~django 예제 구상~~~19.03.16 완료
+    - django 예제 구상 (19.03.16 완료)
   
   - documents [(이동)](https://github.com/BJ-Lim/Capstone_Design/tree/master/document)
-  
+    
   
