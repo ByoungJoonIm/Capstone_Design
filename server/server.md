@@ -76,7 +76,7 @@ $ python manage.py runserver
 
 
 
-![first](https://github.com/jjeamin/jjeamin.github.io/raw/master/_posts/post_img/jango/first.PNG)
+![first](https://github.com/BJ-Lim/Capstone_Design/blob/master/server/image/first.PNG)
 
 
 
