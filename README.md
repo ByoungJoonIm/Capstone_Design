@@ -15,4 +15,23 @@
   - 본 프로젝트는 기존의 실습환경과 달리 교수(조교)의 채점이 아닌 testcase를 통한 자동 채점이 가능하다.
   - 본 프로젝트는 학생들 개개인의 실습결과물이 자신의 github에 일괄 등록되어 github 관리를 효율적으로 할 수 있다.
            
+## 기능 구현 (진행 상황)
+  
+  - 회의록 [(이동)](https://github.com/BJ-Lim/Capstone_Design/tree/master/minutes)
+
+
+  - database [(이동)](https://github.com/BJ-Lim/Capstone_Design/tree/master/database)
+  
+  
+  
+  - web page [(이동)](https://github.com/BJ-Lim/Capstone_Design/tree/master/web)
+  
+  
+  
+  - server [(이동)](https://github.com/BJ-Lim/Capstone_Design/tree/master/server)
+  
+  
+  
+  - documents [(이동)](https://github.com/BJ-Lim/Capstone_Design/tree/master/document)
+  
   
