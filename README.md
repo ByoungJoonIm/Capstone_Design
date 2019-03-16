@@ -25,7 +25,11 @@
 ## 기능 구현 (진행 상황)
   
   - 회의록 
+  
+  
   [2019.03.13(수)](https://github.com/BJ-Lim/Capstone_Design/tree/master/minutes/first_minutes.md)
+  
+  
   [2019.03.16(토)](https://github.com/BJ-Lim/Capstone_Design/tree/master/minutes/second_minutes.md)
 
 
