@@ -2,10 +2,10 @@
 2019년도 1학기 캡스톤디자인 프로젝트 관리 페이지입니다.
 - 팀명 : 0227
 - 팀원 및 역할
-    - 임병준(20165157) : 프로젝트 진행 총괄 & 서류 작성[(이동)](https://github.com/BJ-Lim/Capstone_Design/tree/master/document)
-    - 염희수(20165143) : 데이터베이스 생성 & 관리[(이동)](https://github.com/BJ-Lim/Capstone_Design/tree/master/database)
-    - 이상욱(20145150) : 웹페이지 구축 & 관리[(이동)](https://github.com/BJ-Lim/Capstone_Design/tree/master/web)
-    - 정재민(20145170) : 서버 구축 & 관리[(이동)](https://github.com/BJ-Lim/Capstone_Design/tree/master/server)
+    - 임병준(20165157) : 프로젝트 진행 총괄 & 서류 작성
+    - 염희수(20165143) : 데이터베이스 생성 & 관리
+    - 이상욱(20145150) : 웹페이지 구축 & 관리
+    - 정재민(20145170) : 서버 구축 & 관리
 
 ## 주제 및 기능
   - 프로젝트명 : SCode
