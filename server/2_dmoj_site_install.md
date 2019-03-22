@@ -3,31 +3,21 @@
 ```
 # 필요 라이브러리
 apt install git gcc g++ make python-dev libxml2-dev libxslt1-dev zlib1g-dev gettext curl
+
 # 파이썬 2.7
 wget -q --no-check-certificate -O- https://bootstrap.pypa.io/get-pip.py | sudo python
+
 # 가상환경
 pip install virtualenv
+
 # nodesource
 wget -O- https://deb.nodesource.com/setup_8.x | sudo -E bash -
+
 # nodejs
 apt install nodejs
+
 # npm permission
 npm install -g sass pleeease-cli --unsafe-perm
-```
-
-```
-sudo npm cache clean -f
-sudo npm install -g n
-sudo n stable
-```
-
-중간 npm 오류 발생
-permission denies 등등
-
-
-```
-rm -rf /usr/local/{lib/node{,/.npm,_modules},bin,share/man}/npm*
-sudo apt remove nodejs
 ```
 
 ---
@@ -37,10 +27,17 @@ sudo apt remove nodejs
 apt update
 apt install mariadb-server libmysqlclient-dev
 mysql -uroot -p
+mariadb> set global innodb_large_prefix = ON;
+mariadb> set global innodb_file_format = BARRACUDA;
+mariadb> set global innodb_file_format_max = BARRACUDA;
 mariadb> CREATE DATABASE dmoj DEFAULT CHARACTER SET utf8mb4 DEFAULT COLLATE utf8mb4_general_ci;
 mariadb> GRANT ALL PRIVILEGES ON dmoj.* to 'dmoj'@'localhost' IDENTIFIED BY '<password>';
 mariadb> exit
 ```
+
+## DB 업그레이드[필수]
+
+[https://websiteforstudents.com/upgrading-mariadb-from-10-0-to-10-1-to-10-2-on-ubuntu-16-04-17-10/](https://websiteforstudents.com/upgrading-mariadb-from-10-0-to-10-1-to-10-2-on-ubuntu-16-04-17-10/)
 
 # virtualenv
 
@@ -398,16 +395,12 @@ LOGGING = {
 
 ## db
 
-?? specified key was too long; max key length is 767 bytes
-
-local setting database utf8mb4 - > utf8
-
 ```
 (dmojsite) $ python manage.py migrate
 
 (dmojsite) $ python manage.py loaddata navbar
 (dmojsite) $ python manage.py loaddata language_small
-(dmojsite) $ python manage.py loaddata demo
+(dmojsite) $ python manage.py loaddata demo [에러 해결해야함]
 # 관리자
 (dmojsite) $ python manage.py createsuperuser
 ```
@@ -423,17 +416,3 @@ python manage.py migrate --fake contenttypes zero
 python manage.py migrate --fake flatpages zero
 python manage.py migrate --fake impersonate zero
 python manage.py migrate --fake judge zero
-
-
-manage.py flush
-
-
-SET @tables = NULL;
-SELECT GROUP_CONCAT(table_schema, '.', table_name) INTO @tables
-  FROM information_schema.tables
-  WHERE table_schema = 'dmoj'; -- specify DB name here.
-
-SET @tables = CONCAT('DROP TABLE ', @tables);
-PREPARE stmt FROM @tables;
-EXECUTE stmt;
-DEALLOCATE PREPARE stmt;
