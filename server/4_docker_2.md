@@ -100,7 +100,8 @@ sudo -E docker-compose up -d //권한
 - docker ps
 
 
-![algo](https://github.com/jjeamin/jjeamin.github.io/raw/master/_posts/post_img/capston/ps.PNG)
+
+![ps](https://github.com/jjeamin/jjeamin.github.io/raw/master/_posts/post_img/capston/ps.PNG)
 
 
 
