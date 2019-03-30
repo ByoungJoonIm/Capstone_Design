@@ -44,3 +44,5 @@
   - documents [(이동)](https://github.com/BJ-Lim/Capstone_Design/tree/master/document)
     
  
+## 진행 참고 사항
+- [링크](https://github.com/BJ-Lim/Capstone_Design/blob/master/ideas.md)
