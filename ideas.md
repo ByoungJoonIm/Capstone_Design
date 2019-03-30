@@ -3,7 +3,7 @@
 - [링크](https://github.com/BJ-Lim/Frameworks/blob/master/Docker.md)
 
 ## Django
-- [링크](https://github.com/BJ-Lim/Frameworks/blob/master/Docker.md)
+- [링크](https://github.com/BJ-Lim/Frameworks/blob/master/Django.md)
 
 # Open Source Judge
 ## DMOJ
