@@ -1,0 +1,173 @@
+.
+├── build
+│   ├── build.js
+│   ├── check-versions.js
+│   ├── dev-client.js
+│   ├── dev-server.js
+│   ├── utils.js
+│   ├── vue-loader.conf.js
+│   ├── webpack.base.conf.js
+│   ├── webpack.dev.conf.js
+│   ├── webpack.dll.conf.js
+│   └── webpack.prod.conf.js
+├── config
+│   ├── dev.env.js
+│   ├── index.js
+│   └── prod.env.js
+├── deploy
+│   ├── Dockerfile
+│   ├── nginx.conf
+│   ├── run.sh
+│   └── sentry_release.sh
+├── LICENSE
+├── package.json
+├── package-lock.json
+├── README.md
+├── src
+│   ├── assets
+│   │   ├── Cup.png
+│   │   └── logo.svg
+│   ├── i18n
+│   │   ├── admin
+│   │   │   ├── en-US.js
+│   │   │   ├── zh-CN.js
+│   │   │   └── zh-TW.js
+│   │   ├── index.js
+│   │   └── oj
+│   │       ├── en-US.js
+│   │       ├── zh-CN.js
+│   │       └── zh-TW.js
+│   ├── pages
+│   │   ├── admin
+│   │   │   ├── api.js
+│   │   │   ├── App.vue
+│   │   │   ├── components
+│   │   │   │   ├── Accordion.vue
+│   │   │   │   ├── btn
+│   │   │   │   │   ├── Cancel.vue
+│   │   │   │   │   ├── IconBtn.vue
+│   │   │   │   │   └── Save.vue
+│   │   │   │   ├── CodeMirror.vue
+│   │   │   │   ├── infoCard.vue
+│   │   │   │   ├── KatexEditor.vue
+│   │   │   │   ├── Panel.vue
+│   │   │   │   ├── ScreenFull.vue
+│   │   │   │   ├── SideMenu.vue
+│   │   │   │   ├── simditor-file-upload.js
+│   │   │   │   ├── Simditor.vue
+│   │   │   │   └── TopNav.vue
+│   │   │   ├── index.html
+│   │   │   ├── index.js
+│   │   │   ├── router.js
+│   │   │   ├── style.less
+│   │   │   └── views
+│   │   │       ├── contest
+│   │   │       │   ├── ContestList.vue
+│   │   │       │   └── Contest.vue
+│   │   │       ├── general
+│   │   │       │   ├── Announcement.vue
+│   │   │       │   ├── Conf.vue
+│   │   │       │   ├── Dashboard.vue
+│   │   │       │   ├── JudgeServer.vue
+│   │   │       │   ├── Login.vue
+│   │   │       │   ├── PruneTestCase.vue
+│   │   │       │   └── User.vue
+│   │   │       ├── Home.vue
+│   │   │       ├── index.js
+│   │   │       └── problem
+│   │   │           ├── AddPublicProblem.vue
+│   │   │           ├── ImportAndExport.vue
+│   │   │           ├── ProblemList.vue
+│   │   │           └── Problem.vue
+│   │   └── oj
+│   │       ├── api.js
+│   │       ├── App.vue
+│   │       ├── components
+│   │       │   ├── CodeMirror.vue
+│   │       │   ├── Highlight.vue
+│   │       │   ├── mixins
+│   │       │   │   ├── emitter.js
+│   │       │   │   ├── form.js
+│   │       │   │   ├── index.js
+│   │       │   │   └── problem.js
+│   │       │   ├── NavBar.vue
+│   │       │   ├── Pagination.vue
+│   │       │   ├── Panel.vue
+│   │       │   └── verticalMenu
+│   │       │       ├── verticalMenu-item.vue
+│   │       │       └── verticalMenu.vue
+│   │       ├── index.html
+│   │       ├── index.js
+│   │       ├── router
+│   │       │   ├── index.js
+│   │       │   └── routes.js
+│   │       └── views
+│   │           ├── contest
+│   │           │   ├── children
+│   │           │   │   ├── ACMContestRank.vue
+│   │           │   │   ├── ACMHelper.vue
+│   │           │   │   ├── ContestProblemList.vue
+│   │           │   │   ├── contestRankMixin.js
+│   │           │   │   ├── ContestRank.vue
+│   │           │   │   └── OIContestRank.vue
+│   │           │   ├── ContestDetail.vue
+│   │           │   ├── ContestList.vue
+│   │           │   └── index.js
+│   │           ├── general
+│   │           │   ├── 404.vue
+│   │           │   ├── Announcements.vue
+│   │           │   └── Home.vue
+│   │           ├── help
+│   │           │   ├── About.vue
+│   │           │   └── FAQ.vue
+│   │           ├── index.js
+│   │           ├── problem
+│   │           │   ├── chartData.js
+│   │           │   ├── ProblemList.vue
+│   │           │   └── Problem.vue
+│   │           ├── rank
+│   │           │   ├── ACMRank.vue
+│   │           │   └── OIRank.vue
+│   │           ├── setting
+│   │           │   ├── children
+│   │           │   │   ├── AccountSetting.vue
+│   │           │   │   ├── ProfileSetting.vue
+│   │           │   │   └── SecuritySetting.vue
+│   │           │   ├── index.js
+│   │           │   └── Settings.vue
+│   │           ├── submission
+│   │           │   ├── SubmissionDetails.vue
+│   │           │   └── SubmissionList.vue
+│   │           └── user
+│   │               ├── ApplyResetPassword.vue
+│   │               ├── Login.vue
+│   │               ├── Logout.vue
+│   │               ├── Register.vue
+│   │               ├── ResetPassword.vue
+│   │               └── UserHome.vue
+│   ├── plugins
+│   │   ├── highlight.js
+│   │   └── katex.js
+│   ├── store
+│   │   ├── index.js
+│   │   ├── modules
+│   │   │   ├── contest.js
+│   │   │   └── user.js
+│   │   └── types.js
+│   ├── styles
+│   │   ├── common.less
+│   │   ├── index.less
+│   │   ├── iview-custom.less
+│   │   └── markdown.less
+│   └── utils
+│       ├── constants.js
+│       ├── filters.js
+│       ├── sentry.js
+│       ├── storage.js
+│       ├── time.js
+│       └── utils.js
+└── static
+    └── css
+        └── loader.css
+
+39 directories, 131 files
