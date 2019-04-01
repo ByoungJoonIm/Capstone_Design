@@ -40,6 +40,24 @@
     - `dmoj-cli -c config.yml`
   - 명령어 확인해보기
     - dmoj> `help`
+  - 테스트 코드 작성
+    - `mkdir judge_solutions`
+    - `vi judge_solutions/aplusb_sol.c`
+      ```
+      // code from https://dmoj.ca/problem/aplusb
+      #include <stdio.h>
+
+      int main() {
+        int N;
+        scanf("%d\n", &N);
+
+        for (int i = 0; i < N; i++) {
+          int a, b;
+          scanf("%d %d\n", &a, &b);
+          printf("%d\n", a + b);
+        }
+      }
+      ```
   - 예제 제출하기
     - submit problem_id language_id source_file
       - problem_id : *아직 뭔지 모르겠음* ([참고](https://github.com/DMOJ/judge/blob/master/dmoj/commands/submit.py))
