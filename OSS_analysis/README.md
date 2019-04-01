@@ -60,6 +60,6 @@
       ```
   - 예제 제출하기
     - submit problem_id language_id source_file
-      - problem_id : *아직 뭔지 모르겠음* ([참고](https://github.com/DMOJ/judge/blob/master/dmoj/commands/submit.py))
+      - problem_id : 문제의 폴더명(`problems` 라고 입력했을때 리스트 되는 이름들)
       - language_id : [link](https://github.com/DMOJ/docs/blob/master/docs/judge/supported_languages.md)
       - source_file : 테스트할 코드
