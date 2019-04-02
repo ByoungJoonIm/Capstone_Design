@@ -63,3 +63,6 @@
       - problem_id : 문제의 폴더명(`problems` 라고 입력했을때 리스트 되는 이름들)
       - language_id : [link](https://github.com/DMOJ/docs/blob/master/docs/judge/supported_languages.md)
       - source_file : 테스트할 코드
+  - 문제점
+    - 애초에 judge 모듈만 따로 사용하려 했지만, 완벽한 분리가 되어있지 않다.
+    - judger(채점기)를 dmoj-site에 연결하고, dmoj-site를 수정하는 방식으로 방향을 바꿔야한다.
