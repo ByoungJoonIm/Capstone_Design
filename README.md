@@ -27,6 +27,8 @@
   - 회의록 
     - [2019.03.13(수)](https://github.com/BJ-Lim/Capstone_Design/tree/master/minutes/first_minutes.md)
     - [2019.03.16(토)](https://github.com/BJ-Lim/Capstone_Design/tree/master/minutes/second_minutes.md)
+    - [2019.03.23(토)](https://github.com/BJ-Lim/Capstone_Design/tree/master/minutes/third_minutes.md)
+    - [2019.03.29()](https://github.com/BJ-Lim/Capstone_Design/tree/master/minutes/fourth_minutes.md)
 
 
   - database [(이동)](https://github.com/BJ-Lim/Capstone_Design/tree/master/database)
