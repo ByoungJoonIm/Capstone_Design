@@ -5,16 +5,18 @@
 # 서버가 정상 작동하지 않음
 - Docker-compose로 구성한 서버가 작동하지 않는 경우입니다.
 
-## directory index of "..." is forbidden
-- 대부분 `python manage.py migrate` 과정에서 발생한 오류로 인해 발생합니다.
+## 증상
+- directory index of "..." is forbidden
+  - 대부분 `python manage.py migrate` 과정에서 발생한 오류로 인해 발생합니다.
+  - 이 에러메시지는 컨터이너에서 `tail /var/log/nginx/error.log` 명령으로 확인이 가능합니다.
 
-## 502 Error
-- 서버가 아직 준비되지 않았을 때 발생합니다. 대부분 `python manage.py migrate`가 실행 중일 때 발생합니다.
+- 502 Error
+  - 서버가 아직 준비되지 않았을 때 발생합니다. 대부분 `python manage.py migrate`가 실행 중일 때 발생합니다.
 
-## 이 페이지를 찾을 수 없습니다. / 사이트에 연결할 수 없음
-- 80포트를 listening 하고있는 프로세스가 없으면 발생할 수 있습니다.
+- 이 페이지를 찾을 수 없습니다. / 사이트에 연결할 수 없음
+  - 80포트를 listening 하고있는 프로세스가 없으면 발생할 수 있습니다.
 
-## 원인
+## 원인 및 해결
 1. Docker는 host와 container의 디렉토리를 연결할 수 있다.
   - 예를 들면, docker-compose.yml에는 다음과 같은 코드가 포함됩니다.
     - `$PWD/data/site:/site`
@@ -38,3 +40,15 @@
 3. cloud를 사용하는 경우 방화벽을 신경써야 한다.
   - AWS나 MS AZURE의 경우 VM의 외부에서 방화벽 인바운드 규칙을 추가해야합니다.
   - 80포트를 허용해 놓아야 합니다.
+
+# SSH 연결이 되지 않음
+- 생성한 키로 SSH 연결이 되지 않는 경우입니다.
+
+## 증상
+- 윈도우에서 생성한 개인키(.ppk)파일로 리눅스에서 리눅스간의 SSH 연결이 불가능합니다.
+
+## 원인 및 해결
+1. 윈도우 putty에서 개인키는 .ppk 형식의 파일을 사용해야 합니다.
+2. .ppk 파일을 리눅스에서 사용하려면 .pem으로 변환해야 합니다.
+  - [방법](https://github.com/BJ-Lim/Frameworks/blob/master/Linux.md)
+  
