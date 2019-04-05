@@ -63,3 +63,12 @@
 2. 따라서 실행시 다음 옵션을 추가로 부여해야 합니다.
   - `--priviliged`
   - 실행 예시 : `Docker run -d -it --name t-judge --priviliged dmoj-judge /bin/bash`
+
+# 채점기가 사이트와 연결되지 않음
+## 증상
+- 패킷이 timeout되며 연결되지 않는 현상입니다.
+- ERROR 2019-04-05 10:04:25,467 528 packet Connection failed due to socket error: [ip_addr]:9999
+
+## 원인 및 해결
+1. dmoj-site는 default 채점기 port를 9999로 사용합니다.
+2. azure(혹은 AWS)의 인바운드 규칙에 9999포트를 추가합니다.
