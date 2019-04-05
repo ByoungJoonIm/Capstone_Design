@@ -52,3 +52,14 @@
 2. .ppk 파일을 리눅스에서 사용하려면 .pem으로 변환해야 합니다.
   - [방법](https://github.com/BJ-Lim/Frameworks/blob/master/Linux.md)
   
+# 채점기가 언어를 인식하지 못함
+## 증상
+- 채점기가 어떠한 언어도 인식하지 못하는 경우입니다.
+- 오류 내용은 다음과 같습니다.
+  - RuntimeError: failed to ptrace child, check Yama config (https://www.kernel.org/doc/Documentation/security/Yama.txt, should be at most 1); if running in Docker, must run container with `--privileged`
+
+## 원인 및 해결
+1. 컨터이너는 호스트 커널에 대한 권한이 있어야 합니다.
+2. 따라서 실행시 다음 옵션을 추가로 부여해야 합니다.
+  - `--priviliged`
+  - 실행 예시 : `Docker run -d -it --name t-judge --priviliged dmoj-judge /bin/bash`
