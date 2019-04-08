@@ -19,6 +19,7 @@
 
 ## DMOJ judge working test
 - 환경 : ubuntu 18.04 LTS
+- dmoj-cli를 이용하여 작동이 정상적으로 수행되는 것을 확인할 수 있으나, 사이트와 연결은 확인할 
 - 테스트 과정
   - Dmoj 설치([원문](https://github.com/DMOJ/judge))
     - `pip3 install dmoj --user`
