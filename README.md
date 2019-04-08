@@ -27,10 +27,10 @@
 ## 기능 구현 (진행 상황)
   
   - 회의록 
-    - [2019.03.13(수)](https://github.com/BJ-Lim/Capstone_Design/tree/master/minutes/first_minutes.md)
-    - [2019.03.16(토)](https://github.com/BJ-Lim/Capstone_Design/tree/master/minutes/second_minutes.md)
-    - [2019.03.23(토)](https://github.com/BJ-Lim/Capstone_Design/tree/master/minutes/third_minutes.md)
-    - [2019.03.29(금)](https://github.com/BJ-Lim/Capstone_Design/tree/master/minutes/fourth_minutes.md)
+    - [2019.03.13(수)](https://github.com/BJ-Lim/Capstone_Design/tree/master/minutes/1.md)
+    - [2019.03.16(토)](https://github.com/BJ-Lim/Capstone_Design/tree/master/minutes/2.md)
+    - [2019.03.23(토)](https://github.com/BJ-Lim/Capstone_Design/tree/master/minutes/3.md)
+    - [2019.03.29(금)](https://github.com/BJ-Lim/Capstone_Design/tree/master/minutes/4.md)
 
 
   - database [(이동)](https://github.com/BJ-Lim/Capstone_Design/tree/master/database)
