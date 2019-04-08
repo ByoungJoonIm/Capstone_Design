@@ -74,5 +74,7 @@
   - `python manage.py createsuperuser`
   - `supervisorctl restart site`
   
+## 연결 테스트
+- [설치](https://github.com/BJ-Lim/Capstone_Design/blob/master/OSS_analysis/dmoj_setup.md)
 ## REFERENCE
 - [서버 설치 후 설정](https://github.com/SchOJ/dmoj-dockercompose/wiki/Configure-dmoj-site)
