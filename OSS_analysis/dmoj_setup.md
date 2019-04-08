@@ -57,5 +57,5 @@
   - chmod 700 startup.sh : 권한 변경
   - ./startup.sh : 실행
   - 다음과 같은 화면 확인
-  ![Style Images](https://github.com/BJ-Lim/Capstone_Design/blob/master/capture_ref/ossa_2.JPG)
+  ![Style Images](https://github.com/BJ-Lim/Capstone_Design/blob/master/capture_ref/ossa_3.JPG)
   
