@@ -37,7 +37,7 @@ mariadb> exit
 
 ## DB 업그레이드[필수]
 
-[https://websiteforstudents.com/upgrading-mariadb-from-10-0-to-10-1-to-10-2-on-ubuntu-16-04-17-10/](https://websiteforstudents.com/upgrading-mariadb-from-10-0-to-10-1-to-10-2-on-ubuntu-16-04-17-10/)
+[https://downloads.mariadb.org/mariadb/repositories/](https://downloads.mariadb.org/mariadb/repositories/)
 
 # virtualenv
 
@@ -411,8 +411,35 @@ LOGGING = {
 python manage.py runserver 0.0.0.0:8000
 ```
 
+# 추가적으로 오류 해결하면서 자주 쓰이는거
 
+-
+
+```
+[Mysql]
+sudo apt-get purge mysql-server
+sudo apt-get purge mysql-common
+
+
+
+[MariaDB]
+sudo apt-get purge mariadb-server
+sudo apt-get purge mariadb-common
+
+
+
+[공용작업]
+sudo rm -rf /var/log/mysql
+sudo rm -rf /var/log/mysql.*
+sudo rm -rf /var/lib/mysql
+sudo rm -rf /etc/mysql
+```
+
+- migrate 해제
+
+```
 python manage.py migrate --fake contenttypes zero
 python manage.py migrate --fake flatpages zero
 python manage.py migrate --fake impersonate zero
 python manage.py migrate --fake judge zero
+```
