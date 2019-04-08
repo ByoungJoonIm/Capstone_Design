@@ -411,9 +411,60 @@ LOGGING = {
 python manage.py runserver 0.0.0.0:8000
 ```
 
+## test
+
+```
+python manage.py runbridged
+```
+
+- 10초 기다려보고 `ctrl+c`
+
+## uwsgi
+
+```
+vi uwsgi.ini
+```
+
+- [복사붙여넣기](https://github.com/DMOJ/docs/blob/master/sample_files/uwsgi.ini)
+
+```
+uwsgi --ini uwsgi.ini
+```
+
+## supervisord
+
+```
+apt install supervisor
+```
+
+```
+supervisorctl update
+supervisorctl status
+```
+- 둘다 실행이 된다면 잘된것이다
+
+## nginx
+
+```
+apt install nginx
+```
+
+```
+cd /etc/nginx/conf.d
+vi nginx.conf
+```
+
+- [복사붙여넣기](https://github.com/DMOJ/docs/blob/master/sample_files/nginx.conf)
+
+```
+nginx -t
+service nginx reload
+```
+
+
 # 추가적으로 오류 해결하면서 자주 쓰이는거
 
--
+- db 삭제
 
 ```
 [Mysql]
