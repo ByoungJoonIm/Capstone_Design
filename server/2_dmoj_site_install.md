@@ -435,7 +435,16 @@ uwsgi --ini uwsgi.ini
 
 ```
 apt install supervisor
+cd /etc/supervisor/conf.d/
 ```
+
+```
+vi site.conf
+vi bridged.conf
+```
+
+- [SITE 복붙](https://github.com/DMOJ/docs/blob/master/sample_files/site.conf)
+- [bridged 복붙](https://github.com/DMOJ/docs/blob/master/sample_files/bridged.conf)
 
 ```
 supervisorctl update
@@ -455,10 +464,40 @@ vi nginx.conf
 ```
 
 - [복사붙여넣기](https://github.com/DMOJ/docs/blob/master/sample_files/nginx.conf)
+- 경로 수정 필수
 
 ```
 nginx -t
 service nginx reload
+```
+
+## event
+
+```
+(dmojsite) $ cat > websocket/config.js
+module.exports = {
+    get_host: '127.0.0.1',
+    get_port: 15100,
+    post_host: '127.0.0.1',
+    post_port: 15101,
+    http_host: '127.0.0.1',
+    http_port: 15102,
+    long_poll_timeout: 29000,
+};
+```
+
+get_port should be the same as the port for /event/ in nginx.conf http_port should be the same as the port for /channels/ in nginx.conf post_port should be the same as the port in EVENT_DAEMON_POST in local_settings. You need to configure EVENT_DAEMON_GET and EVENT_DAEMON_POLL. You need to uncomment the relevant section in the nginx configuration.
+
+```
+(dmojsite) $ npm install qu ws simplesets
+(dmojsite) $ pip install websocket-client
+```
+
+```
+$ supervisorctl update
+$ supervisorctl restart bridged
+$ supervisorctl restart site
+$ service nginx restart
 ```
 
 
