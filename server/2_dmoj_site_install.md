@@ -500,6 +500,9 @@ $ supervisorctl restart site
 $ service nginx restart
 ```
 
+```
+supervisorctl restart site *****
+```
 
 # 추가적으로 오류 해결하면서 자주 쓰이는거
 
