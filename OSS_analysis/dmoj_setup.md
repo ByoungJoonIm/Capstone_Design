@@ -7,7 +7,9 @@
 ## 문제점
 - 이 사이트는 아직 수정이 필요함
 - 계정 추가에 문제가 있다
-- 문제 업로드 후  채점기를 선택할 수 없는 문제가 있다
+-> Django의 문제일 것 같다
+-> Docker가 아닌 docs에서 제공하는 방법대로 설치시에도 동일한 문제 
+- 문제 업로드 후 채점기를 선택할 수 없는 문제가 있다
 
 ## 깔려 있어야 하는 프로그램
 - docker : [참조](https://github.com/BJ-Lim/Frameworks/blob/master/Docker.md)
