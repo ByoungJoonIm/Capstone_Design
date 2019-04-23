@@ -23,21 +23,10 @@ npm install -g sass pleeease-cli --unsafe-perm
 ---
 
 # DB
-```
-apt update
-apt install mariadb-server libmysqlclient-dev
-mysql -uroot -p
-mariadb> set global innodb_large_prefix = ON;
-mariadb> set global innodb_file_format = BARRACUDA;
-mariadb> set global innodb_file_format_max = BARRACUDA;
-mariadb> CREATE DATABASE dmoj DEFAULT CHARACTER SET utf8mb4 DEFAULT COLLATE utf8mb4_general_ci;
-mariadb> GRANT ALL PRIVILEGES ON dmoj.* to 'dmoj'@'localhost' IDENTIFIED BY '<password>';
-mariadb> exit
-```
-
-## DB 업그레이드[필수]
 
 [https://downloads.mariadb.org/mariadb/repositories/](https://downloads.mariadb.org/mariadb/repositories/)
+
+- 10.2 version download
 
 # virtualenv
 
