@@ -28,6 +28,13 @@ npm install -g sass pleeease-cli --unsafe-perm
 
 - 10.2 version download
 
+```
+$ mysql -uroot -p
+mariadb> CREATE DATABASE dmoj DEFAULT CHARACTER SET utf8mb4 DEFAULT COLLATE utf8mb4_general_ci;
+mariadb> GRANT ALL PRIVILEGES ON dmoj.* to 'dmoj'@'localhost' IDENTIFIED BY '<password>';
+mariadb> exit
+```
+
 # virtualenv
 
 ```
