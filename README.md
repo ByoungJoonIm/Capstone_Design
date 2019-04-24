@@ -40,19 +40,24 @@
     - [2019.03.16(토)](https://github.com/BJ-Lim/Capstone_Design/tree/master/minutes/2.md)
     - [2019.03.23(토)](https://github.com/BJ-Lim/Capstone_Design/tree/master/minutes/3.md)
     - [2019.03.29(금)](https://github.com/BJ-Lim/Capstone_Design/tree/master/minutes/4.md)
+    - [2019.04.24(수)](https://github.com/BJ-Lim/Capstone_Design/tree/master/minutes/5.md)
 
 
   - database [(이동)](https://github.com/BJ-Lim/Capstone_Design/tree/master/database)
   
     -~~스키마구상~~  (19.03.16 완료)
+    - dmoj 스키마 분석 (진행중)
   
   - web page [(이동)](https://github.com/BJ-Lim/Capstone_Design/tree/master/web)
   
     -~~web page depth 구상~~ (19.03.16 완료)
+    - dmoj 웹페이지 분석 (진행중)
   
   - server [(이동)](https://github.com/BJ-Lim/Capstone_Design/tree/master/server)
   
     -~~django 예제 구상~~ (19.03.16 완료)
+    -~~django 예제 실행~~ (19.04.24 완료)
+    - dmoj와 site의 연동 오류 해결 ()
   
   - documents [(이동)](https://github.com/BJ-Lim/Capstone_Design/tree/master/document)
     
