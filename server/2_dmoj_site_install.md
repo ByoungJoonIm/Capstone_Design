@@ -29,8 +29,8 @@ npm install -g sass pleeease-cli --unsafe-perm
 - 10.2 version download
 
 ```
-$ apt install mariadb-server libmysqlclient-dev
-$ mysql -uroot -p
+apt install libmysqlclient-dev
+mysql -uroot -p
 mariadb> CREATE DATABASE dmoj DEFAULT CHARACTER SET utf8mb4 DEFAULT COLLATE utf8mb4_general_ci;
 mariadb> GRANT ALL PRIVILEGES ON dmoj.* to 'dmoj'@'localhost' IDENTIFIED BY '<password>';
 mariadb> exit
@@ -39,24 +39,25 @@ mariadb> exit
 # virtualenv
 
 ```
-$ virtualenv -p /usr/bin/python3 dmojsite/
-$ . dmojsite/bin/activate
+virtualenv -p /usr/bin/python3 dmojsite/
+virtualenv dmojsite/
+. dmojsite/bin/activate
 ```
 
 # git
 
 ```
-(dmojsite) $ git clone https://github.com/DMOJ/site.git
-(dmojsite) $ cd site
-(dmojsite) $ git submodule init
-(dmojsite) $ git submodule update
+git clone https://github.com/DMOJ/site.git
+cd site
+git submodule init
+git submodule update
 ```
 
 # dependencies
 
 ```
-(dmojsite) $ pip3 install -r requirements.txt
-(dmojsite) $ pip3 install mysqlclient
+pip3 install -r requirements.txt
+pip3 install mysqlclient
 ```
 
 ---
@@ -383,23 +384,23 @@ LOGGING = {
 ## compile asset
 
 ```
-(dmojsite) $ python3 manage.py check
-(dmojsite) $ ./make_style.sh
-(dmojsite) $ python3 manage.py collectstatic
-(dmojsite) $ python3 manage.py compilemessages
-(dmojsite) $ python3 manage.py compilejsi18n
+python3 manage.py check
+./make_style.sh
+python3 manage.py collectstatic
+python3 manage.py compilemessages
+python3 manage.py compilejsi18n
 ```
 
 ## db
 
 ```
-(dmojsite) $ python3 manage.py migrate
+python3 manage.py migrate
 
-(dmojsite) $ python3 manage.py loaddata navbar
-(dmojsite) $ python3 manage.py loaddata language_small
-(dmojsite) $ python3 manage.py loaddata demo
+python3 manage.py loaddata navbar
+python3 manage.py loaddata language_small
+python3 manage.py loaddata demo
 # 관리자
-(dmojsite) $ python3 manage.py createsuperuser
+python3 manage.py createsuperuser
 ```
 
 ## run
