@@ -46,7 +46,10 @@
   - database [(이동)](https://github.com/BJ-Lim/Capstone_Design/tree/master/database)
   
     -~~스키마구상~~  (19.03.16 완료)
-    - dmoj 스키마 분석 (진행중)
+    -~~스키마v1~~    (19.03.23 완료)
+    -~~스키마v2~~    (19.04.09 완료)
+    -~~스키마v3~~    (19.04.24 완료)
+    - dmoj 스키마와 분석 (진행중)
   
   - web page [(이동)](https://github.com/BJ-Lim/Capstone_Design/tree/master/web)
   
@@ -57,9 +60,10 @@
   
     -~~django 예제 구상~~ (19.03.16 완료)
     -~~django 예제 실행~~ (19.04.24 완료)
-    - dmoj와 site의 연동 오류 해결 ()
+    - dmoj와 site의 연동 오류 해결 (진행중)
   
   - documents [(이동)](https://github.com/BJ-Lim/Capstone_Design/tree/master/document)
+    
     
  
 ## 진행 참고 사항
