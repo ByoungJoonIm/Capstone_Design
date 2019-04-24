@@ -533,3 +533,5 @@ python manage.py migrate --fake flatpages zero
 python manage.py migrate --fake impersonate zero
 python manage.py migrate --fake judge zero
 ```
+
+[https://stackoverflow.com/questions/19658891/error-2002-hy000-cant-connect-to-local-mysql-server-through-socket-var-run](https://stackoverflow.com/questions/19658891/error-2002-hy000-cant-connect-to-local-mysql-server-through-socket-var-run)
