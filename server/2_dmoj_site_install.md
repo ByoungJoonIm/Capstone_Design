@@ -6,9 +6,11 @@ apt install git gcc g++ make python-dev libxml2-dev libxslt1-dev zlib1g-dev gett
 
 # 파이썬 2.7
 wget -q --no-check-certificate -O- https://bootstrap.pypa.io/get-pip.py | sudo python
+# 파이썬 3.5
+apt install python3-pip
 
 # 가상환경
-pip install virtualenv
+pip3 install virtualenv
 
 # nodesource
 wget -O- https://deb.nodesource.com/setup_8.x | sudo -E bash -
