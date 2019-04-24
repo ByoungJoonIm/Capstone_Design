@@ -39,7 +39,7 @@ mariadb> exit
 # virtualenv
 
 ```
-$ virtualenv dmojsite
+$ virtualenv -p /usr/bin/python3 dmojsite/
 $ . dmojsite/bin/activate
 ```
 
@@ -55,8 +55,8 @@ $ . dmojsite/bin/activate
 # dependencies
 
 ```
-(dmojsite) $ pip install -r requirements.txt
-(dmojsite) $ pip install mysqlclient
+(dmojsite) $ pip3 install -r requirements.txt
+(dmojsite) $ pip3 install mysqlclient
 ```
 
 ---
@@ -383,35 +383,35 @@ LOGGING = {
 ## compile asset
 
 ```
-(dmojsite) $ python manage.py check
+(dmojsite) $ python3 manage.py check
 (dmojsite) $ ./make_style.sh
-(dmojsite) $ python manage.py collectstatic
-(dmojsite) $ python manage.py compilemessages
-(dmojsite) $ python manage.py compilejsi18n
+(dmojsite) $ python3 manage.py collectstatic
+(dmojsite) $ python3 manage.py compilemessages
+(dmojsite) $ python3 manage.py compilejsi18n
 ```
 
 ## db
 
 ```
-(dmojsite) $ python manage.py migrate
+(dmojsite) $ python3 manage.py migrate
 
-(dmojsite) $ python manage.py loaddata navbar
-(dmojsite) $ python manage.py loaddata language_small
-(dmojsite) $ python manage.py loaddata demo [에러 해결해야함]
+(dmojsite) $ python3 manage.py loaddata navbar
+(dmojsite) $ python3 manage.py loaddata language_small
+(dmojsite) $ python3 manage.py loaddata demo
 # 관리자
-(dmojsite) $ python manage.py createsuperuser
+(dmojsite) $ python3 manage.py createsuperuser
 ```
 
 ## run
 
 ```
-python manage.py runserver 0.0.0.0:8000
+python3 manage.py runserver 0.0.0.0:8000
 ```
 
 ## test
 
 ```
-python manage.py runbridged
+python3 manage.py runbridged
 ```
 
 - 10초 기다려보고 `ctrl+c`
@@ -419,14 +419,25 @@ python manage.py runbridged
 ## uwsgi
 
 ```
+pip3 install uwsgi
 vi uwsgi.ini
 ```
 
 - [복사붙여넣기](https://github.com/DMOJ/docs/blob/master/sample_files/uwsgi.ini)
+- 경로수정
+
+```
+chdir = /home/capston/site
+pythonpath = /home/capston/site
+virtualenv = /home/capston/dmojsite/bin
+```
+
 
 ```
 uwsgi --ini uwsgi.ini
 ```
+
+- `ctrl+c`
 
 ## supervisord
 
@@ -443,11 +454,22 @@ vi bridged.conf
 - [SITE 복붙](https://github.com/DMOJ/docs/blob/master/sample_files/site.conf)
 - [bridged 복붙](https://github.com/DMOJ/docs/blob/master/sample_files/bridged.conf)
 
-```
+```ls
+
 supervisorctl update
 supervisorctl status
 ```
 - 둘다 실행이 된다면 잘된것이다
+
+### 흔하게 안되는 경우
+
+```
+vi site/dmoj/local_settings.py
+python manage.py check
+supervisorctl restart all
+```
+
+
 
 ## nginx
 
@@ -461,7 +483,7 @@ vi nginx.conf
 ```
 
 - [복사붙여넣기](https://github.com/DMOJ/docs/blob/master/sample_files/nginx.conf)
-- 경로 수정 필수
+- 경로 수정 필수 ,static root 수정 : /tmp
 
 ```
 nginx -t
@@ -471,6 +493,7 @@ service nginx reload
 ## event
 
 ```
+(dmojsite) $ cd /home/<name>/site
 (dmojsite) $ cat > websocket/config.js
 module.exports = {
     get_host: '127.0.0.1',
@@ -483,18 +506,24 @@ module.exports = {
 };
 ```
 
-get_port should be the same as the port for /event/ in nginx.conf http_port should be the same as the port for /channels/ in nginx.conf post_port should be the same as the port in EVENT_DAEMON_POST in local_settings. You need to configure EVENT_DAEMON_GET and EVENT_DAEMON_POLL. You need to uncomment the relevant section in the nginx configuration.
+- get_port should be the same as the port for /event/ in nginx.conf 
+- http_port should be the same as the port for /channels/ in nginx.conf 
+- post_port should be the same as the port in EVENT_DAEMON_POST in local_settings. 
+- You need to configure EVENT_DAEMON_GET and EVENT_DAEMON_POLL. You need to uncomment the relevant section in the nginx configuration.
 
 ```
 (dmojsite) $ npm install qu ws simplesets
 (dmojsite) $ pip install websocket-client
+(dmojsite) $ vi /etc/supervisor/conf.d/wsevent.conf
 ```
 
+- [복사 붙여넣기](https://github.com/DMOJ/docs/blob/master/sample_files/wsevent.conf)
+
 ```
-$ supervisorctl update
-$ supervisorctl restart bridged
-$ supervisorctl restart site
-$ service nginx restart
+supervisorctl update
+supervisorctl restart bridged
+supervisorctl restart site
+service nginx restart
 ```
 
 ```
