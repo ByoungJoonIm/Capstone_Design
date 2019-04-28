@@ -41,8 +41,11 @@ mariadb> exit
 # virtualenv
 
 ```
+#파이썬 3.5
 virtualenv -p /usr/bin/python3 dmojsite/
+#파이썬 2.7
 virtualenv dmojsite/
+
 . dmojsite/bin/activate
 ```
 
@@ -427,6 +430,40 @@ vi uwsgi.ini
 ```
 
 - [복사붙여넣기](https://github.com/DMOJ/docs/blob/master/sample_files/uwsgi.ini)
+```
+[uwsgi]
+# Socket and pid file location/permission.
+uwsgi-socket = /tmp/dmoj-site.sock
+chmod-socket = 666
+pidfile = /tmp/dmoj-site.pid
+
+# You should create an account dedicated to running dmoj under uwsgi.
+#uid = dmoj-uwsgi
+#gid = dmoj-uwsgi
+
+# Paths.
+chdir = /home/jjm/site
+pythonpath = /home/jjm/site
+virtualenv = /home/jjm/dmojsite
+
+# Details regarding DMOJ application.
+protocol = uwsgi
+master = true
+env = DJANGO_SETTINGS_MODULE=dmoj.settings
+module = dmoj.wsgi:application
+optimize = 2
+
+# Scaling settings. Tune as you like.
+memory-report = true
+cheaper-algo = backlog
+cheaper = 3
+cheaper-initial = 5
+cheaper-step = 1
+cheaper-rss-limit-soft = 201326592
+cheaper-rss-limit-hard = 234881024
+workers = 7
+```
+
 - 경로수정
 
 ```
@@ -455,10 +492,31 @@ vi bridged.conf
 ```
 
 - [SITE 복붙](https://github.com/DMOJ/docs/blob/master/sample_files/site.conf)
+
+```
+[program:site]
+command=/home/jjm/dmojsite/bin/uwsgi --ini uwsgi.ini
+directory= /home/jjm/site
+stopsignal=QUIT
+stdout_logfile=/tmp/site.stdout.log
+stderr_logfile=/tmp/site.stderr.log
+```
+
 - [bridged 복붙](https://github.com/DMOJ/docs/blob/master/sample_files/bridged.conf)
 
-```ls
+```
+[program:bridged]
+command= /home/jjm/dmojsite/bin/python manage.py runbridged
+directory= /home/jjm/site
+stopsignal=INT
+# You should create a dedicated user for the bridged to run under.
+user=jjm
+group=jjm
+stdout_logfile=/tmp/bridge.stdout.log
+stderr_logfile=/tmp/bridge.stderr.log
+```
 
+```
 supervisorctl update
 supervisorctl status
 ```
@@ -468,6 +526,9 @@ supervisorctl status
 
 ```
 vi site/dmoj/local_settings.py
+
+<desire ---> -> log.txt
+
 python manage.py check
 supervisorctl restart all
 ```
@@ -486,6 +547,78 @@ vi nginx.conf
 ```
 
 - [복사붙여넣기](https://github.com/DMOJ/docs/blob/master/sample_files/nginx.conf)
+
+```
+server {
+    listen       80;
+    listen       [::]:80;
+
+    # Change port to 443 and do the nginx ssl stuff if you want it.
+
+    # Change server name to the HTTP hostname you are using.
+    # You may also make this the default server by listening with default_server,
+    # if you disable the default nginx server declared.
+    server_name "";
+
+    add_header X-UA-Compatible "IE=Edge,chrome=1";
+    add_header X-Content-Type-Options nosniff;
+    add_header X-XSS-Protection "1; mode=block";
+
+    charset utf-8;
+    try_files $uri @icons;
+    error_page 502 504 /502.html;
+
+    location ~ ^/502\.html$|^/logo\.png$|^/robots\.txt$ {
+        root /home/jjm/site;
+    }
+
+    location @icons {
+        root /home/jjm/site/resources/icons;
+        error_page 403 = @uwsgi;
+        error_page 404 = @uwsgi;
+    }
+
+    location @uwsgi {
+        uwsgi_read_timeout 600;
+        # Change this path if you did so in uwsgi.ini
+        uwsgi_pass unix:///tmp/dmoj-site.sock;
+        include uwsgi_params;
+    }
+
+    location /static {
+        gzip_static on;
+        expires max;
+        root /tmp/static;
+        # Comment out root, and use the following if it doesn't end in /static.
+        #alias <STATIC_ROOT>;
+    }
+
+    # Uncomment if you are using PDFs and want to serve it faster.
+    # This location name should be set to PROBLEM_PDF_INTERNAL.
+    #location /pdfcache {
+    #    internal;
+    #    root <path to pdf cache diretory, without the final /pdfcache>;
+    #}
+
+    # Uncomment these sections if you are using the event server.
+    #location /event/ {
+    #    proxy_pass http://127.0.0.1:<event server websocket port>/;
+    #    proxy_http_version 1.1;
+    #    proxy_set_header Upgrade $http_upgrade;
+    #    proxy_set_header Connection "upgrade";
+    #    proxy_read_timeout 86400;
+    #}
+
+    #location /channels/ {
+    #    proxy_read_timeout          120;
+    #    proxy_pass http://127.0.0.1:<event server http port>;
+    #}
+}
+
+sudo ln -s /etc/nginx/sites-available/nginx.conf /etc/nginx/sites-enabled/nginx.conf
+sudo fuser -k 80/tcp
+```
+
 - 경로 수정 필수 ,static root 수정 : /tmp
 
 ```
@@ -521,6 +654,17 @@ module.exports = {
 ```
 
 - [복사 붙여넣기](https://github.com/DMOJ/docs/blob/master/sample_files/wsevent.conf)
+
+```
+[program:wsevent]
+command=/usr/bin/node /home/jjm/site/websocket/daemon.js
+environment=NODE_PATH="/home/jjm/site/node_modules"
+# Should create a dedicated user.
+user=jjm
+group=jjm
+stdout_logfile=/tmp/wsevent.stdout.log
+stderr_logfile=/tmp/wsevent.stderr.log
+```
 
 ```
 supervisorctl update
