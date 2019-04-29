@@ -6,7 +6,8 @@
 - [judge](https://github.com/DMOJ/judge)
 - [site](https://github.com/DMOJ/site)
 - [docs](https://github.com/DMOJ/docs)
-- [docker-compose](https://github.com/SchOJ/dmoj-dockercompose)
+- [docker-compose1](https://github.com/SchOJ/dmoj-dockercompose)(SchOJ)
+- [docker-compose2](https://github.com/Maitre-Hiboux/dmoj-docker-compose)(Maitre-Hiboux)
 
 ## OnlineJudge
 - [judge](https://github.com/QingdaoU/OnlineJudge)
