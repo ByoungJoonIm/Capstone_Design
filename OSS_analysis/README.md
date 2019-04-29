@@ -132,6 +132,7 @@
     - 옳은 답을 제출하면 `AC`, 틀린 답을 제출하면 `WA`로 표시된다.
     - 매번 judger를 initialization부터 시작하게 된다.
     - 위 결과를 사용하려면 별도의 파싱이 필요하다.
+    - 각 [상태 코드](https://dmoj.ca/about/codes/) 별로 테스트가 더 
   
 ## 연결 테스트
 - [설치](https://github.com/BJ-Lim/Capstone_Design/blob/master/OSS_analysis/dmoj_setup.md)
