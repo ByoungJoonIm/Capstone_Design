@@ -20,7 +20,7 @@
 
 ## DMOJ judge working test
 - 환경 : ubuntu 18.04 LTS
-- dmoj-cli를 이용하여 작동이 정상적으로 수행되는 것을 확인할 수 있으나, 사이트와 연결은 확인할 
+- dmoj-cli를 이용하여 작동이 정상적으로 수행되는 것을 확인할 수 있다
 - 테스트 과정
   - Dmoj 설치([원문](https://github.com/DMOJ/judge))
     - `pip3 install dmoj --user`
@@ -65,15 +65,73 @@
       - problem_id : 문제의 폴더명(`problems` 라고 입력했을때 리스트 되는 이름들)
       - language_id : [link](https://github.com/DMOJ/docs/blob/master/docs/judge/supported_languages.md)
       - source_file : 테스트할 코드
-  - 문제점
-    - 애초에 judge 모듈만 따로 사용하려 했지만, 완벽한 분리가 되어있지 않다.
-    - judger(채점기)를 dmoj-site에 연결하고, dmoj-site를 수정하는 방식으로 방향을 바꿔야한다.
 
 ## Dmoj site
 - 설치 후 관리자 설정
   - `docker exec -it oj-site /bin/bash`
   - `python manage.py createsuperuser`
   - `supervisorctl restart site`
+  
+## Dmoj judge
+- 우리는 위 과정에 의해서 judge의 결과를 얻을 수 있다.
+  - 옳은 답을 제출한 경우
+    - 명령어 : `dmoj-cli -c /home/ubuntu/config.yml --no-ansi submit aplusb C ../judge_solutions/aplusb_sol.c`
+    - 결과
+      ```
+      Self-testing executors...
+      Self-testing AWK:    Success
+      Self-testing BF:     Success
+      Self-testing C:      Success
+      Self-testing C11:    Success
+      Self-testing CPP03:  Success
+      Self-testing CPP11:  Success
+      Self-testing CPP14:  Success
+      Self-testing CPP17:  Success
+      Self-testing GAS64:  Success
+      Self-testing PERL:   Success
+      Self-testing PY2:    Success
+      Self-testing PY3:    Success
+      Self-testing SED:    Success
+      Self-testing TEXT:   Success
+      Running local judge...
+
+      Start grading aplusb/1 in C...
+      Test case  1 AC [0.002s (0.003s) | 780kb]
+      Test case  2 AC [0.002s (0.003s) | 780kb]
+      Test case  3 AC [0.106s (0.109s) | 780kb]
+      Done grading aplusb/1.
+      ```
+  - 틀린 답을 제출한 경우
+    - 명령어 : `dmoj-cli -c /home/ubuntu/config.yml --no-ansi submit aplusb C ../judge_solutions/aplusb_wrong_sol.c`
+    - 결과
+    ```
+    Self-testing executors...
+    Self-testing AWK:    Success
+    Self-testing BF:     Success
+    Self-testing C:      Success
+    Self-testing C11:    Success
+    Self-testing CPP03:  Success
+    Self-testing CPP11:  Success
+    Self-testing CPP14:  Success
+    Self-testing CPP17:  Success
+    Self-testing GAS64:  Success
+    Self-testing PERL:   Success
+    Self-testing PY2:    Success
+    Self-testing PY3:    Success
+    Self-testing SED:    Success
+    Self-testing TEXT:   Success
+    Running local judge...
+
+    Start grading aplusb/1 in C...
+    Test case  1 WA [0.002s (0.003s) | 780kb]
+    Test case  2 WA [0.002s (0.003s) | 780kb]
+    Test case  3 WA [0.104s (0.106s) | 780kb]
+    Done grading aplusb/1.
+    ```
+  - 분석
+    - 옳은 답을 제출하면 `AC`, 틀린 답을 제출하면 `WA`로 표시된다.
+    - 매번 judger를 initialization부터 시작하게 된다.
+    - 위 결과를 사용하려면 별도의 파싱이 필요하다.
   
 ## 연결 테스트
 - [설치](https://github.com/BJ-Lim/Capstone_Design/blob/master/OSS_analysis/dmoj_setup.md)
