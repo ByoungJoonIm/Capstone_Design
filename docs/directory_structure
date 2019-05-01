@@ -1,0 +1,17 @@
+/home/scode
+└── 10000						# professor number
+    ├── 2019_1_004069_01		# subject number
+    ├── 2019_1_600006_01
+    │   ├── autorun.sh			# It make someone can automatically get result of judge.
+    │   ├── config.yml			# configuration of languages
+    │   ├── problems			# It is a problem set.
+    │   │   └── 001				# It is sequence number of assignment.
+    │   │       ├── 001.zip		# It is test case.
+    │   │       ├── init.yml	# It is point information.
+    │   └── students			# It is student's code.
+    │       └── 001				# It is also sequence number of assiginment.
+    │           ├── 20165143.c	# File name is student number in the subject.
+    │           └── 20165157.c
+    ├── 2019_1_603102_01
+    ├── 2019_1_750027_01
+    └── 2019_1_903071_01
