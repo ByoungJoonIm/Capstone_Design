@@ -75,3 +75,19 @@
 
 # 사이트에 대한 Docker 빌드 실패
   - 확인중
+
+# java가 채점기에 등록되어 있지 않음
+## 증상
+- 자바 코드를 채점할 수 없는 경우
+
+## 원인 및 해결
+1. 자바가 깔려있지 않거나, 지원하지 않는 버전일 경우 발생
+2. 다음과 같은 명령을 통해 자바 설치
+  ```
+  sudo apt install openjdk-8-jdk
+  ```
+3. 자바 버전이 여러개인 경우 선택
+  ```
+  sudo update-alternatives --config java
+  ```
+- 버전을 8로 맞춰야 하며 java, javac, javap 모두 맞춰야 한다.
