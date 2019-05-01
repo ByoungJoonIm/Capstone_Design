@@ -62,7 +62,7 @@
 1. 컨터이너는 호스트 커널에 대한 권한이 있어야 합니다.
 2. 따라서 실행시 다음 옵션을 추가로 부여해야 합니다.
   - `--priviliged`
-  - 실행 예시 : `Docker run -d -it --name t-judge --priviliged dmoj-judge /bin/bash`
+  - 실행 예시 : `Docker run -d -it --name t-judge --privileged dmoj-judge /bin/bash`
 
 # 채점기가 사이트와 연결되지 않음
 ## 증상
