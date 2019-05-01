@@ -9,3 +9,16 @@ scp : 리눅스간 파일 전송
 schema.sql : 보낼 파일(현재 명령어를 실행하는 PC의 위치)
 user_name@host_name:/home/usr_name/schema.sql : 받을 파일(파일을 수신받을 PC)
 ```
+
+## maria DB 설치
+
+1. sudo apt-get install software-properties-common
+
+2. sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
+
+3. sudo add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://ftp.kaist.ac.kr/mariadb/repo/10.2/ubuntu xenial main'
+
+4. sudo apt update
+
+5. sudo apt install mariadb-server
+
