@@ -66,5 +66,16 @@
 - [2019.03.29(금)](https://github.com/BJ-Lim/Capstone_Design/tree/master/minutes/4.md)
 - [2019.04.24(수)](https://github.com/BJ-Lim/Capstone_Design/tree/master/minutes/5.md)
 
-## 진행 참고 사항
-- [링크](https://github.com/BJ-Lim/Capstone_Design/blob/master/ideas.md)
+## 디렉토리 구조
+```
+OSS_analysis        오픈소스 활용 가능성 검토 관련 디렉토리
+auto_script         서버 환경 구성을 위한 자동화 스크립트 관련 디렉토리
+capture_ref         대부분의 캡쳐 이미지가 위치
+database            데이터베이스 관련 디렉토리
+docs                프로젝트 문서 관련 디렉토리
+minutes             회의록
+server              서버환경 구성 관련 디렉토리
+src                 기타 필요한 연결 프로그램 소스코드
+trouble_shooting    프로젝트를 진행하며 발생한 문제사항들 정리
+web                 HTML, CSS등 웹과 관련된 소스코드
+```
