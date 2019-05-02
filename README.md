@@ -32,13 +32,17 @@
   - 문제별 정답률, 풀이시간, 성능 등의 자료를 수집하여 통계자료를 제공
     
 ## 진행 상황
-  - 오픈소스 활용 가능성 검토 (완료) 
+  - [오픈소스 활용 가능성 검토](https://github.com/BJ-Lim/Capstone_Design/tree/master/OSS_analysis) (완료) 
     - managed by 임병준
-    - [link](https://github.com/BJ-Lim/Capstone_Design/tree/master/OSS_analysis)
-  - [기타 연결 프로그램](https://github.com/BJ-Lim/Capstone_Design/tree/master/src)
+    - Dmoj-site 테스트 (완료)
+    - Dmoj(judge) 테스트 (완료)
+    - Dmoj-cli(judge) 테스트 (완료)
+  - [기타 프로그램](https://github.com/BJ-Lim/Capstone_Design/tree/master/src)
     - managed by 임병준
     - parser.py 초안 작성 (완료)
       - 데이터베이스 부분 추가 필요
+  - [디렉터리 구조 설계](https://github.com/BJ-Lim/Capstone_Design/blob/master/docs/directory_structure) (완료)
+    - managed by 임병준
   - [database](https://github.com/BJ-Lim/Capstone_Design/tree/master/database) 
     - managed by 염희수
     - 스키마 설계 (완료)
