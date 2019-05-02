@@ -15,8 +15,6 @@
 - 이상욱 : Django 웹 페이지 제작
 - 염희수 : Document 작성(회의록 및 개요) / 데이터베이스 셋팅
 - 아직 배분하지 않은 업무 : 연동 / 배포 테스트
-    
-※ 아직 프로젝트에 대한 문서들이 정리되지 않았으며 추후 정리할 예정입니다.
 
 ## 주제 및 기대효과
   - 프로젝트명 : SCode
@@ -28,50 +26,41 @@
     - 각종 통계자료를 교육 개선 등에 활용 가능
   
 ## 기능  
-  - 본 프로젝트는 학생들은 자신의 과제를 압축하여 올리지 않고, 페이지내에서 코드를 작성 및 제출이 가능하다.
-  - 본 프로젝트는 기존의 실습환경과 달리 교수(조교)의 채점이 아닌 testcase를 통한 자동 채점이 가능하다.
-  - 본 프로젝트는 학생들 개개인의 실습결과물이 자신의 github에 일괄 등록되어 github를 효율적으로 관리할 수 있다.
-  - 본 프로젝트는 문제별 정답률, 풀이시간, 성능 등의 자료를 수집하여 통계자료를 제공한다.
+  - 학생들은 자신의 과제를 압축하여 올리지 않고, 페이지 내에서 코드를 작성 및 제출이 가능
+  - 기존의 실습환경과 달리 교수(조교)의 채점이 아닌 testcase를 통한 자동 채점이 가능
+  - 학생들 개개인의 실습결과물이 자신의 github에 일괄 등록되어 github를 효율적으로 관리
+  - 문제별 정답률, 풀이시간, 성능 등의 자료를 수집하여 통계자료를 제공
     
-## 기능 구현 (진행 상황)
-  
-  - 회의록 
-    - [2019.03.13(수)](https://github.com/BJ-Lim/Capstone_Design/tree/master/minutes/1.md)
-    - [2019.03.16(토)](https://github.com/BJ-Lim/Capstone_Design/tree/master/minutes/2.md)
-    - [2019.03.23(토)](https://github.com/BJ-Lim/Capstone_Design/tree/master/minutes/3.md)
-    - [2019.03.29(금)](https://github.com/BJ-Lim/Capstone_Design/tree/master/minutes/4.md)
-    - [2019.04.24(수)](https://github.com/BJ-Lim/Capstone_Design/tree/master/minutes/5.md)
-
-
-  - database [(이동)](https://github.com/BJ-Lim/Capstone_Design/tree/master/database)
-  
-    -~~스키마구상~~  (19.03.16 완료)
-    
-    -~~스키마v1~~    (19.03.23 완료)
-    
-    -~~스키마v2~~    (19.04.09 완료)
-    
-    -~~스키마v3~~    (19.04.24 완료)
-    
-    - dmoj 스키마와 분석 (진행중)
-  
-  - web page [(이동)](https://github.com/BJ-Lim/Capstone_Design/tree/master/web)
-  
-    -~~web page depth 구상~~ (19.03.16 완료)
-    
-    - dmoj 웹페이지 분석 (진행중)
-  
-  - server [(이동)](https://github.com/BJ-Lim/Capstone_Design/tree/master/server)
-  
-    -~~django 예제 구상~~ (19.03.16 완료)
-    
-    -~~django 예제 실행~~ (19.04.24 완료)
-    
-    - dmoj와 site의 연동 오류 해결 (진행중)
-  
-  - documents [(이동)](https://github.com/BJ-Lim/Capstone_Design/tree/master/document)
-    
-    
+## 진행 상황
+  - 오픈소스 활용 가능성 검토 (완료) 
+    - managed by 임병준
+    - [link](https://github.com/BJ-Lim/Capstone_Design/tree/master/OSS_analysis)
+  - [기타 연결 프로그램](https://github.com/BJ-Lim/Capstone_Design/tree/master/src)
+    - managed by 임병준
+    - parser.py 초안 작성 (완료)
+      - 데이터베이스 부분 추가 필요
+  - [database](https://github.com/BJ-Lim/Capstone_Design/tree/master/database) 
+    - managed by 염희수
+    - 스키마 설계 (완료)
+    - mariaDB 설치 (완료)
+    - mariaDB에 스키마 삽입 (진행중)
+    - mariaDB에 데스트 데이터 삽입 (준비중)
+  - [server](https://github.com/BJ-Lim/Capstone_Design/tree/master/server) 
+    - managed by 정재민
+    - Django 환경 셋팅 (완료)
+    - control 작성 (준비중)
+  - [web](https://github.com/BJ-Lim/Capstone_Design/tree/master/web) 
+    - managed by 이상욱
+    - login view 작성 (완료)
+    - 교수 view 작성 (진행중)
+    - 학생 view 작성 (준비중)
  
+## 회의록 
+- [2019.03.13(수)](https://github.com/BJ-Lim/Capstone_Design/tree/master/minutes/1.md)
+- [2019.03.16(토)](https://github.com/BJ-Lim/Capstone_Design/tree/master/minutes/2.md)
+- [2019.03.23(토)](https://github.com/BJ-Lim/Capstone_Design/tree/master/minutes/3.md)
+- [2019.03.29(금)](https://github.com/BJ-Lim/Capstone_Design/tree/master/minutes/4.md)
+- [2019.04.24(수)](https://github.com/BJ-Lim/Capstone_Design/tree/master/minutes/5.md)
+
 ## 진행 참고 사항
 - [링크](https://github.com/BJ-Lim/Capstone_Design/blob/master/ideas.md)
