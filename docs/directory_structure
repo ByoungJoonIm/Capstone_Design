@@ -1,6 +1,6 @@
 /home/scode
 └── 10000						# professor number
-    ├── 2019_1_004069_01		# subject number
+    ├── 2019_1_004069_01		# year_semester_subject number_divided class
     ├── 2019_1_600006_01
     │   ├── autorun.sh			# It make someone can automatically get result of judge.
     │   ├── config.yml			# configuration of languages
