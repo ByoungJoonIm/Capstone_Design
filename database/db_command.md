@@ -39,3 +39,30 @@ user_name@host_name:/home/usr_name/schema.sql : 받을 파일(파일을 수신�
 2. 
 ``update user set password=password('바꿀비밀번호') where user='root';``
 
+## mysql 주요 명령어
+
+- 조회
+
+database list: ``mysql> SHOW DATABASES;``
+
+table list: ``mysql> SHOW TABLES;``
+
+table : ``mysql> select * from table명;``
+
+- 생성
+
+database: ``mysql> CREATE DATABASE db명;``
+
+table: ``mysql> CREATE TABLE 테이블명(
+            -> id int NOT NULL ~ 
+            ->
+         );``
+            
+- 삽입
+
+ ``INSERT INTO 테이블명 (컬럼명1, 컬럼명3, ...) VALUES (값1, 값3, ...);``
+ 
+ - 조회
+ 
+ ``select 컬럼명 from 테이블명``
+ 
