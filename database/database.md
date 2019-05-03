@@ -1,5 +1,5 @@
 ## Schema 
-![](../db_img/db_table_list.PNG)
+![](/db_img/db_table_list.PNG)
 -----------
 ### 학생정보 table
  - 학생(학번,이름)
