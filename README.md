@@ -48,7 +48,7 @@
     - 스키마 설계 (완료)
     - mariaDB 설치 (완료)
     - mariaDB에 스키마 삽입 (완료)
-    - mariaDB에 데스트 데이터 삽입 (준비중)
+    - mariaDB에 데스트 데이터 삽입 (임시입력완료)
   - [server](https://github.com/BJ-Lim/Capstone_Design/tree/master/server) 
     - managed by 정재민
     - Django 환경 셋팅 (완료)
@@ -82,3 +82,4 @@ src                 기타 필요한 연결 프로그램 소스코드
 trouble_shooting    프로젝트를 진행하며 발생한 문제사항들 정리
 web                 HTML, CSS등 웹과 관련된 소스코드
 ```
+
