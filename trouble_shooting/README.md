@@ -91,3 +91,15 @@
   sudo update-alternatives --config java
   ```
 - 버전을 8로 맞춰야 하며 java, javac, javap 모두 맞춰야 한다.
+
+# MariaDB Unix-socket plugin not loaded 문제 발생
+## 증상
+- DB로그인 불가
+
+## 원인 및 해결
+1. 데몬으로 돌고있는 마리아 DB를 중단
+  - `sudo service mariadb stop`
+2. 로그인 인증 우회
+  - `sudo mysqld_safe --skip-grant-tables &`
+3. mariaDB 재접속
+ - `mysql -u root`
