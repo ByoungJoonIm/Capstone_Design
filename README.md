@@ -47,7 +47,7 @@
     - managed by 염희수
     - 스키마 설계 (완료)
     - mariaDB 설치 (완료)
-    - mariaDB에 스키마 삽입 (진행중)
+    - mariaDB에 스키마 삽입 (완료)
     - mariaDB에 데스트 데이터 삽입 (준비중)
   - [server](https://github.com/BJ-Lim/Capstone_Design/tree/master/server) 
     - managed by 정재민
