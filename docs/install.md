@@ -4,8 +4,10 @@
 ## Django 셋팅
 - 준비중
 
-## MariaDB 셋팅
+## MariaDB 설치
 - 준비중
+- connector 설치
+  - `pip install mysql-connector-python`
 
 ## Dmoj-judge 설치
 - `apt update -y`
