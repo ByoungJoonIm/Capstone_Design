@@ -47,7 +47,9 @@ database list: ``mysql> SHOW DATABASES;``
 
 table list: ``mysql> SHOW TABLES;``
 
-table : ``mysql> select * from table명;``
+table : ``mysql> select 컬럼명 from table명;``
+
+table structure : ``describe 테이블명``
 
 - 생성
 
@@ -62,7 +64,13 @@ table: ``mysql> CREATE TABLE 테이블명(
 
  ``INSERT INTO 테이블명 (컬럼명1, 컬럼명3, ...) VALUES (값1, 값3, ...);``
  
-- 조회
+ - primarykey 선언 오류시
+ 1. 기존 primary key 삭제
  
- ``select 컬럼명 from 테이블명``
+ ``alter table 테이블명 drop primary key``
+ 
+ 2. 새로운 pk 선언
+ 
+ ``alter table 테이블명 add constraint [pk명] primary key ([key1,key2,....]);``
+ 
  
