@@ -14,7 +14,6 @@
 - `pip install dmoj`
 - `source .profile`
   - 환경변수 변경사항을 지금 바로 적용
-- `dmoj-autoconf >> config.yml`
 - `echo -e "problem_storage_root:\n  - /[judge_problem_dir]" > config.yml`
   - [judge_problem_dir]을 자신에게 맞는 dir로 수정
   - 추후에 문제 넣는 방법 설명 예정
