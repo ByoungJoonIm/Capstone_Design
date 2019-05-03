@@ -62,7 +62,7 @@ table: ``mysql> CREATE TABLE 테이블명(
 
  ``INSERT INTO 테이블명 (컬럼명1, 컬럼명3, ...) VALUES (값1, 값3, ...);``
  
- - 조회
+- 조회
  
  ``select 컬럼명 from 테이블명``
  
