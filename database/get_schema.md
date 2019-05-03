@@ -27,3 +27,10 @@ user_name@host_name:/home/usr_name/schema.sql : 받을 파일(파일을 수신�
 5. 
 ``sudo apt install mariadb-server``
 
+## maria DB root 비밀번호 설정
+
+1. root 권한으로 mysql 접속
+``mysql -u root -p``
+2. 
+``update user set password=password('바꿀비밀번호') where user='root';``
+
