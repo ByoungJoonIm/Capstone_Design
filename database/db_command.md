@@ -1,3 +1,6 @@
+# 개요
+- MYSQL 명령어사용을 위한 페이지입니다.
+
 ## MariaDB Schema export without data
 `mysqldump -u root -p --no-data dbname > schema.sql`
 
