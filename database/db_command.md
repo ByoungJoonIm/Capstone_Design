@@ -33,6 +33,7 @@ user_name@host_name:/home/usr_name/schema.sql : 받을 파일(파일을 수신�
 ## maria DB root 비밀번호 설정
 
 1. root 권한으로 mysql 접속
+
 ``mysql -u root -p``
 
 2. 
