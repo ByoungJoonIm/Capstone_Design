@@ -52,12 +52,15 @@
   - [server](https://github.com/BJ-Lim/Capstone_Design/tree/master/server) 
     - managed by 정재민
     - Django 환경 셋팅 (완료)
-    - control 작성 (준비중)
+    - Database 연결
+    - control 작성 (진행중)
   - [web](https://github.com/BJ-Lim/Capstone_Design/tree/master/web) 
     - managed by 이상욱
     - login view 작성 (완료)
-    - 교수 view 작성 (진행중)
-    - 학생 view 작성 (준비중)
+    - 교수 view 작성 (완료)
+    - 학생 view 작성 (완료)
+    - CSS 작성 (진행중)
+      - login CSS (진행중)
  
 ## 회의록 
 - [2019.03.13(수)](https://github.com/BJ-Lim/Capstone_Design/tree/master/minutes/1.md)
