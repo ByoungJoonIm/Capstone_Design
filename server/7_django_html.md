@@ -1,5 +1,3 @@
-# HTML + DB 연동하기
-
 ## 구조만들기
 ```
 python django startapp login
@@ -73,11 +71,17 @@ TEMPLATES = [
 ]
 
 ```
+
+---
+
 # mysql을 model로 변경하기
 
 ```
 python manage.py inspectdb
 ```
+
+----
+
 
 # DB 연동하기 - admin DB
 
@@ -116,9 +120,6 @@ DATABASES = {
     }
 }
 ```
-
-
-
 
 
 
