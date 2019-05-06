@@ -73,11 +73,11 @@ TEMPLATES = [
 ]
 
 ```
-# DB 연동하기 - mysql
+# mysql을 model로 변경하기
 
-
-
-
+```
+python manage.py inspectdb
+```
 
 # DB 연동하기 - admin DB
 
