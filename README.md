@@ -41,6 +41,9 @@
     - managed by 임병준
     - parser.py 초안 작성 (완료)
       - 데이터베이스 부분 추가 필요
+  - 자동화 스크립트 작성
+    - 데이터베이스 모델 적용 스크립트 작성 (완료)
+    - DB 테스트용 데이터 제너레이터 작성 (완료)
   - [디렉터리 구조 설계](https://github.com/BJ-Lim/Capstone_Design/blob/master/docs/directory_structure) (완료)
     - managed by 임병준
   - [database](https://github.com/BJ-Lim/Capstone_Design/tree/master/database) 
@@ -49,7 +52,8 @@
     - mariaDB 설치 (완료)
     - mariaDB에 스키마 삽입 (완료)
     - Django model 작성 (완료)
-    - mariaDB에 테스트 데이터 삽입 (작성중)
+    - mariaDB에 테스트 데이터 삽입 (완료)
+      - DB 테스트용 데이터 제너레이터 쉘 코드 사용
   - [server](https://github.com/BJ-Lim/Capstone_Design/tree/master/server) 
     - managed by 정재민
     - Django 환경 셋팅 (완료)
@@ -79,7 +83,7 @@ database            데이터베이스 관련 디렉토리
 docs                프로젝트 문서 관련 디렉토리
 minutes             회의록
 server              서버환경 구성 관련 디렉토리
-src                 기타 필요한 연결 프로그램 소스코드
+src                 기타 필요한 연결 프로그램 소스코드 및 Django 코드
 trouble_shooting    프로젝트를 진행하며 발생한 문제사항들 정리
 web                 HTML, CSS등 웹과 관련된 소스코드
 ```
