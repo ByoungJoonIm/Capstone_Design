@@ -1,0 +1,2 @@
+use SDB2;
+DESCRIBE judge_subject
