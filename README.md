@@ -51,7 +51,7 @@
     - managed by 정재민
     - Django 환경 셋팅 (완료)
     - Database 연결
-    - view 작성 (진행중)
+    - view 작성 ()
   - [web](https://github.com/BJ-Lim/Capstone_Design/tree/master/web) 
     - managed by 이상욱
     - login 페이지 초안 작성 (완료)
@@ -67,6 +67,7 @@
 - [2019.03.23(토)](https://github.com/BJ-Lim/Capstone_Design/tree/master/minutes/3.md)
 - [2019.03.29(금)](https://github.com/BJ-Lim/Capstone_Design/tree/master/minutes/4.md)
 - [2019.04.24(수)](https://github.com/BJ-Lim/Capstone_Design/tree/master/minutes/5.md)
+- [2019.04.29(월)](https://github.com/BJ-Lim/Capstone_Design/tree/master/minutes/6.md)
 
 ## 디렉토리 구조
 ```
