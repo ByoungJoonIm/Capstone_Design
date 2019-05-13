@@ -58,3 +58,6 @@ TEMPLATES = [
 ```
 
 - 경로를 잘잡아줘야함
+
+# 프로젝트 진행 
+- [https://github.com/jjeamin/Capston_Django](https://github.com/jjeamin/Capston_Django)
