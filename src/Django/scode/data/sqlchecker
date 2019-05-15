@@ -1,2 +1,2 @@
-use SDB2;
+use SDB4;
 DESCRIBE judge_subject

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<title>{% block title %}Django Web Programming{% endblock %}</title>
+
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static "css/base.css" %}" />
+<link rel="stylesheet" type="text/css" href="{% block extrastyle %}{% endblock %}" />
+
+</head>
+
+<body>
+<div id="header">
+	<h2 class="logo"><a href="#"><img src="{% static 'img/hallym_logo.png' %}" style="height:30px;"/></a></h2>
+	<h2 class="maintitle">Scode</h2>
+	{% if user.is_active %}
+	<h4 class="welcome">Welcome, 
+
+		<strong>{% firstof user.get_short_name user.get_username %}</strong> /
+		<a href="#">Change Password</a> /
+		<a href="#">Logout</a>
+	</h4>
+	{% else %}
+	<h4 class="welcome">Welcome, Anonymous /
+		<a href="#">Login</a>
+	</h4>
+	{% endif %}
+</div>
+
+<div id="menu">
+	<li><a href="#">Home</a></li>
+	<li><a href="#">Bookmark</a></li>
+	<li><a href="#">Blog</a></li>
+	<li><a href="#">Photo</a></li>
+
+	<li><a href="#">Add&bigtriangledown;</a>
+		<ul>
+			<li><a href="#">Bookmark</a></li>
+			<li><a href="#">Blog</a></li>
+			<li><a href="#">Photo</a></li>
+		</ul>
+	</li>
+	<li><a href="#">Change&bigtriangledown;</a>
+		<ul>
+			<li><a href="#">Bookmark</a></li>
+			<li><a href="#">Blog</a></li>
+			<li><a href="#">Photo</a></li>
+		</ul>
+	</li>
+
+	<li><a href="#">Archive</a></li>
+	<li><a href="#">Search</a></li>
+	<li><a href="#">Admin</a></li>
+</div>
+
+{% block content %}{% endblock %}
+{% block footer %}
+<div id="footer">
+	&copy; scode team
+	&nbsp; &nbsp; &nbsp; &nbsp;
+	<a href="https://github.com/BJ-Lim/Capstone_Design">Our git</a>
+	&nbsp; &nbsp; &nbsp; &nbsp;
+	<a href="https://github.com/DMOJ">Dmoj-project</a>
+</div>
+{% endblock footer %}
+</body>
+</html>

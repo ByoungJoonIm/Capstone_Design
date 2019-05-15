@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}home.html{% endblock %}
+
+{% load staticfiles %}
+{% block extrastyle %}{% static "css/home.css" %}{% endblock %}
+
+{% block content %}
+
+<div id="content_home">
+	<div id="homeimg">
+		<a href="/"><img src="{% static 'img/hallym_logo.png' %}" style="height:256px;"/></a>
+		<h4 style="margin: 0;">This is Django powered web site.</h4>
+	</div>
+
+	<hr style="margin: 5px 0;">
+
+	<h2>Select Application</h2>
+
+	<table id="applist">
+		<tr>
+			<td><b><i><a href="#">Bookmark</a></i></b></td>
+			<td>You can write your own post and share to others. Donec id ...</td>
+			<td class="Edit"><i><a href="#">Add</a></i></td>
+			<td class="Edit"><i><a href="#">Change</a></i></td>
+		</tr>
+
+		<tr>
+			<td><b><i><a href="#">Blog</a></i></b></td>
+			<td>You can write your own post and share to others. Donec id ...</td>
+			<td class="Edit"><i><a href="#">Add</a></i></td>
+			<td class="Edit"><i><a href="#">Change</a></i></td>
+		</tr>
+
+		<tr>
+			<td><b><i><a href="#">Photo</a></i></b></td>
+			<td>You can write your own post and share to others. Donec id ...</td>
+			<td class="Edit"><i><a href="#">Add</a></i></td>
+			<td class="Edit"><i><a href="#">Change</a></i></td>
+		</tr>
+	</table>
+</div>
+{% endblock content %}
