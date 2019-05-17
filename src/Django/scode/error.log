@@ -100,3 +100,192 @@ Did you install mysqlclient?
 
 /home/scode/Capstone_Design/src/Django/scode/scode/views.py changed, reloading.
 Watching for file changes with StatReloader
+[15/May/2019 22:06:49] "GET / HTTP/1.1" 200 2327
+[15/May/2019 22:06:49] "GET /static/css/base.css HTTP/1.1" 304 0
+[15/May/2019 22:06:49] "GET /static/css/home.css HTTP/1.1" 304 0
+Unhandled exception in thread started by <function wrapper at 0x7f63d3073e60>
+Traceback (most recent call last):
+  File "/home/scode/.local/lib/python2.7/site-packages/django/utils/autoreload.py", line 228, in wrapper
+    fn(*args, **kwargs)
+  File "/home/scode/.local/lib/python2.7/site-packages/django/core/management/commands/runserver.py", line 124, in inner_run
+    self.check(display_num_errors=True)
+  File "/home/scode/.local/lib/python2.7/site-packages/django/core/management/base.py", line 359, in check
+    include_deployment_checks=include_deployment_checks,
+  File "/home/scode/.local/lib/python2.7/site-packages/django/core/management/base.py", line 346, in _run_checks
+    return checks.run_checks(**kwargs)
+  File "/home/scode/.local/lib/python2.7/site-packages/django/core/checks/registry.py", line 81, in run_checks
+    new_errors = check(app_configs=app_configs)
+  File "/home/scode/.local/lib/python2.7/site-packages/django/core/checks/urls.py", line 16, in check_url_config
+    return check_resolver(resolver)
+  File "/home/scode/.local/lib/python2.7/site-packages/django/core/checks/urls.py", line 26, in check_resolver
+    return check_method()
+  File "/home/scode/.local/lib/python2.7/site-packages/django/urls/resolvers.py", line 256, in check
+    for pattern in self.url_patterns:
+  File "/home/scode/.local/lib/python2.7/site-packages/django/utils/functional.py", line 35, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/scode/.local/lib/python2.7/site-packages/django/urls/resolvers.py", line 407, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/home/scode/.local/lib/python2.7/site-packages/django/utils/functional.py", line 35, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/scode/.local/lib/python2.7/site-packages/django/urls/resolvers.py", line 400, in urlconf_module
+    return import_module(self.urlconf_name)
+  File "/usr/lib/python2.7/importlib/__init__.py", line 37, in import_module
+    __import__(name)
+  File "/home/scode/Capstone_Design/src/Django/scode/scode/urls.py", line 24, in <module>
+    url(r'^professor/', include(('judge.urls', 'judge'), namespace='judge')).
+NameError: name 'include' is not defined
+Unhandled exception in thread started by <function wrapper at 0x7efdd1c67e60>
+Traceback (most recent call last):
+  File "/home/scode/.local/lib/python2.7/site-packages/django/utils/autoreload.py", line 228, in wrapper
+    fn(*args, **kwargs)
+  File "/home/scode/.local/lib/python2.7/site-packages/django/core/management/commands/runserver.py", line 124, in inner_run
+    self.check(display_num_errors=True)
+  File "/home/scode/.local/lib/python2.7/site-packages/django/core/management/base.py", line 359, in check
+    include_deployment_checks=include_deployment_checks,
+  File "/home/scode/.local/lib/python2.7/site-packages/django/core/management/base.py", line 346, in _run_checks
+    return checks.run_checks(**kwargs)
+  File "/home/scode/.local/lib/python2.7/site-packages/django/core/checks/registry.py", line 81, in run_checks
+    new_errors = check(app_configs=app_configs)
+  File "/home/scode/.local/lib/python2.7/site-packages/django/core/checks/urls.py", line 16, in check_url_config
+    return check_resolver(resolver)
+  File "/home/scode/.local/lib/python2.7/site-packages/django/core/checks/urls.py", line 26, in check_resolver
+    return check_method()
+  File "/home/scode/.local/lib/python2.7/site-packages/django/urls/resolvers.py", line 256, in check
+    for pattern in self.url_patterns:
+  File "/home/scode/.local/lib/python2.7/site-packages/django/utils/functional.py", line 35, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/scode/.local/lib/python2.7/site-packages/django/urls/resolvers.py", line 407, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/home/scode/.local/lib/python2.7/site-packages/django/utils/functional.py", line 35, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/scode/.local/lib/python2.7/site-packages/django/urls/resolvers.py", line 400, in urlconf_module
+    return import_module(self.urlconf_name)
+  File "/usr/lib/python2.7/importlib/__init__.py", line 37, in import_module
+    __import__(name)
+  File "/home/scode/Capstone_Design/src/Django/scode/scode/urls.py", line 24, in <module>
+    url(r'^professor/', include(('judge.urls', 'judge'), namespace='judge')).
+NameError: name 'include' is not defined
+Unhandled exception in thread started by <function wrapper at 0x7f5c0b32be60>
+Traceback (most recent call last):
+  File "/home/scode/.local/lib/python2.7/site-packages/django/utils/autoreload.py", line 228, in wrapper
+    fn(*args, **kwargs)
+  File "/home/scode/.local/lib/python2.7/site-packages/django/core/management/commands/runserver.py", line 124, in inner_run
+    self.check(display_num_errors=True)
+  File "/home/scode/.local/lib/python2.7/site-packages/django/core/management/base.py", line 359, in check
+    include_deployment_checks=include_deployment_checks,
+  File "/home/scode/.local/lib/python2.7/site-packages/django/core/management/base.py", line 346, in _run_checks
+    return checks.run_checks(**kwargs)
+  File "/home/scode/.local/lib/python2.7/site-packages/django/core/checks/registry.py", line 81, in run_checks
+    new_errors = check(app_configs=app_configs)
+  File "/home/scode/.local/lib/python2.7/site-packages/django/core/checks/urls.py", line 16, in check_url_config
+    return check_resolver(resolver)
+  File "/home/scode/.local/lib/python2.7/site-packages/django/core/checks/urls.py", line 26, in check_resolver
+    return check_method()
+  File "/home/scode/.local/lib/python2.7/site-packages/django/urls/resolvers.py", line 256, in check
+    for pattern in self.url_patterns:
+  File "/home/scode/.local/lib/python2.7/site-packages/django/utils/functional.py", line 35, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/scode/.local/lib/python2.7/site-packages/django/urls/resolvers.py", line 407, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/home/scode/.local/lib/python2.7/site-packages/django/utils/functional.py", line 35, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/scode/.local/lib/python2.7/site-packages/django/urls/resolvers.py", line 400, in urlconf_module
+    return import_module(self.urlconf_name)
+  File "/usr/lib/python2.7/importlib/__init__.py", line 37, in import_module
+    __import__(name)
+  File "/home/scode/Capstone_Design/src/Django/scode/scode/urls.py", line 24, in <module>
+    url(r'^professor/', include(('judge.urls', 'judge'), namespace='judge')).
+AttributeError: 'RegexURLResolver' object has no attribute 'url'
+Unhandled exception in thread started by <function wrapper at 0x7f41ca66ae60>
+Traceback (most recent call last):
+  File "/home/scode/.local/lib/python2.7/site-packages/django/utils/autoreload.py", line 228, in wrapper
+    fn(*args, **kwargs)
+  File "/home/scode/.local/lib/python2.7/site-packages/django/core/management/commands/runserver.py", line 124, in inner_run
+    self.check(display_num_errors=True)
+  File "/home/scode/.local/lib/python2.7/site-packages/django/core/management/base.py", line 359, in check
+    include_deployment_checks=include_deployment_checks,
+  File "/home/scode/.local/lib/python2.7/site-packages/django/core/management/base.py", line 346, in _run_checks
+    return checks.run_checks(**kwargs)
+  File "/home/scode/.local/lib/python2.7/site-packages/django/core/checks/registry.py", line 81, in run_checks
+    new_errors = check(app_configs=app_configs)
+  File "/home/scode/.local/lib/python2.7/site-packages/django/core/checks/urls.py", line 16, in check_url_config
+    return check_resolver(resolver)
+  File "/home/scode/.local/lib/python2.7/site-packages/django/core/checks/urls.py", line 26, in check_resolver
+    return check_method()
+  File "/home/scode/.local/lib/python2.7/site-packages/django/urls/resolvers.py", line 256, in check
+    for pattern in self.url_patterns:
+  File "/home/scode/.local/lib/python2.7/site-packages/django/utils/functional.py", line 35, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/scode/.local/lib/python2.7/site-packages/django/urls/resolvers.py", line 407, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/home/scode/.local/lib/python2.7/site-packages/django/utils/functional.py", line 35, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/scode/.local/lib/python2.7/site-packages/django/urls/resolvers.py", line 400, in urlconf_module
+    return import_module(self.urlconf_name)
+  File "/usr/lib/python2.7/importlib/__init__.py", line 37, in import_module
+    __import__(name)
+  File "/home/scode/Capstone_Design/src/Django/scode/scode/urls.py", line 24, in <module>
+    url(r'^professor/', include(('judge.urls', 'judge'), namespace='judge')).
+AttributeError: 'RegexURLResolver' object has no attribute 'url'
+Error: That port is already in use.
+[15/May/2019 23:26:29] "GET / HTTP/1.1" 200 2327
+[15/May/2019 23:26:29] "GET /static/css/base.css HTTP/1.1" 304 0
+[15/May/2019 23:26:29] "GET /static/css/home.css HTTP/1.1" 304 0
+[15/May/2019 23:26:33] "GET /professor HTTP/1.1" 301 0
+Internal Server Error: /professor/
+Traceback (most recent call last):
+  File "/home/scode/.local/lib/python2.7/site-packages/django/core/handlers/exception.py", line 41, in inner
+    response = get_response(request)
+  File "/home/scode/.local/lib/python2.7/site-packages/django/core/handlers/base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/scode/.local/lib/python2.7/site-packages/django/core/handlers/base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+TypeError: as_view() takes exactly 1 argument (2 given)
+[15/May/2019 23:26:33] "GET /professor/ HTTP/1.1" 500 62630
+[16/May/2019 17:55:50] "GET / HTTP/1.1" 200 2327
+[16/May/2019 17:55:50] "GET /static/css/base.css HTTP/1.1" 200 1956
+[16/May/2019 17:55:50] "GET /static/css/home.css HTTP/1.1" 200 163
+Error: That port is already in use.
+[17/May/2019 14:08:06] "GET / HTTP/1.1" 200 2327
+[17/May/2019 14:08:06] "GET /static/css/base.css HTTP/1.1" 304 0
+[17/May/2019 14:08:06] "GET /static/css/home.css HTTP/1.1" 304 0
+[17/May/2019 14:47:50] "GET / HTTP/1.1" 200 2327
+Unhandled exception in thread started by <function wrapper at 0x7f87505d6e60>
+Traceback (most recent call last):
+  File "/home/scode/.local/lib/python2.7/site-packages/django/utils/autoreload.py", line 228, in wrapper
+    fn(*args, **kwargs)
+  File "/home/scode/.local/lib/python2.7/site-packages/django/core/management/commands/runserver.py", line 124, in inner_run
+    self.check(display_num_errors=True)
+  File "/home/scode/.local/lib/python2.7/site-packages/django/core/management/base.py", line 359, in check
+    include_deployment_checks=include_deployment_checks,
+  File "/home/scode/.local/lib/python2.7/site-packages/django/core/management/base.py", line 346, in _run_checks
+    return checks.run_checks(**kwargs)
+  File "/home/scode/.local/lib/python2.7/site-packages/django/core/checks/registry.py", line 81, in run_checks
+    new_errors = check(app_configs=app_configs)
+  File "/home/scode/.local/lib/python2.7/site-packages/django/core/checks/urls.py", line 16, in check_url_config
+    return check_resolver(resolver)
+  File "/home/scode/.local/lib/python2.7/site-packages/django/core/checks/urls.py", line 26, in check_resolver
+    return check_method()
+  File "/home/scode/.local/lib/python2.7/site-packages/django/urls/resolvers.py", line 256, in check
+    for pattern in self.url_patterns:
+  File "/home/scode/.local/lib/python2.7/site-packages/django/utils/functional.py", line 35, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/scode/.local/lib/python2.7/site-packages/django/urls/resolvers.py", line 407, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/home/scode/.local/lib/python2.7/site-packages/django/utils/functional.py", line 35, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/scode/.local/lib/python2.7/site-packages/django/urls/resolvers.py", line 400, in urlconf_module
+    return import_module(self.urlconf_name)
+  File "/usr/lib/python2.7/importlib/__init__.py", line 37, in import_module
+    __import__(name)
+  File "/home/scode/Capstone_Design/src/Django/scode/scode/urls.py", line 24, in <module>
+    url(r'^/', include(('judge.urls', 'judge'), namespace='judge')),
+  File "/home/scode/.local/lib/python2.7/site-packages/django/conf/urls/__init__.py", line 50, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/usr/lib/python2.7/importlib/__init__.py", line 37, in import_module
+    __import__(name)
+  File "/home/scode/Capstone_Design/src/Django/scode/judge/urls.py", line 4, in <module>
+    from judge.views import ProfessorMainLV
+  File "/home/scode/Capstone_Design/src/Django/scode/judge/views.py", line 15, in <module>
+    class ProfessorMainLV(View):
+NameError: name 'View' is not defined
