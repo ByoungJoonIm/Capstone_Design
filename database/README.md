@@ -27,7 +27,11 @@
   ```
 
 - 교수가 한 과제를 선택했을 때 그 과제에 대한 모든 학생들의 학번, 이름, 스코어를 조회하는 SQL
-  - `여기에 작성해주세요`
+  ```
+  select title,student_id,student_name
+  from subject,signup_class,submit
+  where signup_class.sub_cd = subject.sub_id and submit.student_id = student.student_id;
+  ```
 - 교수가 특정 문제를 추가하는 SQL
   - `여기에 작성해주세요`
 - 학생이 자신이 수강하는 모든 과목을 조회하는 SQL
