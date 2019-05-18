@@ -7,14 +7,14 @@
 	<h1>here is for professormain.html</h1>
 	<table>
 		<tr>
-			<th>professor_id</th>
-			<th>professor_name</th>
+			<th>title</th>
+			<th>classes</th>
 		</tr>
 
 		{% for professor in professors %}
 		<tr>
-			<td>{{ professor.professor_id }}</td>
-			<td>{{ professor.professor_name }}</td>
+			<td>{{ professor.title }}</td>
+			<td>{{ professor.classes }}</td>
 		</tr>
 		{% endfor %}
 

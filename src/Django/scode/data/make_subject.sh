@@ -6,7 +6,7 @@ for((i=1;i<9;i++));do
     year: '201$i'
     semester: $i
     subject_cd: '12345$i'
-    classes: '$i'
+    classes: '0$(expr $i % 2 + 1)'
     title: 'subject$i'
     grade: $i
     input_id: 'sub_20190507$i'
