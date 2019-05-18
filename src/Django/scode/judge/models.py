@@ -101,7 +101,8 @@ class subject_has_professor(models.Model):
 
 
 class assignment(models.Model):
-	sequence = models.IntegerField(null=False, primary_key=True)
+	not_use_pri_key = models.AutoField(primary_key=True)
+	sequence = models.IntegerField(null=False)
 	# sub_seq same as year, semester, subject_cd, classes
 	sub_seq = models.ForeignKey(subject, on_delete=models.CASCADE)
 	assignment_name = models.CharField(max_length=100)
@@ -118,7 +119,7 @@ class assignment(models.Model):
 class submit(models.Model):
 	# Table must have one key in Django
 	not_use_pri_key = models.AutoField(primary_key=True)
-	assign_seq = models.ForeignKey(subject, on_delete=models.CASCADE)
+	sub_seq = models.ForeignKey(subject, on_delete=models.CASCADE)
 	student = models.ForeignKey(student, on_delete=models.CASCADE)
 	source = models.TextField()
 	# Is it required?
