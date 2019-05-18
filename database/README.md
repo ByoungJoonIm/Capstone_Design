@@ -5,6 +5,9 @@
 - [link](https://github.com/BJ-Lim/Capstone_Design/blob/master/database/db_command.md)
 
 # 요청 사항
+
+0. submit테이블에 score속성을 추가해 주세요.
+
 - 이 요청사항은 이 문서에 바로 달아주시면 됩니다.
 1. 테이블관의 관계를 명시해주세요.(스키마 그림에 그림판으로 추가해도 상관 없습니다. 1, N을 표시해주세요)
 - (1:1, 1:N, N:N) : 어디가 N인지 써주세요.
@@ -28,12 +31,15 @@
 
 - 교수가 한 과제를 선택했을 때 그 과제에 대한 모든 학생들의 학번, 이름, 스코어를 조회하는 SQL
   ```
-  select title,student_id,student_name
+  select title,student_id,student_name,score
   from subject,signup_class,submit
   where signup_class.sub_cd = subject.sub_id and submit.student_id = student.student_id;
   ```
 - 교수가 특정 문제를 추가하는 SQL
-  - `여기에 작성해주세요`
+  ```
+  insert into assignment(sequence,sub_cd,assignment_name) values('sequence','sub_cd','assignment_name');
+  ```
+  
 - 학생이 자신이 수강하는 모든 과목을 조회하는 SQL
   - `여기에 작성해주세요`
 - 학생이 자신이 수강하는 과목 중 하나를 선택했을 때 과제의 내용을 조회하는 SQL
