@@ -3,7 +3,7 @@
 for((i=1;i<9;i++));do
 	echo "- model: 'judge.assignment'
   fields:
-    sequence: $(expr $i / 2 + 1)
+    sequence: $(expr $(expr $i + 1 ) / 2 )
     sub_seq: $(expr $i % 2 + 1)
     assignment_name: 'assignment$i'
     assignment_desc: 'Test desc $i'

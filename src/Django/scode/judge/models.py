@@ -90,6 +90,7 @@ class subject_has_professor(models.Model):
 	sub_seq = models.ForeignKey(subject, on_delete=models.CASCADE)
 	professor = models.ForeignKey(professor, on_delete=models.CASCADE)
 	represent_yn = models.BooleanField(default=False)
+        # we need to add a field that has size of assignment here.
 
 	# we need to make it remove redundancy
 	input_id = models.CharField(max_length=45)
@@ -119,6 +120,7 @@ class assignment(models.Model):
 class submit(models.Model):
 	# Table must have one key in Django
 	not_use_pri_key = models.AutoField(primary_key=True)
+        sequence = models.ForeignKey(assignment, on_delete=models.CASCADE)
 	sub_seq = models.ForeignKey(subject, on_delete=models.CASCADE)
 	student = models.ForeignKey(student, on_delete=models.CASCADE)
 	source = models.TextField()
