@@ -14,7 +14,7 @@
 2. 다음 SQL들을 작성해 주세요.
 - 교수가 자신이 하는 모든 과목을 조회하는 SQL
   ```
-  SELECT judge_professor.professor_id, judge_professor.professor_name, title 
+  SELECT title,classes 
   FROM judge_professor , judge_subject_has_professor, judge_subject 
   WHERE judge_professor.professor_id=judge_subject_has_professor.professor_id
   AND judge_subject.pri_key=judge_subject_has_professor.sub_seq_id 
@@ -62,6 +62,8 @@
   where student_id = "점수를 바꿀 학생의 학번";
  
   ```
+ 
+ 
  
  
   
