@@ -18,7 +18,8 @@
   ```
   select professor.professor_id as professor_id, professor_name, title 
   from professor,subject_has_professor,subject
-  where professor.professor_id=subject_has_professor and subject.subject_cd = subject_has_professor.subject_cd;
+  where professor.professor_id=subject_has_professor and subject.subject_cd = subject_has_professor.subject_cd
+  and professor.professor_id = "자신의 사번";
   ```
  
 - 교수가 한 과목을 선택했을 때 그 과목에 대한 모든 과제를 조회하는 SQL
@@ -33,7 +34,8 @@
   ```
   select title,student_id,student_name,score
   from subject,signup_class,submit
-  where signup_class.sub_cd = subject.sub_id and submit.student_id = student.student_id;
+  where signup_class.sub_cd = subject.sub_id and submit.student_id = student.student_id and sequence = 선택한 과제 번호 ;
+ 
   ```
 - 교수가 특정 문제를 추가하는 SQL
   ```
@@ -44,10 +46,15 @@
   ```
   select student.student_id as student_id,student_name,title
   from signup_class, student,subject
-  where student_id = signup_class.id and signup_class.sub_cd = subject_cd; 
+  where student_id = signup_class.id and signup_class.sub_cd = subject_cd and student_id = "학생의학번"; 
   ```
   
 - 학생이 자신이 수강하는 과목 중 하나를 선택했을 때 과제의 내용을 조회하는 SQL
-  - `여기에 작성해주세요`
+  ```
+  select sequence,assignment_name,assignment_desc 
+  from assignment, signup_class,student
+  where assignment.sub_cd = signup_class.sub_cd and student_id = "학생의학번";
+  ```
+  
 - 학생이 과제를 제출했을 때 score를 변경하는 SQL
   - `여기에 작성해주세요`
