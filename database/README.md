@@ -33,9 +33,11 @@
 
 - 교수가 한 과제를 선택했을 때 그 과제에 대한 모든 학생들의 학번, 이름, 스코어를 조회하는 SQL
   ```
-  select title,student_id,student_name,score
-  from subject,signup_class,submit
-  where signup_class.sub_cd = subject.sub_id and submit.student_id = student.student_id and sequence = 선택한 과제 번호 ;
+  SELECT judge_student.student_id,judge_student.student_name,score
+  FROM judge_student,judge_submit,judge_assignment
+  WHERE judge_assignment.sub_seq_id = judge_submit.assign_seq_id
+  AND judge_student.student_id = judge_submit.student_id
+  AND sequence = 1;
  
   ```
 - 교수가 특정 문제를 추가하는 SQL
