@@ -23,10 +23,12 @@
  
 - 교수가 한 과목을 선택했을 때 그 과목에 대한 모든 과제를 조회하는 SQL
   ```
-  select title ,assignment.sub_cd as sub_cd, sequence, assignment_name 
-  from subject_has_professor, professor,assignment,subject
-  where subject_has_professor.sub_seq_id = assignment.sub_cd and professor.id = subject_has_professor.professor_id
-  and subject.sub_cd = subject_has_professor.sub_seq_id;
+  SELECT title , judge_assignment.sub_seq_id as sub_seq_id, sequence, assignment_name ,assignment_desc
+  FROM judge_subject_has_professor, judge_professor, judge_assignment, judge_subject
+  WHERE judge_subject_has_professor.sub_seq_id = judge_assignment.sub_seq_id 
+  AND judge_professor.professor_id = judge_subject_has_professor.professor_id
+  AND judge_subject.pri_key = judge_subject_has_professor.sub_seq_id
+  AND judge_subject.title = "subject1";
   ```
 
 - 교수가 한 과제를 선택했을 때 그 과제에 대한 모든 학생들의 학번, 이름, 스코어를 조회하는 SQL
@@ -62,11 +64,9 @@
   where student_id = "점수를 바꿀 학생의 학번";
  
   ```
- 
- 
- 
- 
-  
-  
-  
+
+
+
+
+
   
