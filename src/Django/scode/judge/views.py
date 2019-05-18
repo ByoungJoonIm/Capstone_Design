@@ -12,8 +12,8 @@ from django.views.generic.base import TemplateView
 # Create your views here.
 
 #-- professor
-class ProfessorMainLV(TemplateView):
-    template_name = 'judge/professor/professor_main_list.html'
+#class ProfessorMainLV(TemplateView):
+#    template_name = 'judge/professor/professor_main_list.html'
 
 class ProfessorSubjectLV(TemplateView):
     template_name = 'judge/professor/professor_subject_list.html'
@@ -33,11 +33,20 @@ class ProfessorSettingsView(TemplateView):
 class ProfessorResultLV(TemplateView):
     template_name = 'judge/professor/professor_result_list.html'
 
-'''
 class ProfessorMainLV(ListView):
-    #queryset = Professor.objects.all()
-    #template_name=''
+    '''
+    prof_id = '00001'
+    prof = professor.objects.all().filter(professor_id=prof_id)
+    shp = subject_has_professor.objects.all().filter(professor_id=prof_id)
+    sub = subject.objects.all()
+    '''
+    sql = 'SELECT * from judge_professor'
+    #queryset = professor.objects.all()
+    queryset = professor.objects.raw(sql)
+    template_name = 'judge/professor/professor_main_list.html'
+    context_object_name = "professors"
 
+'''
 class ProfessorSubjectLV(ListView):
 
 

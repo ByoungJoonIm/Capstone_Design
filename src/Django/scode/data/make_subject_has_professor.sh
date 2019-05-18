@@ -3,8 +3,8 @@
 for((i=1;i<9;i++));do
 	echo "- model: 'judge.subject_has_professor'
   fields:
-    sub_seq: $(expr $i % 2 + 1)
-    professor_id: '0000$(expr $i % 2 + 1)'
+    sub_seq: $(expr $i % 3 + 1)
+    professor_id: '0000$(expr $i % 4 + 1)'
     represent_yn: true
     input_id: 'shp_20190507$i'
     input_ip: '127.0.0.$i'
