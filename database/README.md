@@ -21,15 +21,14 @@
   AND judge_professor.professor_id="00001";
   ```
  
-- 교수가 한 과목을 선택했을 때 그 과목에 대한 모든 과제를 조회하는 SQL
-
-```SELECT judge_student.student_id,judge_student.student_name,score
-FROM judge_student,judge_submit,judge_assignment
-WHERE judge_assignment.sub_seq_id = judge_submit.sub_seq_id
-AND judge_student.student_id = judge_submit.student_id
-AND judge_assignment.sub_seq_id = judge_student.
-AND judge_submit.sub_seq_id = 2;
-
+ - 교수가 한 과목을 선택했을 때 그 과목에 대한 모든 과제를 조회하는 SQL
+  ```
+  SELECT judge_student.student_id,judge_student.student_name,score
+  FROM judge_student,judge_submit,judge_assignment
+  WHERE judge_assignment.sub_seq_id = judge_submit.sub_seq_id
+  AND judge_student.student_id = judge_submit.student_id
+  AND judge_assignment.sub_seq_id = judge_student.
+  AND judge_submit.sub_seq_id = 2;
   ```
 
 - 교수가 한 과제를 선택했을 때 그 과제에 대한 모든 학생들의 학번, 이름, 스코어를 조회하는 SQL
