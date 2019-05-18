@@ -28,7 +28,7 @@
   WHERE judge_subject_has_professor.sub_seq_id = judge_assignment.sub_seq_id 
   AND judge_professor.professor_id = judge_subject_has_professor.professor_id
   AND judge_subject.pri_key = judge_subject_has_professor.sub_seq_id
-  AND judge_subject.title = "subject1";
+  AND judge_subject.title = "subject2" AND judge_professor.professor_id="00001";
   ```
 
 - 교수가 한 과제를 선택했을 때 그 과제에 대한 모든 학생들의 학번, 이름, 스코어를 조회하는 SQL
@@ -64,6 +64,8 @@
   where student_id = "점수를 바꿀 학생의 학번";
  
   ```
+
+
 
 
 
