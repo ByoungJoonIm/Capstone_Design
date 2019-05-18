@@ -19,7 +19,13 @@
   ```
  
 - 교수가 한 과목을 선택했을 때 그 과목에 대한 모든 과제를 조회하는 SQL
-  - `여기에 작성해주세요`
+  ```
+  select title ,assignment.sub_cd as sub_cd, sequence, assignment_name 
+  from subject_has_professor, professor,assignment,subject
+  where subject_has_professor.sub_cd = assignment.sub_cd and professor.id = subject_has_professor.professor_id
+  and subject.sub_cd = subject_has_professor.sub_cd;
+  ```
+
 - 교수가 한 과제를 선택했을 때 그 과제에 대한 모든 학생들의 학번, 이름, 스코어를 조회하는 SQL
   - `여기에 작성해주세요`
 - 교수가 특정 문제를 추가하는 SQL
