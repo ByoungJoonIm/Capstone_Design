@@ -40,7 +40,6 @@
   FROM judge_student,judge_submit,judge_assignment
   WHERE judge_assignment.sub_seq_id = judge_submit.sub_seq_id
   AND judge_student.student_id = judge_submit.student_id
-  AND judge_assignment.sub_seq_id = judge_student.
   AND judge_submit.sub_seq_id = 2;
 
   ```
