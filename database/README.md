@@ -16,8 +16,7 @@
   ```
   select professor.professor_id as professor_id, professor_name, title 
   from professor,subject_has_professor,subject
-  where professor.professor_id=subject_has_professor.professor_id and subject.subject_cd = subject_has_professor.subject_cd
-  and professor.professor_id = "자신의 사번";
+  where professor.professor_id=subject_has_professor.professor_id and subject.pri_key = subject_has_professor.sub_cd and professor.professor_id = "자신의 사번";
   ```
  
 - 교수가 한 과목을 선택했을 때 그 과목에 대한 모든 과제를 조회하는 SQL
@@ -44,7 +43,7 @@
   ```
   select student.student_id as student_id,student_name,title
   from signup_class, student,subject
-  where student_id = signup_class.id and signup_class.sub_cd = subject_cd and student_id = "학생의학번"; 
+  where student_id = signup_class.id and signup_class.sub_cd = sub_cd and student_id = "학생의학번"; 
   ```
   
 - 학생이 자신이 수강하는 과목 중 하나를 선택했을 때 과제의 내용을 조회하는 SQL
@@ -61,6 +60,8 @@
   where student_id = "점수를 바꿀 학생의 학번";
  
   ```
+  
+  
   
   
   
