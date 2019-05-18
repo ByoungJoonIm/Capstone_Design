@@ -16,7 +16,7 @@
   ```
   select professor.professor_id as professor_id, professor_name, title 
   from professor,subject_has_professor,subject
-  where professor.professor_id=subject_has_professor and subject.subject_cd = subject_has_professor.subject_cd
+  where professor.professor_id=subject_has_professor.professor_id and subject.subject_cd = subject_has_professor.subject_cd
   and professor.professor_id = "자신의 사번";
   ```
  
@@ -61,5 +61,7 @@
   where student_id = "점수를 바꿀 학생의 학번";
  
   ```
-  .
+  
+  
+  
   
