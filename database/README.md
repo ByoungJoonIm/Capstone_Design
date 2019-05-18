@@ -14,9 +14,11 @@
 2. 다음 SQL들을 작성해 주세요.
 - 교수가 자신이 하는 모든 과목을 조회하는 SQL
   ```
-  select professor.professor_id as professor_id, professor_name, title 
-  from professor,subject_has_professor,subject
-  where professor.professor_id=subject_has_professor.professor_id and subject.pri_key = subject_has_professor.sub_seq_id and professor.professor_id = "자신의 사번";
+  SELECT judge_professor.professor_id, judge_professor.professor_name, title 
+  FROM judge_professor , judge_subject_has_professor, judge_subject 
+  WHERE judge_professor.professor_id=judge_subject_has_professor.professor_id
+  AND judge_subject.pri_key=judge_subject_has_professor.sub_seq_id 
+  AND judge_professor.professor_id="00001";
   ```
  
 - 교수가 한 과목을 선택했을 때 그 과목에 대한 모든 과제를 조회하는 SQL
@@ -62,6 +64,7 @@
   ```
  
  
+  
   
   
   
