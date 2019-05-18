@@ -16,15 +16,15 @@
   ```
   select professor.professor_id as professor_id, professor_name, title 
   from professor,subject_has_professor,subject
-  where professor.professor_id=subject_has_professor.professor_id and subject.pri_key = subject_has_professor.sub_seq_cd and professor.professor_id = "자신의 사번";
+  where professor.professor_id=subject_has_professor.professor_id and subject.pri_key = subject_has_professor.sub_seq_id and professor.professor_id = "자신의 사번";
   ```
  
 - 교수가 한 과목을 선택했을 때 그 과목에 대한 모든 과제를 조회하는 SQL
   ```
   select title ,assignment.sub_cd as sub_cd, sequence, assignment_name 
   from subject_has_professor, professor,assignment,subject
-  where subject_has_professor.sub_seq_cd = assignment.sub_cd and professor.id = subject_has_professor.professor_id
-  and subject.sub_cd = subject_has_professor.sub_seq_cd;
+  where subject_has_professor.sub_seq_id = assignment.sub_cd and professor.id = subject_has_professor.professor_id
+  and subject.sub_cd = subject_has_professor.sub_seq_id;
   ```
 
 - 교수가 한 과제를 선택했을 때 그 과제에 대한 모든 학생들의 학번, 이름, 스코어를 조회하는 SQL
@@ -60,10 +60,7 @@
   where student_id = "점수를 바꿀 학생의 학번";
  
   ```
-  
-  
-  
-  
+ 
  
   
   
