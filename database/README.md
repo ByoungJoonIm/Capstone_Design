@@ -57,4 +57,11 @@
   ```
   
 - 학생이 과제를 제출했을 때 score를 변경하는 SQL
-  - `여기에 작성해주세요`
+  ```
+  update submit
+  set score = 바뀐점수
+  where student_id = "점수를 바꿀 학생의 학번";
+ 
+  ```
+  .
+  
