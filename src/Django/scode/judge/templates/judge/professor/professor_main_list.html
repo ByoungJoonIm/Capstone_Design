@@ -8,13 +8,22 @@
 	<table>
 		<tr>
 			<th>title</th>
-			<th>classes</th>
 		</tr>
 
 		{% for obj in objects %}
 		<tr>
+			{% comment %}
+
 			<td>{{ obj.title }}</td>
-			<td>{{ obj.classes }}</td>
+			{% endcomment %}
+
+			<td>
+				<form id='{{ obj.title }}_{{ obj.classes}}' method="post" action="{% url 'judge:subject' obj.title obj.classes %}">{% csrf_token %}
+					<input type="hidden" name="title" value="{{ obj.title }}"/>
+					<input type="hidden" name="classes" value="{{ obj.classes }}"/>
+					<a href="javascript:{}" onclick=document.getElementById("{{ obj.title }}_{{ obj.classes }}").submit();>{{ obj.title }}_{{ obj.classes }}</a>
+				</form>
+			</td>
 		</tr>
 		{% endfor %}
 
