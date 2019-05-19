@@ -11,10 +11,10 @@
 			<th>classes</th>
 		</tr>
 
-		{% for professor in professors %}
+		{% for obj in objects %}
 		<tr>
-			<td>{{ professor.title }}</td>
-			<td>{{ professor.classes }}</td>
+			<td>{{ obj.title }}</td>
+			<td>{{ obj.classes }}</td>
 		</tr>
 		{% endfor %}
 

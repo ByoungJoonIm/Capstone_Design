@@ -5,5 +5,23 @@
 {% block content %}
 <div id="content">
 	<h1>here is for professor_result_list.html</h1>
+	<table>
+		<tr>
+			<th>student_id</th>
+			<th>student_name</th>
+			<th>score</th>
+		</tr>
+
+		{% for obj in objects %}
+		<tr>
+			<td>{{ obj.student_id }}</td>
+			<td>{{ obj.student_name }}</td>
+			<td>{{ obj.score }}</td>
+		</tr>
+		{% endfor %}
+
+
+	</table>
+
 </div>
 {% endblock content %}

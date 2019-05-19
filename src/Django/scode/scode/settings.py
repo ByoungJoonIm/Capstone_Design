@@ -25,7 +25,7 @@ SECRET_KEY = '-ixz45#%)+@p1x#@rna&k0*7s2r0ei6n#(8ym8n1slfqua8k(^'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -78,7 +78,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'OPTIONS':{
-		'read_default_file':"/home/scode/settings/mysql.cnf",
+		'read_default_file':"~/settings/mysql.cnf",
 		'init_command':"SET sql_mode='STRICT_TRANS_TABLES'"
 	}
     }
