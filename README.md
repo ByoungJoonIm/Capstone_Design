@@ -4,10 +4,10 @@
 ## 팀
 - 팀명 : 0227
 - 팀원 및 역할
-    - 임병준 : 프로젝트 진행 총괄 & 서류 작성 & 자동화 스크립트 작성 & 오픈소스 활용 가능성 검토 & 기타 프로그램 작성
-    - 염희수 : 데이터베이스 생성 & 관리, 회의록 작성
-    - 이상욱 : 웹페이지 디자인(CSS 및 template)
-    - 정재민 : 서버 구축 & 관리 & 웹페이지 뷰(컨트롤) 작성
+    - 임병준 : 프로젝트 진행 총괄 & 서류 작성 & 자동화 스크립트 작성 & 오픈소스 활용 가능성 검토 & 기타 프로그램 작성 & professor 구현
+    - 염희수 : 데이터베이스 생성 & 관리, 회의록 작성 & SQL 질의 작성 & 테스트 데이터 간 유효성 검사 & 웹 페이지 디자인
+    - 이상욱 : 웹페이지 레이아웃 작성
+    - 정재민 : 서버 구축 & 관리 & student 구현
 
 ## 주제 및 기대효과
   - 프로젝트명 : SCode
@@ -25,43 +25,38 @@
   - 문제별 정답률, 풀이시간, 성능 등의 자료를 수집하여 통계자료를 제공
     
 ## 진행 상황
-  - [오픈소스 활용 가능성 검토](https://github.com/BJ-Lim/Capstone_Design/tree/master/OSS_analysis) (완료) 
-    - managed by 임병준
-    - Dmoj-site 테스트 (완료)
-    - Dmoj(judge) 테스트 (완료)
-    - Dmoj-cli(judge) 테스트 (완료)
-  - [기타 프로그램](https://github.com/BJ-Lim/Capstone_Design/tree/master/src)
-    - managed by 임병준
-    - parser.py 초안 작성 (완료)
-      - 데이터베이스 부분 추가 필요
-  - 자동화 스크립트 작성
-    - 데이터베이스 모델 적용 스크립트 작성 (완료)
-    - DB 테스트용 데이터 제너레이터 작성 (완료)
-  - [디렉터리 구조 설계](https://github.com/BJ-Lim/Capstone_Design/blob/master/docs/directory_structure) (완료)
-    - managed by 임병준
-  - [database](https://github.com/BJ-Lim/Capstone_Design/tree/master/database) 
-    - managed by 염희수
-    - 스키마 설계 (완료)
-    - mariaDB 설치 (완료)
-    - mariaDB에 스키마 삽입 (완료)
-    - Django model 작성 (완료)
-    - mariaDB에 테스트 데이터 삽입 (완료)
-      - DB 테스트용 데이터 제너레이터 쉘 코드 사용
-  - [server](https://github.com/BJ-Lim/Capstone_Design/tree/master/server) 
-    - managed by 정재민
+  - 임병준
+    - [오픈소스 활용 가능성 검토](https://github.com/BJ-Lim/Capstone_Design/tree/master/OSS_analysis) (완료) 
+      - Dmoj-site 테스트 (완료)
+      - Dmoj(judge) 테스트 (완료)
+      - Dmoj-cli(judge) 테스트 (완료)
+    - [기타 프로그램](https://github.com/BJ-Lim/Capstone_Design/tree/master/src)
+      - managed by 임병준
+      - parser.py 초안 작성 (완료)
+        - 데이터베이스 부분 추가 필요
+      - 자동화 스크립트 작성
+        - 데이터베이스 모델 적용 스크립트 작성 (완료)
+        - DB 테스트용 데이터 제너레이터 작성 (완료)
+    - [디렉터리 구조 설계](https://github.com/BJ-Lim/Capstone_Design/blob/master/docs/directory_structure) (완료)
+    - [환경설정 파일]
+      - urls.py (완료)
+  - 염희수
+    - [database](https://github.com/BJ-Lim/Capstone_Design/tree/master/database) 
+      - 스키마 설계 (완료)
+      - mariaDB 설치 (완료)
+      - mariaDB에 스키마 삽입 (완료)
+      - Django model 작성 (완료)
+  - 정재민
+    - [server](https://github.com/BJ-Lim/Capstone_Design/tree/master/server) 
     - Django 환경 셋팅 (완료)
-    - view 작성 (진행중)
-      - 교수 페이지
-  - [web](https://github.com/BJ-Lim/Capstone_Design/tree/master/web) 
-    - managed by 이상욱
-    - login 페이지 초안 작성 (완료)
-    - 교수 페이지 초안 작성 (완료)
-    - 학생 페이지 초안 작성 (완료)
-    - CSS 작성 (진행중)
-      - login CSS (진행중)
-    - template 페이지 작성 ()
-      - 교수 페이지
- 
+    - Student 구현(진행중)
+      - form 구현 (완료)
+      - template 작성 (진행중)
+      - view 작성 (진행중)
+  - 이상욱
+    - login, 교수, 학생 페이지 초안 작성 (완료)
+      - [web](https://github.com/BJ-Lim/Capstone_Design/tree/master/web) 
+
 ## 회의록 
 - [2019.03.13(수)](https://github.com/BJ-Lim/Capstone_Design/tree/master/minutes/1.md)
 - [2019.03.16(토)](https://github.com/BJ-Lim/Capstone_Design/tree/master/minutes/2.md)
