@@ -1,3 +1,3 @@
 #!/bin/bash
 
-python manage.py runserver localhost:8000 2>> error.log >> log.log &
+python manage.py runserver 0.0.0.0:10080 2>> error.log >> log.log &
