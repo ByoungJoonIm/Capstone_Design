@@ -49,10 +49,11 @@
   - 정재민
     - [server](https://github.com/BJ-Lim/Capstone_Design/tree/master/server) 
     - Django 환경 셋팅 (완료)
-    - Student 구현(진행중)
+    - Student 구현 (진행중)
       - form 구현 (완료)
       - template 작성 (진행중)
       - view 작성 (진행중)
+    - Login 작동 원리 파악 (진행중)
   - 이상욱
     - login, 교수, 학생 페이지 초안 작성 (완료)
       - [web](https://github.com/BJ-Lim/Capstone_Design/tree/master/web) 
