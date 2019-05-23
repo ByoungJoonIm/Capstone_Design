@@ -8,12 +8,35 @@
 {% block content %}
 
 <div id="content_home">
+	{% comment %}
 	<div id="homeimg">
 		<a href="/"><img src="{% static 'img/hallym_logo.png' %}" style="height:256px;"/></a>
 		<h4 style="margin: 0;">This is Test Home Page.</h4>
 	</div>
 
 	<hr style="margin: 5px 0;">
+	{% endcomment %}
 
+	<h1>Professor</h1>
+	<table>
+		<tr>
+			<th>id</th>
+			<th>name</th>
+		</tr>
+
+		{% for obj in professors %}
+		<tr>
+			<td>{{ obj.id }}</td>
+			<td>
+
+				<form id='123{{ obj.id }}' method="post" action="{% url 'judge:professor' %}">{% csrf_token %}
+					<input type="hidden" name="id" value="{{ obj.id }}"/>
+					<input type="hidden" name="name" value="{{ obj.name }}"/>
+					<a href='javascript:{}' onclick='document.getElementById("123{{ obj.id }}").submit();'>{{ obj.name }}</a>
+				</form>
+			</td>
+		</tr>
+		{% endfor %}
+	</table>
 </div>
 {% endblock content %}

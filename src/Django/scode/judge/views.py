@@ -34,20 +34,33 @@ class ProfessorSettingsView(TemplateView):
 
 
 #-- Here is developing area
+# This page shows a list of subjects that professor has.
 class ProfessorMainLV(ListView):
-    professor_id = '00001'
-    sql = 'SELECT judge_professor.professor_id,title,classes \
+    queryset = None
+    template_name = 'judge/professor/professor_main_list.html'
+    context_object_name = "objects"
+
+    def post(self, request, *args, **kwargs):
+        form = request.POST
+        professor_id = form.get('id')
+        professor_name = form.get('name')
+        sql = 'SELECT judge_professor.professor_id,title,classes \
            FROM judge_professor , judge_subject_has_professor, judge_subject \
            WHERE judge_professor.professor_id=judge_subject_has_professor.professor_id \
            AND judge_subject.pri_key=judge_subject_has_professor.sub_seq_id \
            AND judge_professor.professor_id=' + professor_id + ' \
            ORDER BY judge_subject.title;'
 
-    #queryset = professor.objects.all()
-    queryset = professor.objects.raw(sql)
-    template_name = 'judge/professor/professor_main_list.html'
-    context_object_name = "objects"
+        self.queryset = professor.objects.raw(sql)
 
+        kwargs = {
+            'id': professor_id,
+            'name': professor_name
+        }
+
+        return render(request, self.template_name, {'objects': self.queryset, 'form': kwargs})
+
+# This page shows a list of assignment in selected subject
 class ProfessorSubjectLV(ListView):
     #It doesn't used.
     queryset = professor.objects.all()
@@ -60,7 +73,7 @@ class ProfessorSubjectLV(ListView):
         form = request.POST
         title = form.get('title')
         classes = form.get('classes')
-        professor_id = '00001'
+        professor_id = form.get('id')
         sql = 'SELECT *\
          FROM judge_subject_has_professor, judge_professor, judge_assignment, judge_subject \
          WHERE judge_subject_has_professor.sub_seq_id = judge_assignment.sub_seq_id \
@@ -73,12 +86,14 @@ class ProfessorSubjectLV(ListView):
         self.queryset = professor.objects.raw(sql)
 
         kwargs = {
+            'id': professor_id,
             'title': title,
             'classes': classes
         }
 
         return render(request, self.template_name, {'objects': self.queryset, 'form': kwargs})
 
+# This page shows result of a assiginment.
 class ProfessorResultLV(ListView):
     # We need to revise sub_seq_id
     sub_seq_id = 2
