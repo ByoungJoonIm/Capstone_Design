@@ -4,7 +4,7 @@ for((i=1;i<9;i++));do
 	echo "- model: judge.subject
   fields:
     year: '201$i'
-    semester: $i
+    semester: $(expr $i % 2 + 1)
     subject_cd: '12345$i'
     classes: '0$(expr $i % 2 + 1)'
     title: 'subject$i'

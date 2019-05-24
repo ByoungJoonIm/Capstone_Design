@@ -27,9 +27,9 @@ class ProfessorCreateView(FormView):
     form_class = AssignmentForm
 
 
-    def form_valid(self, form):
+#    def form_valid(self, form):
         #return render(self.request, self.template_name, {'form': self.form})
-        return super().form_valid(form)
+#        return super().form_valid(form)
 
 
     def post(self, request, *args, **kwargs):
@@ -46,9 +46,16 @@ class ProfessorCreateView(FormView):
             AND judge_subject.classes = '+ request.session['classes'] +' \
             AND judge_professor.professor_id=' + request.session['professor_id'] + ';'
 
- #       sql2 = 
+        sql2 = 'SELECT year, semester, judge_professor.professor_id as professor_id, judge_subject.subject_cd as subject_cd, classes \
+            FROM judge_subject, judge_subject_has_professor, judge_professor \
+            WHERE judge_subject.pri_key = judge_subject_has_professor.sub_seq_id \
+            AND judge_subject_has_professor.professor_id = judge_professor.professor_id \
+            AND judge_professor.professor_id = ' + request.session['professor_id'] + ';'
 
         sequence_sql = professor.objects.raw(sql)
+        dir_sql = professor.objects.raw(sql2)
+
+        print(dir_sql.year)
 
         return redirect(reverse_lazy('judge:subject', args=[request.session['title'], request.session['classes']]))
 
