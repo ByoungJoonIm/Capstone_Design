@@ -82,5 +82,12 @@
  
   ```
 
-
+- 디렉터리 구조 생성을 위한 SQL
+  ```
+  SELECT year, semester, judge_professor.professor_id as professor_id, judge_subject.subject_cd as subject_cd, classes
+  FROM judge_subject, judge_subject_has_professor, judge_professor
+  WHERE judge_subject.pri_key = judge_subject_has_professor.sub_seq_id
+  AND judge_subject_has_professor.professor_id = judge_professor.professor_id
+  AND judge_professor.professor_id = "00001";
+  ```
 
