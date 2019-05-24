@@ -4,19 +4,14 @@
 
 {% block content %}
 <div id="content">
-	<h1>here is for professormain.html</h1>
+	<h1>Welcome, {{ request.session.professor_name }}({{ request.session.professor_id }})!</h1>
 	<table>
 		<tr>
 			<th>title</th>
 		</tr>
 
-		{% for obj in objects %}
+		{% for obj in subject_list_sql %}
 		<tr>
-			{% comment %}
-
-			<td>{{ obj.title }}</td>
-			{% endcomment %}
-
 			<td>
 				<form id='{{ obj.title }}_{{ obj.classes}}' method="post" action="{% url 'judge:subject' obj.title obj.classes %}">{% csrf_token %}
 					<input type="hidden" name="title" value="{{ obj.title }}"/>

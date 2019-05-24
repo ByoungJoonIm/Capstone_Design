@@ -2,8 +2,46 @@
 
 {% block title %}professor_assignment_add.html{% endblock %}
 
+{% load staticfiles %}
+{% block extrastyle %}{% static "css/forms.css" %}{% endblock %}
+
 {% block content %}
 <div id="content">
 	<h1>here is for professor_assignment_add.html</h1>
+	<form action="." method="post">{% csrf_token %}
+
+		{% if form.errors %}
+		<p class="errornote">Wrong! Please correct the error(s) below.</p>
+		{% endif %}
+
+		<p>This is a creation or update form for your post.</p>
+
+		<fieldset class="aligned">
+
+			<div class="form-row">
+				{{ form.assignment_name.label_tag }} {{ form.assignment_name }}
+			</div>
+
+			<div class="form-row">
+				{{ form.assignment_desc.label_tag }} {{ form.assignment_desc }}
+			</div>
+
+			<div class="form-row">
+				{{ form.test_case_file.label_tag }} {{ form.test_case_file }}
+			</div>
+
+			<div class="form-row">
+				{{ form.solution_file.label_tag }} {{ form.solution_file }}
+			</div>
+		</fieldset>
+
+
+		<div class="submit-row">
+			<input type="submit" value="Submit"/>
+		</div>
+		<script type="text/javascript">document.getElementById('id_title').focus();</script>
 </div>
 {% endblock content %}
+
+
+
