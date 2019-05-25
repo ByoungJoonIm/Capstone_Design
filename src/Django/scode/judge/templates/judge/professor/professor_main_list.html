@@ -16,6 +16,7 @@
 				<form id='{{ obj.title }}_{{ obj.classes}}' method="post" action="{% url 'judge:subject' obj.title obj.classes %}">{% csrf_token %}
 					<input type="hidden" name="title" value="{{ obj.title }}"/>
 					<input type="hidden" name="classes" value="{{ obj.classes }}"/>
+					<input type="hidden" name="subject_id" value="{{ obj.subject_id }}"/>
 					<a href="javascript:{}" onclick=document.getElementById("{{ obj.title }}_{{ obj.classes }}").submit();>{{ obj.title }}_{{ obj.classes }}</a>
 				</form>
 			</td>

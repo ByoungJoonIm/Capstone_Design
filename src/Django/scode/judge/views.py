@@ -18,6 +18,12 @@ from django.db import connection
 
 from judge.models import *
 from judge.forms import AssignmentForm
+
+
+from judge.fileManager import FileManager
+
+import pymysql
+import os
 # Create your views here.
 
 
@@ -26,16 +32,36 @@ class ProfessorCreateView(FormView):
     template_name = 'judge/professor/professor_assignment_add.html'
     form_class = AssignmentForm
 
-
 #    def form_valid(self, form):
         #return render(self.request, self.template_name, {'form': self.form})
 #        return super().form_valid(form)
 
+    def get_next_sequence(self):
+        conn = pymysql.connect(read_default_file='~/settings/mysql.cnf')
+        curs = conn.cursor()
+        curs.execute(self.sequnce_SQL)
+        row = curs.fetchone()
+        conn.close()
+
+        rs = row[0]
+        return rs+1
+
+    def handle_uploaded_file(self, files, path):
+        uploaded_file_name = ['in', 'out']
+        for f in files:
+            with open(path + '/temp/' + uploaded_file_name[files.index(f)], 'wb+') as dest:
+                for chunk in f.chunks():
+                    dest.write(chunk)
 
     def post(self, request, *args, **kwargs):
-        form = request.POST
+        fileManager = FileManager()
+        fileManager.construct(request.session['professor_id'])
+        base_file_path = fileManager.get_file_path(request.session['professor_id'], request.session['subject_id'])
+        self.handle_uploaded_file([request.FILES['in_file'], request.FILES['out_file']], base_file_path)
 
-        print("here you go post!")
+        #we are here
+        #we need to make in and out files separate 
+
 
         sql = 'SELECT count(sequence) \
             FROM judge_subject_has_professor, judge_professor, judge_assignment, judge_subject \
@@ -53,9 +79,6 @@ class ProfessorCreateView(FormView):
             AND judge_professor.professor_id = ' + request.session['professor_id'] + ';'
 
         sequence_sql = professor.objects.raw(sql)
-        dir_sql = professor.objects.raw(sql2)
-
-        print(dir_sql.year)
 
         return redirect(reverse_lazy('judge:subject', args=[request.session['title'], request.session['classes']]))
 
@@ -84,7 +107,7 @@ class ProfessorMainLV(ListView):
         request.session['professor_id'] = professor_id
         request.session['professor_name'] = professor_name
 
-        sql = 'SELECT judge_professor.professor_id,title,classes \
+        sql = 'SELECT judge_professor.professor_id,title,classes, judge_subject.pri_key as subject_id \
            FROM judge_professor , judge_subject_has_professor, judge_subject \
            WHERE judge_professor.professor_id=judge_subject_has_professor.professor_id \
            AND judge_subject.pri_key=judge_subject_has_professor.sub_seq_id \
@@ -104,14 +127,13 @@ class ProfessorSubjectLV(ListView):
     paginate_by = 10
 
     def get(self, request, *args, **kwargs):
-        if request.session['title']:
+        if request.session['subject_id']:
             sql = 'SELECT *\
                     FROM judge_subject_has_professor, judge_professor, judge_assignment, judge_subject \
                     WHERE judge_subject_has_professor.sub_seq_id = judge_assignment.sub_seq_id \
                     AND judge_professor.professor_id = judge_subject_has_professor.professor_id \
                     AND judge_subject.pri_key = judge_subject_has_professor.sub_seq_id \
-                    AND judge_subject.title = "' + request.session['title'] + '" \
-                    AND judge_subject.classes = "' + request.session['classes'] + '" \
+                    AND judge_subject.pri_key = "' + request.session['subject_id'] + '" \
                     AND judge_professor.professor_id = "' + request.session['professor_id'] + '";'
 
             subject_list_sql = professor.objects.raw(sql)
@@ -124,17 +146,15 @@ class ProfessorSubjectLV(ListView):
 
     def post(self, request, *args, **kwargs):
         form = request.POST
-        title = form.get('title')
-        classes = form.get('classes')
-        request.session['title'] = title
-        request.session['classes'] = classes
+        request.session['title'] = form.get('title')
+        request.session['classes'] = form.get('classes')
+        request.session['subject_id'] = form.get('subject_id')
         sql = 'SELECT *\
                 FROM judge_subject_has_professor, judge_professor, judge_assignment, judge_subject \
                 WHERE judge_subject_has_professor.sub_seq_id = judge_assignment.sub_seq_id \
                 AND judge_professor.professor_id = judge_subject_has_professor.professor_id \
                 AND judge_subject.pri_key = judge_subject_has_professor.sub_seq_id \
-                AND judge_subject.title = "' + request.session['title'] + '" \
-                AND judge_subject.classes = "' + request.session['classes'] + '" \
+                AND judge_subject.pri_key = "' + request.session['subject_id'] + '" \
                 AND judge_professor.professor_id = "' + request.session['professor_id'] + '";'
 
         subject_list_sql = professor.objects.raw(sql)
