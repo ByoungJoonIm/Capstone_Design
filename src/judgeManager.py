@@ -3,11 +3,13 @@ import sys
 
 import pymysql
 import zipfile
-
+import sys
+import subprocess
 
 class JudgeManager():
     conn = None
     curs = None
+    # Don't modify base_dir_name in function.
     base_dir_name = 'judge_files'
 
     def connect(self):
@@ -17,7 +19,21 @@ class JudgeManager():
     def disconnect(self):
         self.conn.close()
 
+    # It overwrite previous file.
+    def create_autoconf(self):
+        cnf_path = os.path.expanduser('~')
+        cnf_path = os.path.join(cnf_path, 'settings')
+        cnf_path = os.path.join(cnf_path, 'base_config.yml')
+
+        cmd = "dmoj-autoconf > " + cnf_path
+        subprocess.call(cmd, shell=True)
+
+    # This function create tree dir structure of only one professor
     def construct(self, professor_id):
+        base_cnf_path = os.path.join(os.path.join(os.path.expanduser('~'), "settings"), "base_config.yml")
+        if not os.path.exists(base_cnf_path):
+            self.create_autoconf()
+        
         sql = "SELECT year, semester, judge_professor.professor_id as professor_id, judge_subject.subject_cd as subject_cd, classes \
             FROM judge_subject, judge_subject_has_professor, judge_professor \
             WHERE judge_subject.pri_key = judge_subject_has_professor.sub_seq_id \
@@ -40,23 +56,35 @@ class JudgeManager():
 
 #            print("\n{0} {1} {2}".format(dir_path[1], dir_path[2], dir_path[3]))
 
-            dir_elem = ['problems', 'students', 'temp']
+            dir_elem = ['students', 'temp', 'problems', 'settings']
             base = os.path.expanduser('~')
 
             for d in dir_path:
                 base = os.path.join(base, d)
                 if not os.path.exists(base):
                     os.mkdir(base)
-#                else:
-#                    print(d + " : exist")
 
             for d in dir_elem:
                 tmp_path = os.path.join(base, d)
                 if not os.path.exists(tmp_path):
                     os.mkdir(tmp_path)
-#                else:
-#                    print(d + " : exist")
 
+            #--- Make a config.yml at each subject
+            cnf_path = os.path.join(os.path.join(base, 'settings'), "config.yml")
+            cnf_file = open(cnf_path, "w")
+            base_cnf_file = open(base_cnf_path, "r")
+
+            cnf_file.write("problem_storage_root:\n  -  " + os.path.join(base, 'problems') + "\n")
+
+            while True:
+                line = base_cnf_file.readline()
+                if not line:
+                    break
+                cnf_file.write(line)
+
+            base_cnf_file.close()
+            cnf_file.close()
+            
         self.disconnect()
 
     # example return value : home/scode/2019_1/00001/12312_01
@@ -169,19 +197,7 @@ class JudgeManager():
 
 # ------- usage
 judgeManager = JudgeManager()
-#judgeManager.construct('00001')
+judgeManager.construct('00001')
 #print(judgeManager.get_file_path('00001', 2))
-judgeManager.create_problem('00001', 2)
-
-
-
-
-
-
-
-
-
-
-
-
-
+#judgeManager.create_problem('00001', 2)
+#judgeManager.create_autoconf()
