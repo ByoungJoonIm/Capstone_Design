@@ -6,6 +6,23 @@ import zipfile
 import sys
 import subprocess
 
+import yaml
+
+#--- Function forms of class JudgeManager
+'''
+connect()
+disconnect()
+create_autoconf()
+construct(professor_id)
+construct_all()
+get_file_path(professor_id, subject_id)
+create_problem(professor_id, subject_id)
+get_professor_id(subject_id)
+get_next_sequence(subject_id)
+'''
+
+
+
 class JudgeManager():
     conn = None
     curs = None
@@ -87,6 +104,25 @@ class JudgeManager():
             
         self.disconnect()
 
+    def construct_all(self):
+        sql = "SELECT professor_id \
+                FROM judge_professor;"
+        self.connect()
+        self.curs.execute(sql)
+
+        professor_list = []
+
+        while True:
+            row = self.curs.fetchone()
+            if row == None:
+                break
+
+            professor_list.append(row[0])
+        self.disconnect()
+
+        for p in professor_list:
+            self.construct(p)
+
     # example return value : home/scode/2019_1/00001/12312_01
     def get_file_path(self, professor_id, subject_id):
         sql = "SELECT year, semester, judge_professor.professor_id as professor_id, judge_subject.subject_cd as subject_cd, classes \
@@ -112,19 +148,7 @@ class JudgeManager():
     #This function includes generating zip and init file
     #This function needs in and out files which was uploaded.
     def create_problem(self, professor_id, subject_id):
-        #--- get sequence from mysql
-        sql = "SELECT count(sequence) \
-            FROM judge_subject_has_professor, judge_professor, judge_assignment, judge_subject \
-            WHERE judge_subject_has_professor.sub_seq_id = judge_assignment.sub_seq_id \
-            AND judge_professor.professor_id = judge_subject_has_professor.professor_id \
-            AND judge_subject.pri_key = judge_subject_has_professor.sub_seq_id \
-            And judge_subject.pri_key = {0} \
-            AND judge_professor.professor_id= '{1}';".format(subject_id, professor_id)
-        self.connect()
-        self.curs.execute(sql)
-
-        row = self.curs.fetchone()
-        sequence = row[0] + 1
+        sequence = self.get_next_sequence(subject_id)
 
         #--- separate files
         in_file = open("in", "r")
@@ -134,7 +158,7 @@ class JudgeManager():
         zip_name = str(sequence) + ".zip"
         myzip = zipfile.ZipFile(zip_name, "w")
 
-        # we will be change like follow
+        # we will change like follow
         #file_list = ["in", "out"]
         file_list = []
 
@@ -147,12 +171,12 @@ class JudgeManager():
             in_file_rs_name = str(sequence) + "." + str(cnt) + ".in"
             in_file_rs = open(in_file_rs_name, "w")
             in_file_rs.write('1\n')
-            in_file_rs.write(in_line)
+            in_file_rs.write(str(in_line) + '\n')
             in_file_rs.close()
 
             out_file_rs_name = str(sequence) + "." + str(cnt) + ".out"
             out_file_rs = open(out_file_rs_name, "w")
-            out_file_rs.write(out_line)
+            out_file_rs.write(str(out_line) + '\n')
             out_file_rs.close()
 
             myzip.write(in_file_rs_name)
@@ -175,7 +199,7 @@ class JudgeManager():
         #--- generate init file
         init_file_name = "init.yml"
         init_file = open(init_file_name, "w")
-        init_file.write("archive: {0}\ntest_cases:".format(sequence))
+        init_file.write("archive: {0}.zip\ntest_cases:".format(sequence))
 
         for i in range(1, cnt):
             init_file.write("\n- {" + "in: {0}.{1}.in, out: {0}.{1}.out, points: 1".format(sequence, i) + "}")
@@ -190,14 +214,107 @@ class JudgeManager():
         os.rename(zip_name, os.path.join(file_path, zip_name))
         os.rename(init_file_name, os.path.join(file_path, init_file_name))
 
+    # This function converts subject_id to professor_id
+    # NOTICE : I didn't think about multiple professor per one subject.
+    def get_professor_id(self, subject_id):
+        self.connect()
+        sql = "SELECT judge_professor.professor_id \
+            FROM judge_professor , judge_subject_has_professor, judge_subject \
+            WHERE judge_professor.professor_id=judge_subject_has_professor.professor_id \
+            AND judge_subject.pri_key=judge_subject_has_professor.sub_seq_id \
+            AND judge_subject.pri_key={0};".format(subject_id)
+
+        self.curs.execute(sql)
+
+        row = self.curs.fetchone()
+        professor_id = row[0]
+
+        self.disconnect()
+
+        return professor_id
+
+    def get_next_sequence(self, subject_id):
+        self.connect()
+        sql = "SELECT count(sequence) \
+            FROM judge_subject_has_professor, judge_assignment, judge_subject \
+            WHERE judge_subject_has_professor.sub_seq_id = judge_assignment.sub_seq_id  \
+            AND judge_subject.pri_key = judge_subject_has_professor.sub_seq_id \
+            AND judge_subject.pri_key = {0};".format(subject_id)
+
+        self.curs.execute(sql)
+
+        row = self.curs.fetchone()
+        sequence = row[0]
+
+        self.disconnect()
+
+        return sequence+1
+
+
+    def judge(self, subject_id, student_id, sequence):
+        #Next line will be changed.
+        lang_setting = '.c'
+
+        professor_id = self.get_professor_id(subject_id)
+        professor_file_path = self.get_file_path(professor_id, subject_id)
+        config_file_path = os.path.join(os.path.join(professor_file_path, 'settings'), 'config.yml')
+        init_file_path = os.path.join(os.path.join(os.path.join(professor_file_path, 'problems'), str(sequence)), 'init.yml')
+        student_file_path = os.path.join(os.path.join(os.path.join(professor_file_path, 'students'), str(sequence)), student_id + lang_setting)
+#        print(professor_file_path)
+#        print(config_file_path)
+#        print(init_file_path)
+#        print(student_file_path)
+        points = []
+        with open(init_file_path, 'r') as stream:
+            try:
+                prob_info = yaml.safe_load(stream)
+                tc = prob_info['test_cases']
+                for t in tc:
+                    points.append(t['points'])
+            except yaml.YAMLError as exc:
+                print(exc)
+        # Make parsed result of dmoj-judge
+        # It will print as follow
+        # total_get_score / total_score
+        a = subprocess.check_output(["dmoj-cli", "-c", config_file_path, "--no-ansi", "submit", str(sequence), "C", student_file_path ])
+        sp = a.split()
+
+        i = 2
+        seq = 1
+        total = sum(points)
+        total_get = 0
+        while True:
+            if "Self" in sp[i]:
+                i = i + 3
+                continue
+            if "Running" in sp[i]:
+                i = i + 10
+                continue
+            if seq > len(points):
+                break
+            if int(sp[i]) == seq:
+                if sp[i+1] == "AC":
+                    total_get = total_get + points[seq-1]
+                seq = seq + 1
+                i = i + 8
+
+
+        return str(total_get) + " / " +  str(total)
+
 
             
 
 
 
+# Don't use like this in this file
 # ------- usage
-judgeManager = JudgeManager()
-judgeManager.construct('00001')
+#judgeManager = JudgeManager()
+#judgeManager.construct('00001')
 #print(judgeManager.get_file_path('00001', 2))
-#judgeManager.create_problem('00001', 2)
+#judgeManager.create_problem('00002', 2)
 #judgeManager.create_autoconf()
+#print(judgeManager.get_professor_id(2))
+#print(judgeManager.judge(2, '20165157', 5))
+#judgeManager.construct_all()
+#print(judgeManager.get_sequence(2))
+
