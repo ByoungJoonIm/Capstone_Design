@@ -101,7 +101,7 @@ sudo -E docker-compose up -d //권한
 
 
 
-![ps](https://github.com/jjeamin/jjeamin.github.io/raw/master/_posts/post_img/capston/ps.PNG)
+![ps](./image/ps.PNG)
 
 
 
