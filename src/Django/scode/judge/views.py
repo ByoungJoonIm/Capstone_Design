@@ -20,7 +20,7 @@ from judge.models import *
 from judge.forms import AssignmentForm
 
 
-from judge.fileManager import FileManager
+from judge.judgeManager import JudgeManager
 
 import pymysql
 import os
@@ -54,15 +54,16 @@ class ProfessorCreateView(FormView):
                     dest.write(chunk)
 
     def post(self, request, *args, **kwargs):
-        fileManager = FileManager()
-        fileManager.construct(request.session['professor_id'])
-        base_file_path = fileManager.get_file_path(request.session['professor_id'], request.session['subject_id'])
+        
+        judgeManager = JudgeManager()
+        judgeManager.construct(request.session['professor_id'])
+        base_file_path = judgeManager.get_file_path(request.session['professor_id'], request.session['subject_id'])
         self.handle_uploaded_file([request.FILES['in_file'], request.FILES['out_file']], base_file_path)
 
         #we are here
         #we need to make in and out files separate 
 
-
+        '''
         sql = 'SELECT count(sequence) \
             FROM judge_subject_has_professor, judge_professor, judge_assignment, judge_subject \
             WHERE judge_subject_has_professor.sub_seq_id = judge_assignment.sub_seq_id \
@@ -77,10 +78,13 @@ class ProfessorCreateView(FormView):
             WHERE judge_subject.pri_key = judge_subject_has_professor.sub_seq_id \
             AND judge_subject_has_professor.professor_id = judge_professor.professor_id \
             AND judge_professor.professor_id = ' + request.session['professor_id'] + ';'
-
+        
         sequence_sql = professor.objects.raw(sql)
+        '''
 
         return redirect(reverse_lazy('judge:subject', args=[request.session['title'], request.session['classes']]))
+        
+        
 
 class ProfessorUpdateView(TemplateView):
     template_name = 'judge/professor/professor_assignment_update.html'
@@ -128,13 +132,14 @@ class ProfessorSubjectLV(ListView):
 
     def get(self, request, *args, **kwargs):
         if request.session['subject_id']:
-            sql = 'SELECT *\
+            sql = 'SELECT * \
                     FROM judge_subject_has_professor, judge_professor, judge_assignment, judge_subject \
                     WHERE judge_subject_has_professor.sub_seq_id = judge_assignment.sub_seq_id \
                     AND judge_professor.professor_id = judge_subject_has_professor.professor_id \
                     AND judge_subject.pri_key = judge_subject_has_professor.sub_seq_id \
-                    AND judge_subject.pri_key = "' + request.session['subject_id'] + '" \
-                    AND judge_professor.professor_id = "' + request.session['professor_id'] + '";'
+                    AND judge_subject.pri_key = "{0}" \
+                    AND judge_professor.professor_id = "{1}" \
+                    ORDER BY judge_subject.title;'.format(request.session['subject_id'], request.session['professor_id'])
 
             subject_list_sql = professor.objects.raw(sql)
 
@@ -149,13 +154,14 @@ class ProfessorSubjectLV(ListView):
         request.session['title'] = form.get('title')
         request.session['classes'] = form.get('classes')
         request.session['subject_id'] = form.get('subject_id')
-        sql = 'SELECT *\
+        sql = 'SELECT * \
                 FROM judge_subject_has_professor, judge_professor, judge_assignment, judge_subject \
                 WHERE judge_subject_has_professor.sub_seq_id = judge_assignment.sub_seq_id \
                 AND judge_professor.professor_id = judge_subject_has_professor.professor_id \
                 AND judge_subject.pri_key = judge_subject_has_professor.sub_seq_id \
-                AND judge_subject.pri_key = "' + request.session['subject_id'] + '" \
-                AND judge_professor.professor_id = "' + request.session['professor_id'] + '";'
+                AND judge_subject.pri_key = "{0}" \
+                AND judge_professor.professor_id = "{1}" \
+                ORDER BY judge_subject.title;'.format(request.session['subject_id'], request.session['professor_id'])
 
         subject_list_sql = professor.objects.raw(sql)
 
