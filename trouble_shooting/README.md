@@ -103,3 +103,13 @@
   - `sudo mysqld_safe --skip-grant-tables &`
 3. mariaDB 재접속
  - `mysql -u root`
+
+
+# migration 오류 발생
+## 증상
+- 마이그레이션이 정상 작동하지 않음
+
+## 원인 및 해결
+1. view에서 import 할 때 에러 발생
+2. import 하는 파일에 실행구문이 포함되어 있어 해당 에러 발생
+  - 실행 구문을 제거 및 해결

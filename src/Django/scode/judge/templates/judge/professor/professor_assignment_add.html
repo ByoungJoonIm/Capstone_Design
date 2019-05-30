@@ -8,7 +8,7 @@
 {% block content %}
 <div id="content">
 	<h1>here is for professor_assignment_add.html</h1>
-	<form action="." method="post">{% csrf_token %}
+	<form action="." method="post" enctype="multipart/form-data">{% csrf_token %}
 
 		{% if form.errors %}
 		<p class="errornote">Wrong! Please correct the error(s) below.</p>
@@ -27,11 +27,11 @@
 			</div>
 
 			<div class="form-row">
-				{{ form.test_case_file.label_tag }} {{ form.test_case_file }}
+				{{ form.in_file.label_tag }} {{ form.in_file }}
 			</div>
 
 			<div class="form-row">
-				{{ form.solution_file.label_tag }} {{ form.solution_file }}
+				{{ form.out_file.label_tag }} {{ form.out_file }}
 			</div>
 		</fieldset>
 

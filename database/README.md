@@ -36,13 +36,19 @@
 - 교수가 한 과제를 선택했을 때 그 과제의 수를 반환하는 SQL
   ```
   SELECT count(sequence)
-  FROM judge_subject_has_professor, judge_professor, judge_assignment, judge_subject
+  FROM judge_subject_has_professor, judge_assignment, judge_subject
   WHERE judge_subject_has_professor.sub_seq_id = judge_assignment.sub_seq_id 
-  AND judge_professor.professor_id = judge_subject_has_professor.professor_id
   AND judge_subject.pri_key = judge_subject_has_professor.sub_seq_id
-  AND judge_subject.title = "subject2"
-  AND judge_subject.classes = "01"
-  AND judge_professor.professor_id="00001";
+  AND judge_subject.pri_key = 2;
+  ```
+  
+- 과목(고유)번호로 교수 ID 조회
+  ```
+  SELECT judge_professor.professor_id
+  FROM judge_professor , judge_subject_has_professor, judge_subject 
+  WHERE judge_professor.professor_id=judge_subject_has_professor.professor_id
+  AND judge_subject.pri_key=judge_subject_has_professor.sub_seq_id 
+  AND judge_subject.pri_key="2";
   ```
   
 - 교수가 한 과제를 선택했을 때 그 과제에 대한 모든 학생들의 학번, 이름, 스코어를 조회하는 SQL
