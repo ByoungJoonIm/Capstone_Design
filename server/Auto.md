@@ -92,6 +92,12 @@ sudo ./auto_setting.sh [비밀번호]
 ## 6. 서버 실행
 
 ```
+vi auto_start.sh
+```
+
+안에 wsgi.py의 경로를 찾아서 적어주어야한다.
+
+```
 sudo ./auto_start.sh
 ```
 
