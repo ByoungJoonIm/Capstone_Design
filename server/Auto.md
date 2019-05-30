@@ -75,7 +75,7 @@ server {
 }
 ```
 
-**위에 port와 domain을 지정해주기**
+**위에 port와 domain 그리고 경로 지정해주기**
 
 ### 심볼릭 링크
 
@@ -86,13 +86,14 @@ sudo ln -s /etc/nginx/sites-available/mysite_nginx.conf /etc/nginx/sites-enabled
 ## 5. 데이터 넣기
 
 ```
+sudo ./auto_setting.sh [비밀번호]
 ```
 
 ## 6. 서버 실행
 
 ```
+sudo ./auto_start.sh
 ```
-
 
 
 # 참조
