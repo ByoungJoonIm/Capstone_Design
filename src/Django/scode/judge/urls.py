@@ -26,12 +26,23 @@ urlpatterns = [
     url(r'^professor/(?P<subject_title>[a-zA-Z0-9]+)_(?P<classes>[0-9][0-9])/(?P<sequence>[0-9]+)/$', ProfessorResultLV.as_view(), name='result'),
 
 
+# We need to change to regular expression
     # example : /student
-#    url(r'^student/$', ProfessorMainLV.as_view(), name='student'),
+#    url(r'^student$', StuadentMainLV.as_view(), name='student'),
 
     # example : /student/python_01
-#    url(r'^student/$', ProfessorMainLV.as_view(), name='std_subject'),
+#    url(r'^student/(?P<subject_title>[a-zA-Z0-9]+)_(?P<classes>[0-9][0-9])/$', StudentSubjectLV.as_view(), name='std_subject'),
 
     # example : /student/python_01/3
-#    url(r'^student/$', ProfessorMainLV.as_view(), name='std_assign'),
+#    url(r'^student/(?P<subject_title>[a-zA-Z0-9]+)_(?P<classes>[0-9][0-9])/?P<assign_no>[0-9]+/$', StudentSubjectLV.as_view(), name='std_assign'),
+
+
+# This urls will be supported temporary
+    url(r'^student/$', StudentMainLV.as_view(), name='student'),
+    url(r'^student/std_subject$', StudentSubjectLV.as_view(), name='std_subject'),
+    url(r'^student/std_assign$', StudentAssignment.as_view(), name='std_assign'),
+
+
+
+
 ]

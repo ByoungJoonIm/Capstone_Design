@@ -1,0 +1,17 @@
+{% block content %}
+<head>
+	<h1>Coding</h1>
+</head>
+<body>
+	<div id="coding">
+		<form method="POST">
+			{%csrf_token%}  
+			{{ form }}
+			<div class="form-actions">
+			<button type="submit">Submit</button>
+			</div>
+		</form>
+	</div>
+</body>	
+{% endblock content %}
+

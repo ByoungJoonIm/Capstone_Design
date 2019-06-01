@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}student_subject_list.html{% endblock %}
+
+{% block content %}
+<div id="content">
+	<h1> {{ request.session.title }}_{{ request.session.classes}} </h1>
+	<h3><a href="{% url 'judge:add' request.session.title request.session.classes %}"><input type="button" value="Add"/></a></h3>
+	<h3><input type=button value="settings"/></h3>
+	<table>
+		<tr>
+			<th>sequence</th>
+			<th>assginment_name</th>
+			<th>assginment_desc</th>
+		</tr>
+
+		{% for obj in subject_list_sql %}
+		<tr>
+			<td>{{ obj.sequence }}</td>
+			<td><a href="{% url 'judge:add' request.session.title request.session.classes %}">{{ obj.assignment_name }}</a></td>
+			<td>{{ obj.assignment_desc }}</td>
+		</tr>
+		{% endfor %}
+
+
+	</table>
+
+</div>
+{% endblock content %}
