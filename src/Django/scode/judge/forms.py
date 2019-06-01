@@ -12,3 +12,7 @@ class CodingForm(forms.Form):
 
     CHOICES = (('python','python'),('c','c'),('java','java'))
     lang = forms.ChoiceField(choices=CHOICES)
+
+class LoginForm(forms.Form):
+    userid = forms.CharField(label="userid")
+    password = forms.CharField(label="password", widget=forms.PasswordInput)
