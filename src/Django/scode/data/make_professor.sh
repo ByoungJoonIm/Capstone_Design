@@ -5,6 +5,7 @@ for((i=1;i<9;i++));do
   pk: '0000$i'
   fields:
     professor_name: 'professor$i'
+    password: '`echo -n "0000$i" | shasum -a 256 | cut -c 1-64`'
     input_id: '201905060000$i'
     input_ip: '127.0.$i.0'
     input_date: 2019-05-06 10:00:0$i

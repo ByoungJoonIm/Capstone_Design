@@ -46,6 +46,7 @@ class subject(models.Model):
 class student(models.Model):
 	student_id = models.CharField(max_length=10, primary_key=True)
 	student_name = models.CharField(max_length=45)
+        password = models.CharField(max_length=64)
 
 	# we need to make it remove redundancy
 	input_id = models.CharField(max_length=45)
@@ -59,6 +60,7 @@ class student(models.Model):
 class professor(models.Model):
 	professor_id = models.CharField(max_length=10, primary_key=True)
 	professor_name = models.CharField(max_length=45)
+        password = models.CharField(max_length=64)
 
 	# we need to make it remove redundancy
 	input_id = models.CharField(max_length=45)
