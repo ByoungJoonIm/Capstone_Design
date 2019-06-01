@@ -18,7 +18,7 @@
 
         <fieldset class="aligned">
                 <div class="form-row">
-                        {{ form.username.label_tag }} {{ form.username }}
+                        {{ form.userid.label_tag }} {{ form.userid }}
                 </div>
 
                 <div class="form-row">
@@ -29,10 +29,9 @@
 
         <div class="submit-row">
                 <input type="submit" value="Log In"/>
-                <input type="hidden" name="next" value="{{ next }}" />
         </div>
 
-        <script type="text/javascript">document.getElementById('id_username').focus();
+        <script type="text/javascript">document.getElementById('user_id').focus();
         </script>
         </form>
 
