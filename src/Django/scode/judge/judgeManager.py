@@ -1,12 +1,11 @@
 import os
 import sys
-
 import pymysql
 import zipfile
 import sys
 import subprocess
-
 import yaml
+import hashlib
 
 #--- Function forms of class JudgeManager
 '''
@@ -19,6 +18,9 @@ get_file_path(professor_id, subject_id)
 create_problem(professor_id, subject_id)
 get_professor_id(subject_id)
 get_next_sequence(subject_id)
+login_check(login_id, login_password)
+get_professor_name(professor_id)
+get_student_name(student_id)
 '''
 
 
@@ -233,6 +235,31 @@ class JudgeManager():
 
         return professor_id
 
+    def get_professor_name(self, professor_id):
+        self.connect()
+        sql = "SELECT professor_name \
+            FROM judge_professor \
+            WHERE professor_id = '{0}';".format(professor_id)
+        self.curs.execute(sql)
+        row = self.curs.fetchone()
+        professor_name = row[0]
+        self.disconnect()
+
+        return professor_name
+
+    def get_student_name(self, student_id):
+        self.connect()
+        sql = "SELECT student_name \
+            FROM judge_student \
+            WHERE student_id = '{0}';".format(student_id)
+        self.curs.execute(sql)
+        row = self.curs.fetchone()
+        student_name = row[0]
+        self.disconnect()
+
+        return student_name
+
+
     def get_next_sequence(self, subject_id):
         self.connect()
         sql = "SELECT count(sequence) \
@@ -302,12 +329,53 @@ class JudgeManager():
         return str(total_get) + " / " +  str(total)
 
 
+    '''
+    return values
+    -1 : Error occured in login rule
+    -2 : ID didn't exist
+    -3 : Password is wrong
+    1 : logined as professor
+    2 : logined as student
+    '''
+    def login_check(self, login_id, login_password):
+        # This must be distinguishable login rule.
+        id_length = len(login_id)
+        sha256_login_password = hashlib.sha256(login_password).hexdigest()
+        result = -1
+
+        # professor
+        if id_length == 5:
+            sql = 'SELECT password \
+                FROM judge_professor \
+                WHERE professor_id="{0}";'.format(login_id)
+            result = 1
+
             
+        # student
+        elif id_length == 8:
+            sql = 'SELECT password \
+                FROM judge_student \
+                WHERE student_id="{0}";'.format(login_id)
+            result = 2
+        # else
+        else:
+            return result
+        
+        self.connect()
+        self.curs.execute(sql)
+
+        row = self.curs.fetchone()
+        self.disconnect()
+
+        if row == None:
+            return -2
+
+        if row[0] == sha256_login_password:
+            return result
+
+        return -3
 
 
-
-# Don't use like this in this file
-# ------- usage
 #judgeManager = JudgeManager()
 #judgeManager.construct('00001')
 #print(judgeManager.get_file_path('00001', 2))
@@ -317,4 +385,11 @@ class JudgeManager():
 #print(judgeManager.judge(2, '20165157', 5))
 #judgeManager.construct_all()
 #print(judgeManager.get_sequence(2))
+#print(judgeManager.login_check('000000','00001'))
+#print(judgeManager.login_check('00000','00001'))
+#print(judgeManager.login_check('00001','00002'))
+#print(judgeManager.login_check('00001','00001'))
+#print(judgeManager.login_check('20165157','20165157'))
+#print(judgeManager.get_professor_name('00001'))
+#print(judgeManager.get_student_name('20165151'))
 
