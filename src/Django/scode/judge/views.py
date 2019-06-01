@@ -26,7 +26,6 @@ import pymysql
 import os
 # Create your views here.
 
-
 #-- Here is test views
 class ProfessorCreateView(FormView):
     template_name = 'judge/professor/professor_assignment_add.html'
@@ -102,15 +101,7 @@ class ProfessorMainLV(ListView):
     queryset = None
     template_name = 'judge/professor/professor_main_list.html'
 
-    def post(self, request, *args, **kwargs):
-        # if request.session['professor_id'] == None:
-
-        form = request.POST
-        professor_id = form.get('id')
-        professor_name = form.get('name')
-        request.session['professor_id'] = professor_id
-        request.session['professor_name'] = professor_name
-
+    def get(self, request, *args, **kwargs):
         sql = 'SELECT judge_professor.professor_id,title,classes, judge_subject.pri_key as subject_id \
            FROM judge_professor , judge_subject_has_professor, judge_subject \
            WHERE judge_professor.professor_id=judge_subject_has_professor.professor_id \
