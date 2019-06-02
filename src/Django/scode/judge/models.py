@@ -11,10 +11,10 @@ from django.db import models
 class common():
 	input_id = models.CharField(max_length=45)
 	input_ip = models.CharField(max_length=45)
-	input_date = models.TimeField(auto_now_add=True)
+	input_date = models.DateTimeField(auto_now_add=True)
 	update_id = models.CharField(max_length=45)
 	update_ip = models.CharField(max_length=45)
-	update_date = models.TimeField(auto_now=True)
+	update_date = models.DateTimeField(auto_now=True)
 '''
 
 # You can see follow address for checking schema
@@ -37,10 +37,10 @@ class subject(models.Model):
 	# we need to make it remove redundancy
 	input_id = models.CharField(max_length=45)
 	input_ip = models.CharField(max_length=45)
-	input_date = models.TimeField(auto_now_add=True)
+	input_date = models.DateTimeField(auto_now_add=True)
 	update_id = models.CharField(max_length=45)
 	update_ip = models.CharField(max_length=45)
-	update_date = models.TimeField(auto_now=True)
+	update_date = models.DateTimeField(auto_now=True)
 	class Meta:
 		unique_together = ('year', 'semester', 'subject_cd', 'classes')
 
@@ -53,10 +53,10 @@ class student(models.Model):
 	# we need to make it remove redundancy
 	input_id = models.CharField(max_length=45)
 	input_ip = models.CharField(max_length=45)
-	input_date = models.TimeField(auto_now_add=True)
+	input_date = models.DateTimeField(auto_now_add=True)
 	update_id = models.CharField(max_length=45)
 	update_ip = models.CharField(max_length=45)
-	update_date = models.TimeField(auto_now=True)
+	update_date = models.DateTimeField(auto_now=True)
 
 
 class professor(models.Model):
@@ -67,10 +67,10 @@ class professor(models.Model):
 	# we need to make it remove redundancy
 	input_id = models.CharField(max_length=45)
 	input_ip = models.CharField(max_length=45)
-	input_date = models.TimeField(auto_now_add=True)
+	input_date = models.DateTimeField(auto_now_add=True)
 	update_id = models.CharField(max_length=45)
 	update_ip = models.CharField(max_length=45)
-	update_date = models.TimeField(auto_now=True)
+	update_date = models.DateTimeField(auto_now=True)
 
 class signup_class(models.Model):
 	# Table must have one key in Django
@@ -82,10 +82,10 @@ class signup_class(models.Model):
 	# we need to make it remove redundancy
 	input_id = models.CharField(max_length=45)
 	input_ip = models.CharField(max_length=45)
-	input_date = models.TimeField(auto_now_add=True)
+	input_date = models.DateTimeField(auto_now_add=True)
 	update_id = models.CharField(max_length=45)
 	update_ip = models.CharField(max_length=45)
-	update_date = models.TimeField(auto_now=True)
+	update_date = models.DateTimeField(auto_now=True)
 
 class subject_has_professor(models.Model):
 	# Table must have one key in Django
@@ -99,10 +99,10 @@ class subject_has_professor(models.Model):
 	# we need to make it remove redundancy
 	input_id = models.CharField(max_length=45)
 	input_ip = models.CharField(max_length=45)
-	input_date = models.TimeField(auto_now_add=True)
+	input_date = models.DateTimeField(auto_now_add=True)
 	update_id = models.CharField(max_length=45)
 	update_ip = models.CharField(max_length=45)
-	update_date = models.TimeField(auto_now=True)
+	update_date = models.DateTimeField(auto_now=True)
 
 
 class assignment(models.Model):
@@ -112,14 +112,16 @@ class assignment(models.Model):
 	sub_seq = models.ForeignKey(subject, on_delete=models.CASCADE)
 	assignment_name = models.CharField(max_length=100)
 	assignment_desc = models.TextField()
+	deadline = models.DateTimeField(null=False)
+        max_score = models.IntegerField()
 	
 	# we need to make it remove redundancy
 	input_id = models.CharField(max_length=45)
 	input_ip = models.CharField(max_length=45)
-	input_date = models.TimeField(auto_now_add=True)
+	input_date = models.DateTimeField(auto_now_add=True)
 	update_id = models.CharField(max_length=45)
 	update_ip = models.CharField(max_length=45)
-	update_date = models.TimeField(auto_now=True)
+	update_date = models.DateTimeField(auto_now=True)
 
 class submit(models.Model):
 	# Table must have one key in Django
