@@ -1,6 +1,6 @@
 # Database Schema
 - [구조](https://github.com/BJ-Lim/Capstone_Design/blob/master/database/database.md)
-- [다이어그램](https://github.com/BJ-Lim/Capstone_Design/blob/master/database/ERD_0227_v3.PNG)
+- [다이어그램](https://github.com/BJ-Lim/Capstone_Design/blob/master/database/0227ERD_v4.PNG)
 # DB 관련 명령어 모음
 - [link](https://github.com/BJ-Lim/Capstone_Design/blob/master/database/db_command.md)
 
@@ -127,4 +127,4 @@
   WHERE student_id = '20161111';
   ```
   
-
+  
