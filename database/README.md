@@ -99,13 +99,6 @@
   AND judge_subject_has_professor.professor_id = judge_professor.professor_id
   AND judge_professor.professor_id = "00001";
   ```
-
-- 학생이 자신이 수강하는 모든 과목을 조회하는 SQL
-  ```
-  SELECT student_name, title
-  FROM judge_signup,judge_student,judge_subject
-  WHERE judge_subject.pri_key = judge_signup_class.sub_cd and judge_signup_class.student_id = judge_student.student_ id and      judge_student_id = "학생의학번";                                                            
-  ```
   
 - 교수 로그인을 위한 password 조회 SQL
   ```
