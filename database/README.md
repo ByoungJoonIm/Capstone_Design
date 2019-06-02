@@ -78,7 +78,11 @@
   
 - 학생이 자신이 수강하는 과목 중 하나를 선택했을 때 과제의 내용을 조회하는 SQL
   ```
-  작성중
+  SELECT sequence, assignment_name, assignment_desc
+  FROM judge_student, judge_signup_class, judge_assignment
+  WHERE judge_student.student_id = judge_signup_class.student_id
+  AND judge_signup_class.sub_seq_id = judge_assignment.sub_seq_id
+  AND judge_student.student_id = '20165151';
   ```
   
 - 학생이 과제를 제출했을 때 score를 변경하는 SQL
