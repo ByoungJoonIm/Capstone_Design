@@ -85,10 +85,7 @@
   
 - 학생이 과제를 제출했을 때 score를 변경하는 SQL
   ```
-  update submit
-  set score = 바뀐점수
-  where student_id = "점수를 바꿀 학생의 학번";
- 
+  작성중
   ```
 
 - 디렉터리 구조 생성을 위한 SQL
