@@ -9,6 +9,7 @@ for((i=0;i<30;i++));do
     classes: '0$(expr $i % 2 + 1)'
     title: 'subject$(expr $i + 1)'
     grade: $(expr $i % 4 + 1)
+    lang: 'c'
     input_id: 'sub_20190507$i'
     input_ip: '127.0.0.$i'
     input_date: 2019-05-07 00:00:0$(expr $i % 10)
