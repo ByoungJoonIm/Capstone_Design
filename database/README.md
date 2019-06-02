@@ -103,3 +103,32 @@
   FROM judge_signup,judge_student,judge_subject
   WHERE judge_subject.sub_cd = judge_signup_class.sub_cd and judge_signup_class.student_id = judge_student.student_ id and      judge_student_id = "학생의학번";                                                            
   ```
+  
+- 교수 로그인을 위한 password 조회 SQL
+  ```
+  SELECT password
+  FROM judge_professor
+  WHERE professor_id = '00001';
+  ```
+
+- 학생 로그인을 위한 password 조회 SQL
+  ```
+  SELECT password
+  FROM judge_student
+  WHERE student_id = '20161111';
+  ```
+
+- 교수 ID로 name을 조회하기 위한 SQL
+  ```
+  SELECT professor_name
+  FROM judge_professor
+  WHERE professor_id = '00001';
+  ```
+
+- 학생 ID로 name을 조회하기 위한 SQL
+  ```
+  SELECT student_name
+  FROM judge_student
+  WHERE student_id = '20161111';
+  ```
+
