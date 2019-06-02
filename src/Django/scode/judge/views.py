@@ -25,6 +25,7 @@ from scode.loginManager import LoginManager
 
 import pymysql
 import os
+import datetime
 
 
 #-- Here is developing area
@@ -53,7 +54,7 @@ class ProfessorSubjectLV(ListView, LoginManager):
     template_name = 'judge/professor/professor_subject_list.html'
     paginate_by = 10
 
-    def get(self, request, *args, **kwargs):
+    def common(self, request):
         if request.session['subject_id']:
             sql = 'SELECT * \
                     FROM judge_subject_has_professor, judge_professor, judge_assignment, judge_subject \
@@ -71,24 +72,17 @@ class ProfessorSubjectLV(ListView, LoginManager):
         else:
             return HttpResponse('This is wrong way!')
 
+    def get(self, request, *args, **kwargs):
+        return self.common(request)
+
 
     def post(self, request, *args, **kwargs):
         form = request.POST
         request.session['title'] = form.get('title')
         request.session['classes'] = form.get('classes')
         request.session['subject_id'] = form.get('subject_id')
-        sql = 'SELECT * \
-                FROM judge_subject_has_professor, judge_professor, judge_assignment, judge_subject \
-                WHERE judge_subject_has_professor.sub_seq_id = judge_assignment.sub_seq_id \
-                AND judge_professor.professor_id = judge_subject_has_professor.professor_id \
-                AND judge_subject.pri_key = judge_subject_has_professor.sub_seq_id \
-                AND judge_subject.pri_key = "{0}" \
-                AND judge_professor.professor_id = "{1}" \
-                ORDER BY judge_subject.title;'.format(request.session['subject_id'], request.session['professor_id'])
 
-        subject_list_sql = professor.objects.raw(sql)
-
-        return render(request, self.template_name, { 'subject_list_sql': subject_list_sql})
+        return self.common(request)
 
 # This page shows result of a assiginment.
 class ProfessorResultLV(ListView, LoginManager):
@@ -125,7 +119,11 @@ class ProfessorCreateView(FormView, LoginManager):
         judgeManager.construct(request.session['professor_id'])
         base_file_path = judgeManager.get_file_path(request.session['subject_id'], request.session['professor_id'])
         self.handle_uploaded_file([request.FILES['in_file'], request.FILES['out_file']], base_file_path)
-        judgeManager.create_problem(request.session['professor_id'], request.session['subject_id'])
+
+        #judgeManager.create_problem(request.session['professor_id'], request.session['subject_id'])
+        judgeManager.add_assignment(request.session['subject_id'], request.POST.get('assignment_name'),
+                request.POST.get('assignment_desc'), int(request.POST.get('deadline')))
+
 
         # we need next step which is inserting db.
 
@@ -166,19 +164,35 @@ class StudentSubjectLV(TemplateView, LoginManager):
 	queryset = None
 	template_name = 'judge/student/student_subject_list.html'
 
-	def get(self, request, *args, **kwargs):
+        def common(self, request):
 	    if request.session['subject_id']:
-	        sql = 'SELECT sequence, assignment_name, assignment_desc, judge_student.student_id \
+                now = datetime.datetime.now()
+
+                not_expired_assignment_list_sql = 'SELECT sequence, assignment_name, judge_student.student_id, deadline \
                     FROM judge_student, judge_signup_class, judge_assignment \
                     WHERE judge_student.student_id = judge_signup_class.student_id \
                     AND judge_signup_class.sub_seq_id = judge_assignment.sub_seq_id \
-                    AND judge_assignment.sub_seq_id = "{0}";'.format(request.session['subject_id'])
+                    AND judge_assignment.sub_seq_id = "{0}" \
+                    AND deadline > "{1}" ;'.format(request.session['subject_id'], now)
+                expired_assignment_list_sql = 'SELECT sequence, assignment_name, judge_student.student_id, deadline \
+                    FROM judge_student, judge_signup_class, judge_assignment \
+                    WHERE judge_student.student_id = judge_signup_class.student_id \
+                    AND judge_signup_class.sub_seq_id = judge_assignment.sub_seq_id \
+                    AND judge_assignment.sub_seq_id = "{0}" \
+                    AND deadline < "{1}";'.format(request.session['subject_id'], now)
 
-		subject_list_sql = student.objects.raw(sql)
+                not_expired_assignment_list = student.objects.raw(not_expired_assignment_list_sql)
+                expired_assignment_list = student.objects.raw(expired_assignment_list_sql)
 
-		return render(request, self.template_name, { 'subject_list_sql': subject_list_sql})
-	    else:
-		return HttpResponse('This is wrong way!')
+        	return render(request, self.template_name,
+                    { 'not_expired_assignment_list': not_expired_assignment_list,
+                      'expired_assignment_list': expired_assignment_list })
+            else:
+                return HttpResponse('This is wrong way!')
+
+
+	def get(self, request, *args, **kwargs):
+            return self.common(request)
 
 	def post(self, request, *args, **kwargs):
 	    form = request.POST
@@ -186,16 +200,7 @@ class StudentSubjectLV(TemplateView, LoginManager):
 	    request.session['classes'] = form.get('classes')
 	    request.session['subject_id'] = form.get('subject_id')
 
-	    sql = 'SELECT sequence, assignment_name, assignment_desc, judge_student.student_id \
-                FROM judge_student, judge_signup_class, judge_assignment \
-                WHERE judge_student.student_id = judge_signup_class.student_id \
-                AND judge_signup_class.sub_seq_id = judge_assignment.sub_seq_id \
-                AND judge_assignment.sub_seq_id = "{0}";'.format(request.session['subject_id'])
-
-	    subject_list_sql = student.objects.raw(sql)
-
-	    return render(request, self.template_name, { 'subject_list_sql': subject_list_sql})
-
+            return self.common(request)
 
 class StudentAssignment(FormView, LoginManager):
     template_name = 'judge/student/student_assignment.html'
@@ -226,36 +231,8 @@ class StudentAssignment(FormView, LoginManager):
                 code = form.cleaned_data['code']
                 code = code.encode('utf-8')
                 judgeManager.create_src_file(code, request.session['student_id'], request.session['subject_id'], sequence)
+                # we are here
                 print(judgeManager.judge(request.session['subject_id'], request.session['student_id'], sequence))
 
             return redirect(reverse_lazy('judge:std_subject', args=[request.session['title'], request.session['classes']]))
-            
 
-        '''
-        if request.method == "POST":
-            form = CodingForm(request.POST)
-
-            if form.is_valid():
-                code = form.cleaned_data['code']
-                lang = form.cleaned_data['lang']
-
-                code = code.encode('utf-8')
-                print("your code : ",code)
-                print("your lang : ",lang)
-
-                if lang == 'c':
-                    f = open("./code/code.c",'w')
-                elif lang == 'python':
-                    f = open("./code/code.py",'w')
-                elif lang == 'java':
-                    f = open("./code/code.java",'w')
-
-                f.write(code)
-                f.close()
-
-                form = CodingForm()
-
-            return render(request, 'judge/student/student_assignment.html', {'form' : form})
-        else:
-            form = CodingForm()
-        '''

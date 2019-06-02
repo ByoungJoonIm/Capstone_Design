@@ -6,6 +6,8 @@ import sys
 import subprocess
 import yaml
 import hashlib
+import datetime
+import time
 
 #--- Function forms of class JudgeManager
 '''
@@ -28,6 +30,27 @@ class JudgeManager():
     curs = None
     # Don't modify base_dir_name in function.
     base_dir_name = 'judge_files'
+
+    def add_assignment(self, subject_id, assignment_name, assignment_desc, period):
+        max_score = self.create_problem(subject_id)
+        print(max_score)
+
+        # we will change input_id, input_ip later.
+        input_id = "temp_id"
+        input_ip = "127.0.0.1"
+        input_date = datetime.datetime.now()
+        deadline = datetime.datetime.now() + datetime.timedelta(days=period)
+        sql = "INSERT INTO judge_assignment(sequence, assignment_name, assignment_desc, deadline, input_id, input_ip, input_date, update_id, update_ip,update_date, sub_seq_id, max_score) \
+            VALUES({0}, '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', {10}, {11});".format(
+                    self.get_next_sequence(subject_id), assignment_name, assignment_desc, deadline,
+                    input_id, input_ip, input_date,
+                    input_id, input_ip, input_date,
+                    subject_id, max_score)
+        self.connect()
+        self.curs.execute(sql)
+        self.conn.commit()
+        self.disconnect()
+
 
     def connect(self):
         self.conn = pymysql.connect(read_default_file='~/settings/mysql.cnf')
@@ -161,25 +184,29 @@ class JudgeManager():
 
         return base_path
 
-    #This function includes generating zip and init file
-    #This function needs in and out files which was uploaded.
-    def create_problem(self, professor_id, subject_id):
+    # includes generating zip and init file
+    # needs in and out files which was uploaded.
+    # return the number of test_case
+    def create_problem(self, subject_id):
+        professor_id = self.get_professor_id(subject_id)
         sequence = self.get_next_sequence(subject_id)
         base_path = self.get_file_path(subject_id, professor_id)
         temp_path = os.path.join(base_path, 'temp')
 
+        os.chdir(temp_path)
+
         #--- separate files
-        in_file = open(os.path.join(temp_path, "in"), "r")
-        out_file = open(os.path.join(temp_path, "out"), "r")
+        in_file = open("in", "r")
+        out_file = open("out", "r")
         cnt = 1
 
         zip_name = str(sequence) + ".zip"
-        zip_path = os.path.join(temp_path, zip_name)
-        myzip = zipfile.ZipFile(zip_path, "w")
+        myzip = zipfile.ZipFile(zip_name, "w")
 
-        # we will change like follow
         file_list = ["in", "out"]
-        #file_list = []
+
+        # it remove the number of inputs
+        in_line = in_file.readline()
 
         while True:
             in_line = in_file.readline().rstrip()
@@ -187,13 +214,13 @@ class JudgeManager():
             if not in_line or not out_line:
                 break
 
-            in_file_rs_name = os.path.join(temp_path, str(sequence) + "." + str(cnt) + ".in")
+            in_file_rs_name = str(sequence) + "." + str(cnt) + ".in"
             in_file_rs = open(in_file_rs_name, "w")
             in_file_rs.write('1\n')
             in_file_rs.write(str(in_line) + '\n')
             in_file_rs.close()
 
-            out_file_rs_name = os.path.join(temp_path, str(sequence) + "." + str(cnt) + ".out")
+            out_file_rs_name = str(sequence) + "." + str(cnt) + ".out"
             out_file_rs = open(out_file_rs_name, "w")
             out_file_rs.write(str(out_line) + '\n')
             out_file_rs.close()
@@ -235,7 +262,9 @@ class JudgeManager():
 
         init_file.close()
 
-        os.rename(zip_path, os.path.join(prob_path, zip_name))
+        os.rename(zip_name, os.path.join(prob_path, zip_name))
+
+        return cnt - 1
 
     def create_src_file(self, code, student_id, subject_id, sequence):
         lang = self.get_lang(subject_id)
@@ -311,17 +340,13 @@ class JudgeManager():
 
     def judge(self, subject_id, student_id, sequence):
         #Next line will be changed.
-        lang_setting = '.c'
+        lang = self.get_lang(subject_id)
 
-        professor_id = self.get_professor_id(subject_id)
-        professor_file_path = self.get_file_path(subject_id, professor_id)
+        professor_file_path = self.get_file_path(subject_id)
         config_file_path = os.path.join(os.path.join(professor_file_path, 'settings'), 'config.yml')
         init_file_path = os.path.join(os.path.join(os.path.join(professor_file_path, 'problems'), str(sequence)), 'init.yml')
-        student_file_path = os.path.join(os.path.join(os.path.join(professor_file_path, 'students'), str(sequence)), student_id + lang_setting)
-#        print(professor_file_path)
-#        print(config_file_path)
-#        print(init_file_path)
-#        print(student_file_path)
+        student_file_path = os.path.join(os.path.join(os.path.join(professor_file_path, 'students'), str(sequence)), student_id + "." + lang)
+
         points = []
         with open(init_file_path, 'r') as stream:
             try:
@@ -335,6 +360,7 @@ class JudgeManager():
         # It will print as follow
         # total_get_score / total_score
         a = subprocess.check_output(["dmoj-cli", "-c", config_file_path, "--no-ansi", "submit", str(sequence), "C", student_file_path ])
+        print(a)
         sp = a.split()
 
         i = 2
@@ -356,8 +382,7 @@ class JudgeManager():
                 seq = seq + 1
                 i = i + 8
 
-
-        return str(total_get) + " / " +  str(total)
+        return total_get
 
 
     '''
@@ -492,3 +517,4 @@ class JudgeManager():
 #print(judgeManager.get_assign_name(1,1))
 #print(judgeManager.get_assign_desc(1,1))
 #print(judgeManager.get_std_file_path(2, 1, '20165151'))
+#judgeManager.add_assignment(1, "add_assign", "add_desc", 7)
