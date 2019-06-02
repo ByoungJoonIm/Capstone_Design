@@ -68,9 +68,12 @@
   
 - 학생이 자신이 수강하는 모든 과목을 조회하는 SQL
   ```
-  select student.student_id as student_id,student_name,title
-  from signup_class, student,subject
-  where student_id = signup_class.id and signup_class.sub_cd = sub_cd and student_id = "학생의학번"; 
+  SELECT judge_student.student_id as student_id, title, classes
+  FROM judge_subject, judge_signup_class, judge_student
+  WHERE judge_subject.pri_key = judge_signup_class.sub_seq_id
+  AND judge_signup_class.student_id = judge_student.student_id
+  AND judge_student.student_id = '20165151'
+  ORDER BY judge_subject.title;
   ```
   
 - 학생이 자신이 수강하는 과목 중 하나를 선택했을 때 과제의 내용을 조회하는 SQL
