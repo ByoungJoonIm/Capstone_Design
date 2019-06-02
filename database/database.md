@@ -2,17 +2,17 @@
 ![테이블 전체 구조](https://github.com/BJ-Lim/Capstone_Design/blob/master/database/db_img/db_table_list.PNG)
 -----------
 ### 학생정보 table
-![student_table](https://github.com/BJ-Lim/Capstone_Design/blob/master/database/db_img/judge_student.JPG)
+![student_table](https://github.com/BJ-Lim/Capstone_Design/blob/master/database/db_img/judge_student2.JPG)
  - 학생(학번,이름)
  - 주키:학번
 
 ### 교수정보 table
-![professor table](https://github.com/BJ-Lim/Capstone_Design/blob/master/database/db_img/judge_professor.JPG)
+![professor table](https://github.com/BJ-Lim/Capstone_Design/blob/master/database/db_img/judge_professor2.JPG)
  - 교수(사번,이름)
  - 주키:사번
 
 ### 과목정보 table
-![subject table](https://github.com/BJ-Lim/Capstone_Design/blob/master/database/db_img/judge_subject.JPG)
+![subject table](https://github.com/BJ-Lim/Capstone_Design/blob/master/database/db_img/judge_subject2.JPG)
  - 과목(과목코드,년도,학기,분반,과목명,강의자명,학점,사용언어)
  - 주키:과목코드,년도,학기,분반
 
@@ -34,7 +34,6 @@
  - 주키:주차,순서번호,학번
  - 외래키:주차,순서번호,학번
  
-
 
 
 
