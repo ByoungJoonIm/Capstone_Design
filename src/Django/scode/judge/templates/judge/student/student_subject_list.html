@@ -5,8 +5,6 @@
 {% block content %}
 <div id="content">
 	<h1> {{ request.session.title }}_{{ request.session.classes}} </h1>
-	<h3><a href="{% url 'judge:add' request.session.title request.session.classes %}"><input type="button" value="Add"/></a></h3>
-	<h3><input type=button value="settings"/></h3>
 	<table>
 		<tr>
 			<th>sequence</th>
@@ -17,7 +15,13 @@
 		{% for obj in subject_list_sql %}
 		<tr>
 			<td>{{ obj.sequence }}</td>
-			<td><a href="{% url 'judge:add' request.session.title request.session.classes %}">{{ obj.assignment_name }}</a></td>
+
+			<td>
+				<form id='{{ obj.sequence }}' method="post" action="{% url 'judge:std_assign' request.session.title request.session.classes obj.sequence%}">{% csrf_token %}
+					<input type="hidden" name="sequence" value="{{ obj.sequence }}"/>
+					<a href="javascript:{}" onclick=document.getElementById("{{ obj.sequence }}").submit();>{{ obj.assignment_name }}</a>
+				</form>
+			</td>
 			<td>{{ obj.assignment_desc }}</td>
 		</tr>
 		{% endfor %}

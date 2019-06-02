@@ -1,17 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}student_assignment.html{% endblock %}
+
+{% load staticfiles %}
+{% block extrastyle %}{% static "css/forms.css" %}{% endblock %}
+
 {% block content %}
-<head>
-	<h1>Coding</h1>
-</head>
-<body>
-	<div id="coding">
-		<form method="POST">
-			{%csrf_token%}  
-			{{ form }}
-			<div class="form-actions">
-			<button type="submit">Submit</button>
-			</div>
-		</form>
-	</div>
-</body>	
+<div id="content">
+
+        <form action="." method="post">{% csrf_token %}
+
+                {% if form.errors %}
+                <p class="errornote">Wrong! Please correct the error(s) below.</p>
+                {% endif %}
+
+                <fieldset class="aligned">
+                        <div class="form-row">
+				lang {{ assign_info.lang }}
+                        </div>
+                        <div class="form-row">
+				assign_name {{ assign_info.name }}
+                        </div>
+                        <div class="form-row">
+				desc {{ assign_info.desc }}
+                        </div>
+                        <div class="form-row">
+                                {{ form.code.label_tag }} {{ form.code }}
+                        </div>
+                </fieldset>
+
+
+                <div class="submit-row">
+                        <input type="submit" value="Submit"/>
+                </div>
+                <script type="text/javascript">document.getElementById('id_code').focus();</script>
+
+</div>
 {% endblock content %}
 

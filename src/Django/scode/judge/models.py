@@ -32,6 +32,8 @@ class subject(models.Model):
 	title = models.CharField(max_length=100)
 	grade = models.IntegerField()
 
+        lang = models.CharField(max_length=10, null=False)
+
 	# we need to make it remove redundancy
 	input_id = models.CharField(max_length=45)
 	input_ip = models.CharField(max_length=45)

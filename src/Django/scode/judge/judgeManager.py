@@ -10,20 +10,18 @@ import hashlib
 #--- Function forms of class JudgeManager
 '''
 connect()
-disconnect()
 create_autoconf()
 construct(professor_id)
 construct_all()
-get_file_path(professor_id, subject_id)
 create_problem(professor_id, subject_id)
+disconnect()
+get_file_path(subject_id, *professor_id)
 get_professor_id(subject_id)
 get_next_sequence(subject_id)
-login_check(login_id, login_password)
 get_professor_name(professor_id)
 get_student_name(student_id)
+login_check(login_id, login_password)
 '''
-
-
 
 class JudgeManager():
     conn = None
@@ -126,7 +124,14 @@ class JudgeManager():
             self.construct(p)
 
     # example return value : home/scode/2019_1/00001/12312_01
-    def get_file_path(self, professor_id, subject_id):
+    # error occurs when professor_id and subject_id are not match
+    def get_file_path(self, subject_id, *professor_id_args):
+        professor_id = ''
+        if not professor_id_args:
+            professor_id = self.get_professor_id(subject_id)
+        else:
+            professor_id = professor_id_args[0]
+
         sql = "SELECT year, semester, judge_professor.professor_id as professor_id, judge_subject.subject_cd as subject_cd, classes \
             FROM judge_subject, judge_subject_has_professor, judge_professor \
             WHERE judge_subject.pri_key = judge_subject_has_professor.sub_seq_id \
@@ -147,22 +152,34 @@ class JudgeManager():
 
         return rs
 
+    def get_std_file_path(self, subject_id, sequence, student_id):
+        lang = self.get_lang(subject_id)
+        base_path = self.get_file_path(subject_id)
+        base_path = os.path.join(base_path, 'students')
+        base_path = os.path.join(base_path, str(sequence))
+        base_path = os.path.join(base_path, student_id + "." + lang)
+
+        return base_path
+
     #This function includes generating zip and init file
     #This function needs in and out files which was uploaded.
     def create_problem(self, professor_id, subject_id):
         sequence = self.get_next_sequence(subject_id)
+        base_path = self.get_file_path(subject_id, professor_id)
+        temp_path = os.path.join(base_path, 'temp')
 
         #--- separate files
-        in_file = open("in", "r")
-        out_file = open("out", "r")
+        in_file = open(os.path.join(temp_path, "in"), "r")
+        out_file = open(os.path.join(temp_path, "out"), "r")
         cnt = 1
 
         zip_name = str(sequence) + ".zip"
-        myzip = zipfile.ZipFile(zip_name, "w")
+        zip_path = os.path.join(temp_path, zip_name)
+        myzip = zipfile.ZipFile(zip_path, "w")
 
         # we will change like follow
-        #file_list = ["in", "out"]
-        file_list = []
+        file_list = ["in", "out"]
+        #file_list = []
 
         while True:
             in_line = in_file.readline().rstrip()
@@ -170,13 +187,13 @@ class JudgeManager():
             if not in_line or not out_line:
                 break
 
-            in_file_rs_name = str(sequence) + "." + str(cnt) + ".in"
+            in_file_rs_name = os.path.join(temp_path, str(sequence) + "." + str(cnt) + ".in")
             in_file_rs = open(in_file_rs_name, "w")
             in_file_rs.write('1\n')
             in_file_rs.write(str(in_line) + '\n')
             in_file_rs.close()
 
-            out_file_rs_name = str(sequence) + "." + str(cnt) + ".out"
+            out_file_rs_name = os.path.join(temp_path, str(sequence) + "." + str(cnt) + ".out")
             out_file_rs = open(out_file_rs_name, "w")
             out_file_rs.write(str(out_line) + '\n')
             out_file_rs.close()
@@ -196,11 +213,21 @@ class JudgeManager():
 
         #--- remove files
         for f in file_list:
-            os.remove(f)
+            os.remove(os.path.join(temp_path, f))
+
+        #--- Make sequence directory in professor private path and move generated files to there
+        prob_path = os.path.join(base_path, "problems")
+        prob_path = os.path.join(prob_path, str(sequence))
+        os.mkdir(prob_path)
+
+        std_path = os.path.join(base_path, "students")
+        std_path = os.path.join(std_path, str(sequence))
+        os.mkdir(std_path)
 
         #--- generate init file
         init_file_name = "init.yml"
-        init_file = open(init_file_name, "w")
+        init_file_path = os.path.join(prob_path, init_file_name)
+        init_file = open(init_file_path, "w")
         init_file.write("archive: {0}.zip\ntest_cases:".format(sequence))
 
         for i in range(1, cnt):
@@ -208,13 +235,17 @@ class JudgeManager():
 
         init_file.close()
 
-        #--- Make sequence directory in professor private path and move generated files to there
-        file_path = self.get_file_path(professor_id, subject_id)
-        file_path = os.path.join(file_path, "problems")
-        file_path = os.path.join(file_path, str(sequence))
-        os.mkdir(file_path)
-        os.rename(zip_name, os.path.join(file_path, zip_name))
-        os.rename(init_file_name, os.path.join(file_path, init_file_name))
+        os.rename(zip_path, os.path.join(prob_path, zip_name))
+
+    def create_src_file(self, code, student_id, subject_id, sequence):
+        lang = self.get_lang(subject_id)
+        base_path = self.get_file_path(subject_id)
+        src_path = os.path.join(os.path.join(base_path, "students"), str(sequence))
+        src_path = os.path.join(src_path, student_id + "." + lang)
+
+        src_file = open(src_path, "w")
+        src_file.write(code)
+        src_file.close()
 
     # This function converts subject_id to professor_id
     # NOTICE : I didn't think about multiple professor per one subject.
@@ -283,7 +314,7 @@ class JudgeManager():
         lang_setting = '.c'
 
         professor_id = self.get_professor_id(subject_id)
-        professor_file_path = self.get_file_path(professor_id, subject_id)
+        professor_file_path = self.get_file_path(subject_id, professor_id)
         config_file_path = os.path.join(os.path.join(professor_file_path, 'settings'), 'config.yml')
         init_file_path = os.path.join(os.path.join(os.path.join(professor_file_path, 'problems'), str(sequence)), 'init.yml')
         student_file_path = os.path.join(os.path.join(os.path.join(professor_file_path, 'students'), str(sequence)), student_id + lang_setting)
@@ -375,10 +406,73 @@ class JudgeManager():
 
         return -3
 
+    def get_lang(self, subject_id):
+        sql = 'SELECT lang \
+            FROM judge_subject \
+            WHERE pri_key = {0};'.format(subject_id)
+
+        self.connect()
+        self.curs.execute(sql)
+        row = self.curs.fetchone()
+        self.disconnect()
+
+        return row[0]
+
+    def get_class(self, subject_id):
+        sql = 'SELECT classes \
+            FROM judge_subject \
+            WHERE pri_key = {0};'.format(subject_id)
+        self.connect()
+        self.curs.execute(sql)
+        row = self.curs.fetchone()
+        self.disconnect()
+
+        return row[0]
+
+    def get_title(self, subject_id):
+        sql = 'SELECT title \
+            FROM judge_subject \
+            WHERE pri_key = {0};'.format(subject_id)
+        self.connect()
+        self.curs.execute(sql)
+        row = self.curs.fetchone()
+        self.disconnect()
+
+        return row[0]
+
+    def get_assign_name(self, subject_id, sequence):
+        sql = 'SELECT assignment_name \
+            FROM judge_assignment \
+            WHERE sub_seq_id = {0} \
+            AND sequence = {1};'.format(subject_id, sequence)
+
+        self.connect()
+        self.curs.execute(sql)
+        row = self.curs.fetchone()
+        self.disconnect()
+
+        return row[0]
+
+    def get_assign_desc(self, subject_id, sequence):
+        sql = 'SELECT assignment_desc \
+            FROM judge_assignment \
+            WHERE sub_seq_id = {0} \
+            AND sequence = {1};'.format(subject_id, sequence)
+
+        self.connect()
+        self.curs.execute(sql)
+        row = self.curs.fetchone()
+        self.disconnect()
+
+        return row[0]
+
+
+
 
 #judgeManager = JudgeManager()
 #judgeManager.construct('00001')
-#print(judgeManager.get_file_path('00001', 2))
+#print(judgeManager.get_file_path(2))
+#print(judgeManager.get_file_path(2, '00002'))
 #judgeManager.create_problem('00002', 2)
 #judgeManager.create_autoconf()
 #print(judgeManager.get_professor_id(2))
@@ -392,4 +486,9 @@ class JudgeManager():
 #print(judgeManager.login_check('20165157','20165157'))
 #print(judgeManager.get_professor_name('00001'))
 #print(judgeManager.get_student_name('20165151'))
-
+#print(judgeManager.get_lang(4))
+#print(judgeManager.get_title(4))
+#print(judgeManager.get_class(4))
+#print(judgeManager.get_assign_name(1,1))
+#print(judgeManager.get_assign_desc(1,1))
+#print(judgeManager.get_std_file_path(2, 1, '20165151'))

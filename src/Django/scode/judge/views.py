@@ -17,87 +17,19 @@ from django.urls import reverse
 from django.db import connection
 
 from judge.models import *
-from judge.forms import AssignmentForm
+from judge.forms import AssignmentForm, CodingForm
 
 
 from judge.judgeManager import JudgeManager
+from scode.loginManager import LoginManager
 
 import pymysql
 import os
-# Create your views here.
-
-#-- Here is test views
-class ProfessorCreateView(FormView):
-    template_name = 'judge/professor/professor_assignment_add.html'
-    form_class = AssignmentForm
-
-#    def form_valid(self, form):
-        #return render(self.request, self.template_name, {'form': self.form})
-#        return super().form_valid(form)
-
-    def get_next_sequence(self):
-        conn = pymysql.connect(read_default_file='~/settings/mysql.cnf')
-        curs = conn.cursor()
-        curs.execute(self.sequnce_SQL)
-        row = curs.fetchone()
-        conn.close()
-
-        rs = row[0]
-        return rs+1
-
-    def handle_uploaded_file(self, files, path):
-        uploaded_file_name = ['in', 'out']
-        for f in files:
-            with open(path + '/temp/' + uploaded_file_name[files.index(f)], 'wb+') as dest:
-                for chunk in f.chunks():
-                    dest.write(chunk)
-
-    def post(self, request, *args, **kwargs):
-        
-        judgeManager = JudgeManager()
-        judgeManager.construct(request.session['professor_id'])
-        base_file_path = judgeManager.get_file_path(request.session['professor_id'], request.session['subject_id'])
-        self.handle_uploaded_file([request.FILES['in_file'], request.FILES['out_file']], base_file_path)
-
-        #we are here
-        #we need to make in and out files separate 
-
-        '''
-        sql = 'SELECT count(sequence) \
-            FROM judge_subject_has_professor, judge_professor, judge_assignment, judge_subject \
-            WHERE judge_subject_has_professor.sub_seq_id = judge_assignment.sub_seq_id \
-            AND judge_professor.professor_id = judge_subject_has_professor.professor_id \
-            AND judge_subject.pri_key = judge_subject_has_professor.sub_seq_id \
-            AND judge_subject.title = ' + request.session['title'] + ' \
-            AND judge_subject.classes = '+ request.session['classes'] +' \
-            AND judge_professor.professor_id=' + request.session['professor_id'] + ';'
-
-        sql2 = 'SELECT year, semester, judge_professor.professor_id as professor_id, judge_subject.subject_cd as subject_cd, classes \
-            FROM judge_subject, judge_subject_has_professor, judge_professor \
-            WHERE judge_subject.pri_key = judge_subject_has_professor.sub_seq_id \
-            AND judge_subject_has_professor.professor_id = judge_professor.professor_id \
-            AND judge_professor.professor_id = ' + request.session['professor_id'] + ';'
-        
-        sequence_sql = professor.objects.raw(sql)
-        '''
-
-        return redirect(reverse_lazy('judge:subject', args=[request.session['title'], request.session['classes']]))
-        
-        
-
-class ProfessorUpdateView(TemplateView):
-    template_name = 'judge/professor/professor_assignment_update.html'
-
-class ProfessorDeleteView(TemplateView):
-    template_name = 'judge/professor/professor_assignment_delete.html'
-
-class ProfessorSettingsView(TemplateView):
-    template_name = 'judge/professor/professor_subject_settings.html'
 
 
 #-- Here is developing area
 # This page shows a list of subjects that professor has.
-class ProfessorMainLV(ListView):
+class ProfessorMainLV(ListView, LoginManager):
     queryset = None
     template_name = 'judge/professor/professor_main_list.html'
 
@@ -114,7 +46,7 @@ class ProfessorMainLV(ListView):
         return render(request, self.template_name, {'subject_list_sql': subject_list_sql})
 
 # This page shows a list of assignment in selected subject
-class ProfessorSubjectLV(ListView):
+class ProfessorSubjectLV(ListView, LoginManager):
     #It doesn't used.
     queryset = None
 
@@ -159,7 +91,7 @@ class ProfessorSubjectLV(ListView):
         return render(request, self.template_name, { 'subject_list_sql': subject_list_sql})
 
 # This page shows result of a assiginment.
-class ProfessorResultLV(ListView):
+class ProfessorResultLV(ListView, LoginManager):
     # We need to revise sub_seq_id
     sub_seq_id = 2
     sql = 'SELECT judge_student.student_id,judge_student.student_name,score \
@@ -173,42 +105,74 @@ class ProfessorResultLV(ListView):
     template_name = 'judge/professor/professor_result_list.html'
     context_object_name = "objects"
 
+class ProfessorCreateView(FormView, LoginManager):
+    template_name = 'judge/professor/professor_assignment_add.html'
+    form_class = AssignmentForm
 
-'''
-class ProfessorUpdateView(UpdateView):
+#    def form_valid(self, form):
+        #return render(self.request, self.template_name, {'form': self.form})
+#        return super().form_valid(form)
 
-class ProfessorDeleteView(DeleteView):
+    def handle_uploaded_file(self, files, path):
+        uploaded_file_name = ['in', 'out']
+        for f in files:
+            with open(path + '/temp/' + uploaded_file_name[files.index(f)], 'wb+') as dest:
+                for chunk in f.chunks():
+                    dest.write(chunk)
 
-class ProfessorSettingsView(UpdateView):
-'''
+    def post(self, request, *args, **kwargs):
+        judgeManager = JudgeManager()
+        judgeManager.construct(request.session['professor_id'])
+        base_file_path = judgeManager.get_file_path(request.session['subject_id'], request.session['professor_id'])
+        self.handle_uploaded_file([request.FILES['in_file'], request.FILES['out_file']], base_file_path)
+        judgeManager.create_problem(request.session['professor_id'], request.session['subject_id'])
+
+        # we need next step which is inserting db.
+
+        return redirect(reverse_lazy('judge:subject', args=[request.session['title'], request.session['classes']]))
+
+
+#class ProfessorUpdateView(UpdateView):
+class ProfessorUpdateView(TemplateView, LoginManager):
+    template_name = 'judge/professor/professor_assignment_update.html'
+
+#class ProfessorDeleteView(DeleteView):
+class ProfessorDeleteView(TemplateView, LoginManager):
+    template_name = 'judge/professor/professor_assignment_delete.html'
+
+#class ProfessorSettingsView(UpdateView):
+class ProfessorSettingsView(TemplateView, LoginManager):
+    template_name = 'judge/professor/professor_subject_settings.html'
+
 
 #-- student
-class StudentMainLV(ListView):
+class StudentMainLV(ListView, LoginManager):
 	queryset = None
 	template_name = 'judge/student/student_main_list.html'
 	
-	def post(self,request,*args,**kwargs):
-	    form = request.POST
-	    student_id = form.get('id')
-            student_name = form.get('name')
-	    request.session['student_id'] = student_id
-	    request.session['student_name'] = student_name
-
-	    sql = 'SELECT '
+	def get(self, request, *args, **kwargs):
+	    sql = 'SELECT judge_student.student_id as student_id, title, classes, judge_subject.pri_key as subject_id \
+                FROM judge_subject, judge_signup_class, judge_student \
+                WHERE judge_subject.pri_key = judge_signup_class.sub_seq_id \
+                AND judge_signup_class.student_id = judge_student.student_id \
+                AND judge_student.student_id = "{0}" \
+                ORDER BY judge_subject.title;'.format(request.session['student_id'])
 		
-	    student.objects.raw(sql)
+	    subject_list_sql = student.objects.raw(sql)
 
-	    return render(request, self.template_name, {'subject_list_sql': subject_list_sql})	
+	    return render(request, self.template_name, {'subject_list_sql': subject_list_sql})
 
-class StudentSubjectLV(TemplateView):
+class StudentSubjectLV(TemplateView, LoginManager):
 	queryset = None
-
 	template_name = 'judge/student/student_subject_list.html'
-	paginate_by = None
 
 	def get(self, request, *args, **kwargs):
 	    if request.session['subject_id']:
-	        sql = ''
+	        sql = 'SELECT sequence, assignment_name, assignment_desc, judge_student.student_id \
+                    FROM judge_student, judge_signup_class, judge_assignment \
+                    WHERE judge_student.student_id = judge_signup_class.student_id \
+                    AND judge_signup_class.sub_seq_id = judge_assignment.sub_seq_id \
+                    AND judge_assignment.sub_seq_id = "{0}";'.format(request.session['subject_id'])
 
 		subject_list_sql = student.objects.raw(sql)
 
@@ -222,17 +186,52 @@ class StudentSubjectLV(TemplateView):
 	    request.session['classes'] = form.get('classes')
 	    request.session['subject_id'] = form.get('subject_id')
 
-	    sql = ''
+	    sql = 'SELECT sequence, assignment_name, assignment_desc, judge_student.student_id \
+                FROM judge_student, judge_signup_class, judge_assignment \
+                WHERE judge_student.student_id = judge_signup_class.student_id \
+                AND judge_signup_class.sub_seq_id = judge_assignment.sub_seq_id \
+                AND judge_assignment.sub_seq_id = "{0}";'.format(request.session['subject_id'])
 
 	    subject_list_sql = student.objects.raw(sql)
 
 	    return render(request, self.template_name, { 'subject_list_sql': subject_list_sql})
 
 
-class StudentAssignment(TemplateView):
+class StudentAssignment(FormView, LoginManager):
     template_name = 'judge/student/student_assignment.html'
+    form_class = CodingForm
 
     def post(self, request, *args, **kwargs):
+        judgeManager = JudgeManager()
+        sequence = request.POST.get('sequence')
+        
+        # into assignment page
+        if sequence:
+            assign_info = { 
+                'lang': judgeManager.get_lang(request.session['subject_id']), 
+                'name': judgeManager.get_assign_name(request.session['subject_id'], sequence), 
+                'desc': judgeManager.get_assign_desc(request.session['subject_id'], sequence) 
+            }
+            request.session['sequence'] = sequence
+            return render(request, self.template_name, {'assign_info': assign_info, 'form': CodingForm})
+
+        # submit assignment
+        else:
+            judgeManager = JudgeManager()
+            form = CodingForm(request.POST)
+            sequence = request.session['sequence']
+            del request.session['sequence']
+
+            if form.is_valid():
+                code = form.cleaned_data['code']
+                code = code.encode('utf-8')
+                judgeManager.create_src_file(code, request.session['student_id'], request.session['subject_id'], sequence)
+                print(judgeManager.judge(request.session['subject_id'], request.session['student_id'], sequence))
+
+            return redirect(reverse_lazy('judge:std_subject', args=[request.session['title'], request.session['classes']]))
+            
+
+        '''
         if request.method == "POST":
             form = CodingForm(request.POST)
 
@@ -259,4 +258,4 @@ class StudentAssignment(TemplateView):
             return render(request, 'judge/student/student_assignment.html', {'form' : form})
         else:
             form = CodingForm()
-
+        '''
