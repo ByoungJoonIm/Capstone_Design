@@ -84,7 +84,22 @@
   AND judge_signup_class.sub_seq_id = judge_assignment.sub_seq_id
   AND judge_student.student_id = '20165151';
   ```
-  
+
+- 학생이 자신이 수강하는 과목 중 하나를 선택했을 때 score가 존재하면 score를, 존재하지 않으면 NULL로 조회하는 SQL
+  ```
+  SELECT sequence, assignment_name, lf.student_id, deadline, score
+  FROM (
+  SELECT sequence, assignment_name, judge_student.student_id, deadline
+  FROM judge_student
+  INNER JOIN (judge_signup_class, judge_assignment)
+  ON (judge_student.student_id = judge_signup_class.student_id 
+  AND judge_signup_class.sub_seq_id = judge_assignment.sub_seq_id)
+  WHERE judge_assignment.sub_seq_id = "2") as lf
+  LEFT JOIN judge_submit
+  ON (lf.sequence = judge_submit.sequence_id
+  AND lf.student_id = judge_submit.student_id);
+  ```
+
 - 학생이 과제를 제출했을 때 score를 변경하는 SQL
   ```
   작성중
@@ -126,5 +141,3 @@
   FROM judge_student
   WHERE student_id = '20161111';
   ```
-  
-  
