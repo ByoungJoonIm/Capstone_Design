@@ -129,7 +129,5 @@ class submit(models.Model):
         sequence = models.ForeignKey(assignment, on_delete=models.CASCADE)
 	sub_seq = models.ForeignKey(subject, on_delete=models.CASCADE)
 	student = models.ForeignKey(student, on_delete=models.CASCADE)
-	source = models.TextField()
-	# Is it required?
-	comment = models.CharField(max_length=100)
+	comment = models.CharField(max_length=100, null=True)
 	score = models.IntegerField()
