@@ -1,0 +1,75 @@
+- model: judge.subject
+  fields:
+    year: '2019'
+    semester: 1
+    subject_cd: '123450'
+    classes: '01'
+    title: 'Algorithm'
+    grade: 1
+    lang: 'c'
+    input_id: 'sub_201905070'
+    input_ip: '127.0.0.0'
+    input_date: '2009-01-06 15:08:24.078915+09:00'
+    update_id: 'sub_201905070'
+    update_ip: '127.0.0.0'
+    update_date: '2009-01-06 15:08:24.078915+09:00'
+- model: judge.subject
+  fields:
+    year: '2019'
+    semester: 1
+    subject_cd: '123451'
+    classes: '01'
+    title: 'Python'
+    grade: 2
+    lang: 'python'
+    input_id: 'sub_201905071'
+    input_ip: '127.0.0.1'
+    input_date: '2009-01-06 15:08:24.078915+09:00'
+    update_id: 'sub_201905071'
+    update_ip: '127.0.0.1'
+    update_date: '2009-01-06 15:08:24.078915+09:00'
+- model: judge.subject
+  fields:
+    year: '2019'
+    semester: 1
+    subject_cd: '123451'
+    classes: '02'
+    title: 'Python'
+    grade: 2
+    lang: 'python'
+    input_id: 'sub_201905072'
+    input_ip: '127.0.0.2'
+    input_date: '2009-01-06 15:08:24.078915+09:00'
+    update_id: 'sub_201905072'
+    update_ip: '127.0.0.2'
+    update_date: '2009-01-06 15:08:24.078915+09:00'
+- model: judge.subject
+  fields:
+    year: '2019'
+    semester: 1
+    subject_cd: '123453'
+    classes: '01'
+    title: 'C'
+    grade: 2
+    lang: 'c'
+    input_id: 'sub_201905073'
+    input_ip: '127.0.0.3'
+    input_date: '2009-01-06 15:08:24.078915+09:00'
+    update_id: 'sub_201905073'
+    update_ip: '127.0.0.3'
+    update_date: '2009-01-06 15:08:24.078915+09:00'
+- model: judge.subject
+  fields:
+    year: '2019'
+    semester: 1
+    subject_cd: '123454'
+    classes: '01'
+    title: 'Java'
+    grade: 1
+    lang: 'java'
+    input_id: 'sub_201905074'
+    input_ip: '127.0.0.4'
+    input_date: '2009-01-06 15:08:24.078915+09:00'
+    update_id: 'sub_201905074'
+    update_ip: '127.0.0.4'
+    update_date: '2009-01-06 15:08:24.078915+09:00'
