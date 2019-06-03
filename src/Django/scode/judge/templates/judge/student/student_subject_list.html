@@ -11,6 +11,7 @@
 			<th>assginment_name</th>
 			<th>deadline</th>
 			<th>state</th>
+			<th>score</th>
 		</tr>
 
 		{% for obj in expired_assignment_list %}
@@ -19,6 +20,14 @@
 			<td>{{ obj.assignment_name }}</td>
 			<td>{{ obj.deadline }}</td>
 			<td>expired</td>
+			<td>{% if obj.score %}
+				{{ obj.score }}
+			    {% else %}
+				0
+			    {% endif %}
+			    &nbsp / &nbsp {{ obj.max_score }}
+			</td>
+
 		</tr>
 		{% endfor %}
 
@@ -34,6 +43,14 @@
 			</td>
 			<td>{{ obj.deadline }}</td>
 			<td>working</td>
+			<td>{% if obj.score %}
+				{{ obj.score }}
+			    {% else %}
+				0
+			    {% endif %}
+			    &nbsp / &nbsp {{ obj.max_score }}
+			</td>
+
 		</tr>
 		{% endfor %}
 

@@ -168,18 +168,32 @@ class StudentSubjectLV(TemplateView, LoginManager):
 	    if request.session['subject_id']:
                 now = datetime.datetime.now()
 
-                not_expired_assignment_list_sql = 'SELECT sequence, assignment_name, judge_student.student_id, deadline \
-                    FROM judge_student, judge_signup_class, judge_assignment \
-                    WHERE judge_student.student_id = judge_signup_class.student_id \
-                    AND judge_signup_class.sub_seq_id = judge_assignment.sub_seq_id \
-                    AND judge_assignment.sub_seq_id = "{0}" \
-                    AND deadline > "{1}" ;'.format(request.session['subject_id'], now)
-                expired_assignment_list_sql = 'SELECT sequence, assignment_name, judge_student.student_id, deadline \
-                    FROM judge_student, judge_signup_class, judge_assignment \
-                    WHERE judge_student.student_id = judge_signup_class.student_id \
-                    AND judge_signup_class.sub_seq_id = judge_assignment.sub_seq_id \
-                    AND judge_assignment.sub_seq_id = "{0}" \
-                    AND deadline < "{1}";'.format(request.session['subject_id'], now)
+                not_expired_assignment_list_sql = ' \
+                    SELECT sequence, assignment_name, lf.student_id, deadline, score, max_score \
+                    FROM ( \
+                    SELECT sequence, assignment_name, judge_student.student_id, deadline, max_score \
+                    FROM judge_student \
+                    INNER JOIN (judge_signup_class, judge_assignment) \
+                    ON (judge_student.student_id = judge_signup_class.student_id \
+                    AND judge_signup_class.sub_seq_id = judge_assignment.sub_seq_id) \
+                    WHERE judge_assignment.sub_seq_id = "{0}") as lf \
+                    LEFT JOIN judge_submit \
+                    ON (lf.sequence = judge_submit.sequence_id \
+                    AND lf.student_id = judge_submit.student_id) \
+                    WHERE deadline > "{1}";'.format(request.session["subject_id"], now)
+                expired_assignment_list_sql = ' \
+                    SELECT sequence, assignment_name, lf.student_id, deadline, score, max_score \
+                    FROM ( \
+                    SELECT sequence, assignment_name, judge_student.student_id, deadline, max_score \
+                    FROM judge_student \
+                    INNER JOIN (judge_signup_class, judge_assignment) \
+                    ON (judge_student.student_id = judge_signup_class.student_id \
+                    AND judge_signup_class.sub_seq_id = judge_assignment.sub_seq_id) \
+                    WHERE judge_assignment.sub_seq_id = "{0}") as lf \
+                    LEFT JOIN judge_submit \
+                    ON (lf.sequence = judge_submit.sequence_id \
+                    AND lf.student_id = judge_submit.student_id) \
+                    WHERE deadline < "{1}";'.format(request.session["subject_id"], now)
 
                 not_expired_assignment_list = student.objects.raw(not_expired_assignment_list_sql)
                 expired_assignment_list = student.objects.raw(expired_assignment_list_sql)
