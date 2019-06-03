@@ -18,7 +18,7 @@
 		<tr>
 			<td>{{ obj.sequence }}</td>
 			<td><a href="{% url 'judge:add' request.session.title request.session.classes %}">{{ obj.assignment_name }}</a></td>
-			<td>{{ obj.deadline }}</td>
+			<td>{{ obj.deadline | date:"Y-m-d(D)" }} {{ obj.deadline | time:"H:i:s" }}</td>
 		</tr>
 		{% endfor %}
 

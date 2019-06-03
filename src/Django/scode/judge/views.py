@@ -180,7 +180,8 @@ class StudentSubjectLV(TemplateView, LoginManager):
                     LEFT JOIN judge_submit \
                     ON (lf.sequence = judge_submit.sequence_id \
                     AND lf.student_id = judge_submit.student_id) \
-                    WHERE deadline > "{1}";'.format(request.session["subject_id"], now)
+                    WHERE lf.student_id = {2} \
+                    AND deadline > "{1}";'.format(request.session["subject_id"], now, request.session['student_id'])
                 expired_assignment_list_sql = ' \
                     SELECT sequence, assignment_name, lf.student_id, deadline, score, max_score \
                     FROM ( \
@@ -193,7 +194,8 @@ class StudentSubjectLV(TemplateView, LoginManager):
                     LEFT JOIN judge_submit \
                     ON (lf.sequence = judge_submit.sequence_id \
                     AND lf.student_id = judge_submit.student_id) \
-                    WHERE deadline < "{1}";'.format(request.session["subject_id"], now)
+                    WHERE lf.student_id = {2} \
+                    AND deadline < "{1}";'.format(request.session["subject_id"], now, request.session['student_id'])
 
                 not_expired_assignment_list = student.objects.raw(not_expired_assignment_list_sql)
                 expired_assignment_list = student.objects.raw(expired_assignment_list_sql)

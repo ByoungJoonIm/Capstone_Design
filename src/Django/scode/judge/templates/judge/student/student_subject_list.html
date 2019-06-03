@@ -18,7 +18,8 @@
 		<tr>
 			<td>{{ obj.sequence }}</td>
 			<td>{{ obj.assignment_name }}</td>
-			<td>{{ obj.deadline }}</td>
+			{% comment %} datetime format reference : https://docs.djangoproject.com/en/2.2/ref/templates/builtins/#date {% endcomment%}
+			<td>{{ obj.deadline | date:"Y-m-d(D)" }} {{ obj.deadline | time:"H:i:s" }}</td>
 			<td>expired</td>
 			<td>{% if obj.score %}
 				{{ obj.score }}
@@ -41,7 +42,7 @@
 					<a href="javascript:{}" onclick=document.getElementById("{{ obj.sequence }}").submit();>{{ obj.assignment_name }}</a>
 				</form>
 			</td>
-			<td>{{ obj.deadline }}</td>
+			<td>{{ obj.deadline | date:"Y-m-d(D)" }} {{ obj.deadline | time:"H:i:s" }}</td>
 			<td>working</td>
 			<td>{% if obj.score %}
 				{{ obj.score }}
