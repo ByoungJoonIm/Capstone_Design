@@ -321,13 +321,13 @@ class JudgeManager():
 
 
     def get_next_sequence(self, subject_id):
-        self.connect()
         sql = "SELECT count(sequence) \
             FROM judge_subject_has_professor, judge_assignment, judge_subject \
             WHERE judge_subject_has_professor.sub_seq_id = judge_assignment.sub_seq_id  \
             AND judge_subject.pri_key = judge_subject_has_professor.sub_seq_id \
             AND judge_subject.pri_key = {0};".format(subject_id)
 
+        self.connect()
         self.curs.execute(sql)
 
         row = self.curs.fetchone()
@@ -337,6 +337,37 @@ class JudgeManager():
 
         return sequence+1
 
+    def change_score(self, subject_id, sequence, student_id, score):
+        select_sql = 'SELECT * \
+            FROM judge_submit \
+            WHERE sub_seq_id = {0} \
+            AND sequence_id = {1} \
+            AND student_id = "{2}";'.format(subject_id, sequence, student_id)
+
+        self.connect()
+        self.curs.execute(select_sql)
+
+        rs = self.curs.fetchone()
+        self.disconnect()
+
+        # update case
+        if rs:
+            sql = 'UPDATE judge_submit \
+                SET score = {3} \
+                WHERE sub_seq_id = {0} \
+                AND sequence_id = {1} \
+                AND student_id = "{2}";'.format(subject_id, sequence, student_id, score)
+
+        # insert case
+        else:
+            sql = 'INSERT INTO judge_submit(comment, score, sequence_id, student_id, sub_seq_id) \
+                VALUES (NULL, {3}, {1}, {2}, {0});'.format(subject_id, sequence, student_id, score)
+
+        self.connect()
+        self.curs.execute(sql)
+        self.conn.commit()
+        self.disconnect()
+        
 
     def judge(self, subject_id, student_id, sequence):
         #Next line will be changed.
@@ -357,10 +388,7 @@ class JudgeManager():
             except yaml.YAMLError as exc:
                 print(exc)
         # Make parsed result of dmoj-judge
-        # It will print as follow
-        # total_get_score / total_score
         a = subprocess.check_output(["dmoj-cli", "-c", config_file_path, "--no-ansi", "submit", str(sequence), "C", student_file_path ])
-        print(a)
         sp = a.split()
 
         i = 2
@@ -381,6 +409,9 @@ class JudgeManager():
                     total_get = total_get + points[seq-1]
                 seq = seq + 1
                 i = i + 8
+
+        #execute insert into or update set in database
+        self.change_score(subject_id, sequence, student_id, total_get)
 
         return total_get
 
@@ -518,3 +549,5 @@ class JudgeManager():
 #print(judgeManager.get_assign_desc(1,1))
 #print(judgeManager.get_std_file_path(2, 1, '20165151'))
 #judgeManager.add_assignment(1, "add_assign", "add_desc", 7)
+#judgeManager.change_score(2, 1, "20165151", 10)
+#judgeManager.change_score(2, 2, "20165151", 10)
