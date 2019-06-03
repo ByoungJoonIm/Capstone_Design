@@ -1,3 +1,4 @@
+# This Python file uses the following encoding: utf-8
 import os
 import sys
 import pymysql
@@ -33,7 +34,9 @@ class JudgeManager():
 
     def add_assignment(self, subject_id, assignment_name, assignment_desc, period):
         max_score = self.create_problem(subject_id)
-        print(max_score)
+
+        assignment_name = assignment_name.encode("UTF-8")
+        assignment_desc = assignment_desc.encode("UTF-8")
 
         # we will change input_id, input_ip later.
         input_id = "temp_id"
@@ -50,7 +53,6 @@ class JudgeManager():
         self.curs.execute(sql)
         self.conn.commit()
         self.disconnect()
-
 
     def connect(self):
         self.conn = pymysql.connect(read_default_file='~/settings/mysql.cnf')
@@ -522,9 +524,6 @@ class JudgeManager():
 
         return row[0]
 
-
-
-
 #judgeManager = JudgeManager()
 #judgeManager.construct('00001')
 #print(judgeManager.get_file_path(2))
@@ -548,6 +547,6 @@ class JudgeManager():
 #print(judgeManager.get_assign_name(1,1))
 #print(judgeManager.get_assign_desc(1,1))
 #print(judgeManager.get_std_file_path(2, 1, '20165151'))
-#judgeManager.add_assignment(1, "add_assign", "add_desc", 7)
+#judgeManager.add_assignment(1, "한글 제목", "한글 설명", 7)
 #judgeManager.change_score(2, 1, "20165151", 10)
 #judgeManager.change_score(2, 2, "20165151", 10)
