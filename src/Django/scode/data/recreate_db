@@ -1,3 +1,0 @@
-drop database SDB;
-create database SDB;
-use SDB;
