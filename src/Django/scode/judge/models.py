@@ -20,6 +20,11 @@ class common():
 # You can see follow address for checking schema
 # https://github.com/BJ-Lim/Capstone_Design/blob/master/database/db_schema_v2.PNG
 
+class language(models.Model):
+    pri_key = models.AutoField(primary_key = True)
+    name = models.CharField(max_length=10)
+    extention = models.CharField(max_length=10)
+    lang_id = models.CharField(max_length=10)
 
 #class subject(models.Model, common):
 class subject(models.Model):
@@ -32,7 +37,7 @@ class subject(models.Model):
 	title = models.CharField(max_length=100)
 	grade = models.IntegerField()
 
-        lang = models.CharField(max_length=10, null=False)
+        lang_seq = models.ForeignKey(language, on_delete=models.CASCADE)
 
 	# we need to make it remove redundancy
 	input_id = models.CharField(max_length=45)
@@ -130,4 +135,6 @@ class submit(models.Model):
 	sub_seq = models.ForeignKey(subject, on_delete=models.CASCADE)
 	student = models.ForeignKey(student, on_delete=models.CASCADE)
 	comment = models.CharField(max_length=100, null=True)
-	score = models.IntegerField()
+        score = models.IntegerField()
+
+

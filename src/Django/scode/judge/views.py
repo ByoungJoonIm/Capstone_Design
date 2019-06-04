@@ -168,34 +168,25 @@ class StudentSubjectLV(TemplateView, LoginManager):
 	    if request.session['subject_id']:
                 now = datetime.datetime.now()
 
-                not_expired_assignment_list_sql = ' \
+                common_sql = ' \
                     SELECT sequence, assignment_name, lf.student_id, deadline, score, max_score \
                     FROM ( \
-                    SELECT sequence, assignment_name, judge_student.student_id, deadline, max_score \
+                    SELECT sequence, assignment_name, judge_student.student_id, deadline, max_score, judge_assignment.sub_seq_id \
                     FROM judge_student \
                     INNER JOIN (judge_signup_class, judge_assignment) \
                     ON (judge_student.student_id = judge_signup_class.student_id \
                     AND judge_signup_class.sub_seq_id = judge_assignment.sub_seq_id) \
-                    WHERE judge_assignment.sub_seq_id = "{0}") as lf \
+                    WHERE judge_assignment.sub_seq_id = {0} \
+                    AND judge_student.student_id = "{1}" \
+                    AND judge_assignment.sub_seq_id = {0}) as lf \
                     LEFT JOIN judge_submit \
                     ON (lf.sequence = judge_submit.sequence_id \
-                    AND lf.student_id = judge_submit.student_id) \
-                    WHERE lf.student_id = {2} \
-                    AND deadline > "{1}";'.format(request.session["subject_id"], now, request.session['student_id'])
-                expired_assignment_list_sql = ' \
-                    SELECT sequence, assignment_name, lf.student_id, deadline, score, max_score \
-                    FROM ( \
-                    SELECT sequence, assignment_name, judge_student.student_id, deadline, max_score \
-                    FROM judge_student \
-                    INNER JOIN (judge_signup_class, judge_assignment) \
-                    ON (judge_student.student_id = judge_signup_class.student_id \
-                    AND judge_signup_class.sub_seq_id = judge_assignment.sub_seq_id) \
-                    WHERE judge_assignment.sub_seq_id = "{0}") as lf \
-                    LEFT JOIN judge_submit \
-                    ON (lf.sequence = judge_submit.sequence_id \
-                    AND lf.student_id = judge_submit.student_id) \
-                    WHERE lf.student_id = {2} \
-                    AND deadline < "{1}";'.format(request.session["subject_id"], now, request.session['student_id'])
+                    AND lf.student_id = judge_submit.student_id \
+                    AND lf.sub_seq_id = judge_submit.sub_seq_id) \
+                    WHERE deadline '.format(request.session["subject_id"], request.session['student_id'])
+
+                not_expired_assignment_list_sql = common_sql + '> "{0}";'.format(now)
+                expired_assignment_list_sql = common_sql + '< "{0}";'.format(now)
 
                 not_expired_assignment_list = student.objects.raw(not_expired_assignment_list_sql)
                 expired_assignment_list = student.objects.raw(expired_assignment_list_sql)
@@ -228,8 +219,10 @@ class StudentAssignment(FormView, LoginManager):
         
         # into assignment page
         if sequence:
+            lang_name = judgeManager.get_lang_name(
+                    judgeManager.get_lang_pri_key(request.session['subject_id']))
             assign_info = { 
-                'lang': judgeManager.get_lang(request.session['subject_id']), 
+                'lang': lang_name, 
                 'name': judgeManager.get_assign_name(request.session['subject_id'], sequence), 
                 'desc': judgeManager.get_assign_desc(request.session['subject_id'], sequence) 
             }
@@ -248,7 +241,7 @@ class StudentAssignment(FormView, LoginManager):
                 code = code.encode('utf-8')
                 judgeManager.create_src_file(code, request.session['student_id'], request.session['subject_id'], sequence)
                 # we are here
-                print(judgeManager.judge(request.session['subject_id'], request.session['student_id'], sequence))
+                judgeManager.judge(request.session['subject_id'], request.session['student_id'], sequence)
 
             return redirect(reverse_lazy('judge:std_subject', args=[request.session['title'], request.session['classes']]))
 

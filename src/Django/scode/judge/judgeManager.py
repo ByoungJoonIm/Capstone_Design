@@ -178,11 +178,11 @@ class JudgeManager():
         return rs
 
     def get_std_file_path(self, subject_id, sequence, student_id):
-        lang = self.get_lang(subject_id)
+        lang_extention = self.get_lang_extention(self.get_lang_pri_key(subject_id))
         base_path = self.get_file_path(subject_id)
         base_path = os.path.join(base_path, 'students')
         base_path = os.path.join(base_path, str(sequence))
-        base_path = os.path.join(base_path, student_id + "." + lang)
+        base_path = os.path.join(base_path, student_id + "." + lang_extention)
 
         return base_path
 
@@ -206,9 +206,6 @@ class JudgeManager():
         myzip = zipfile.ZipFile(zip_name, "w")
 
         file_list = ["in", "out"]
-
-        # it remove the number of inputs
-        in_line = in_file.readline()
 
         while True:
             in_line = in_file.readline().rstrip()
@@ -269,10 +266,11 @@ class JudgeManager():
         return cnt - 1
 
     def create_src_file(self, code, student_id, subject_id, sequence):
-        lang = self.get_lang(subject_id)
+        lang_extention = self.get_lang_extention(self.get_lang_pri_key(subject_id))
+
         base_path = self.get_file_path(subject_id)
         src_path = os.path.join(os.path.join(base_path, "students"), str(sequence))
-        src_path = os.path.join(src_path, student_id + "." + lang)
+        src_path = os.path.join(src_path, student_id + "." + lang_extention)
 
         src_file = open(src_path, "w")
         src_file.write(code)
@@ -369,16 +367,80 @@ class JudgeManager():
         self.curs.execute(sql)
         self.conn.commit()
         self.disconnect()
+
+    def get_lang_pri_key(self, subject_id):
+        sql = 'SELECT lang_seq_id \
+            FROM judge_subject \
+            WHERE pri_key = {0};'.format(subject_id)
+
+        self.connect()
+        self.curs.execute(sql)
+        row = self.curs.fetchone()
+        self.disconnect()
+
+        return row[0]
+
+    def get_lang_name(self, auto_pri_key):
+        sql = 'SELECT name \
+                FROM judge_language \
+                WHERE pri_key = {0}'.format(auto_pri_key)
+        self.connect()
+        self.curs.execute(sql)
+
+        row = self.curs.fetchone()
+        lang_name = row[0]
+
+        self.disconnect()
+
+        return lang_name
         
+    def get_lang_extention(self, auto_pri_key):
+        sql = 'SELECT extention \
+                FROM judge_language \
+                WHERE pri_key = {0}'.format(auto_pri_key)
+        self.connect()
+        self.curs.execute(sql)
+
+        row = self.curs.fetchone()
+        extention = row[0]
+
+        self.disconnect()
+
+        return extention
+
+    def get_lang_lang_id(self, auto_pri_key):
+        sql = 'SELECT lang_id \
+                FROM judge_language \
+                WHERE pri_key = {0}'.format(auto_pri_key)
+        self.connect()
+        self.curs.execute(sql)
+
+        row = self.curs.fetchone()
+        lang_id = row[0]
+
+        self.disconnect()
+
+        return lang_id
 
     def judge(self, subject_id, student_id, sequence):
-        #Next line will be changed.
-        lang = self.get_lang(subject_id)
+#    def judge(self):
+        lang_pri_key = self.get_lang_pri_key(subject_id)
+        lang_extention = self.get_lang_extention(lang_pri_key)
+        lang_lang_id = self.get_lang_lang_id(lang_pri_key)
 
         professor_file_path = self.get_file_path(subject_id)
         config_file_path = os.path.join(os.path.join(professor_file_path, 'settings'), 'config.yml')
         init_file_path = os.path.join(os.path.join(os.path.join(professor_file_path, 'problems'), str(sequence)), 'init.yml')
-        student_file_path = os.path.join(os.path.join(os.path.join(professor_file_path, 'students'), str(sequence)), student_id + "." + lang)
+        student_file_path = os.path.join(os.path.join(os.path.join(professor_file_path, 'students'), str(sequence)), student_id + "." + lang_extention)
+
+        '''
+        # This info for debug
+        config_file_path = "../judge_files/2019_1/00001/123451_01/settings/config.yml"
+        init_file_path = "../judge_files/2019_1/00001/123451_01/problems/1/init.yml"
+        sequence = "1"
+        lang_lang_id = "C"
+        student_file_path = "../samples/aplusb_sol.c"
+        '''
 
         points = []
         with open(init_file_path, 'r') as stream:
@@ -389,28 +451,23 @@ class JudgeManager():
                     points.append(t['points'])
             except yaml.YAMLError as exc:
                 print(exc)
+
         # Make parsed result of dmoj-judge
-        a = subprocess.check_output(["dmoj-cli", "-c", config_file_path, "--no-ansi", "submit", str(sequence), "C", student_file_path ])
+#        a = subprocess.check_output(["dmoj-cli", "-c", config_file_path, "--no-ansi", "submit", str(sequence), "C", student_file_path ])
+        a = subprocess.check_output(["dmoj-cli", "-c", config_file_path, "--no-ansi", "submit", str(sequence), lang_lang_id, student_file_path ])
         sp = a.split()
 
-        i = 2
-        seq = 1
-        total = sum(points)
+        i = 0
         total_get = 0
+
         while True:
-            if "Self" in sp[i]:
-                i = i + 3
-                continue
-            if "Running" in sp[i]:
-                i = i + 10
-                continue
-            if seq > len(points):
+            if sp[i] == "Done":
                 break
-            if int(sp[i]) == seq:
-                if sp[i+1] == "AC":
-                    total_get = total_get + points[seq-1]
-                seq = seq + 1
-                i = i + 8
+            if sp[i] == "Test":
+                if sp[i+3] == "AC":
+                    total_get = total_get + points[int(sp[i + 2]) - 1]
+
+            i = i + 1
 
         #execute insert into or update set in database
         self.change_score(subject_id, sequence, student_id, total_get)
@@ -463,18 +520,6 @@ class JudgeManager():
             return result
 
         return -3
-
-    def get_lang(self, subject_id):
-        sql = 'SELECT lang \
-            FROM judge_subject \
-            WHERE pri_key = {0};'.format(subject_id)
-
-        self.connect()
-        self.curs.execute(sql)
-        row = self.curs.fetchone()
-        self.disconnect()
-
-        return row[0]
 
     def get_class(self, subject_id):
         sql = 'SELECT classes \
@@ -541,7 +586,6 @@ class JudgeManager():
 #print(judgeManager.login_check('20165157','20165157'))
 #print(judgeManager.get_professor_name('00001'))
 #print(judgeManager.get_student_name('20165151'))
-#print(judgeManager.get_lang(4))
 #print(judgeManager.get_title(4))
 #print(judgeManager.get_class(4))
 #print(judgeManager.get_assign_name(1,1))
@@ -550,3 +594,14 @@ class JudgeManager():
 #judgeManager.add_assignment(1, "한글 제목", "한글 설명", 7)
 #judgeManager.change_score(2, 1, "20165151", 10)
 #judgeManager.change_score(2, 2, "20165151", 10)
+#print(judgeManager.get_lang_extention(1))
+#print(judgeManager.get_lang_name(1))
+#print(judgeManager.get_lang_lang_id(1))
+#print(judgeManager.get_lang_extention(2))
+#print(judgeManager.get_lang_name(2))
+#print(judgeManager.get_lang_lang_id(2))
+#print(judgeManager.get_lang_extention(3))
+#print(judgeManager.get_lang_name(3))
+#print(judgeManager.get_lang_lang_id(3))
+#print(judgeManager.get_lang_name(judgeManager.get_lang_pri_key(1)))
+#print(judgeManager.judge())
