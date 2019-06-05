@@ -20,4 +20,4 @@
 [judgeManager.py](https://github.com/BJ-Lim/Capstone_Design/blob/master/docs/judgeManager.md) | 이 프로젝트와 오픈소스 프로젝트인 [dmoj-judge](https://github.com/DMOJ/judge)를 연결하기 위한 클래스
 [page_parameters](https://github.com/BJ-Lim/Capstone_Design/blob/master/docs/page_parameters.md) | 각각의 페이지에서 다른 페이지로 넘어갈 때 넘겨주는 파라미터들을 정의해 놓은 문서
 데이터베이스 | 문서 정리 및 업로드 예정
-
+[테스트 상황](https://github.com/BJ-Lim/Capstone_Design/blob/master/docs/test.md) | 이 프로젝트에서 테스트 하기 위한 상황을 가정하고 설명한 파일
