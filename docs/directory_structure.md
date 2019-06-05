@@ -143,6 +143,3 @@ judge_files/                                      프로젝트가 관리되는 �
 
 ## 참고사항
 - .pyc 파일은 class import시 사용되는 파일로, 프로젝트 진행시 무시해도 무관함
-
-# 세부 링크
-- [judgeManager.py](https://github.com/BJ-Lim/Capstone_Design/blob/master/docs/judgeManager.md)
