@@ -7,7 +7,6 @@ from judge.judgeManager import JudgeManager
 class LoginManager():
     def login(self, request, login_id, login_password):
 
-
         judgeManager = JudgeManager()
         login_result = judgeManager.login_check(login_id,login_password)
 

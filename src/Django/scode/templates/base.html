@@ -25,21 +25,6 @@
 	</h4>
 	{% endif %}
 </div>
-{% comment %}
-<div id="menu">
-	<li><a href="{% url 'judge:professor' %}">Professor</a>
-		<ul style="width:322px;">
-			<li><a href="{% url 'judge:subject' %}">Subject</a></li>
-			<li><a href="{% url 'judge:add' %}">Add</a></li>
-			<li><a href="{% url 'judge:update' %}">Update</a></li>
-			<li><a href="{% url 'judge:delete' %}">Delete</a></li>
-			<li><a href="{% url 'judge:settings' %}">Settings</a></li>
-			<li><a href="{% url 'judge:result' %}">Result</a></li>
-		</ul>
-	</li>
-	<li><h2>This menu for debug</h2></li>
-</div>
-{% endcomment %}
 {% block content %}{% endblock %}
 {% block footer %}
 <div id="footer">

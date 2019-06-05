@@ -12,17 +12,30 @@ import time
 
 #--- Function forms of class JudgeManager
 '''
+add_assignment(subject_id, assignment_name, assignment_desc, period)
+change_score(subject_id, sequence, student_id, score)
 connect()
-create_autoconf()
 construct(professor_id)
 construct_all()
-create_problem(professor_id, subject_id)
+create_autoconf()
+create_problem(subject_id)
+create_src_file(code, student_id, subject_id, sequence)
 disconnect()
-get_file_path(subject_id, *professor_id)
+get_file_path(subject_id, *professor_id_args)
+get_std_file_path(subject_id, sequence, student_id)
 get_professor_id(subject_id)
-get_next_sequence(subject_id)
 get_professor_name(professor_id)
 get_student_name(student_id)
+get_next_sequence(subject_id)
+get_lang_pri_key(subject_id)
+get_lang_name(auto_pri_key)
+get_lang_extention(auto_pri_key)
+get_lang_lang_id(auto_pri_key)
+get_class(subject_id)
+get_title(subject_id)
+get_assign_name(subject_id, sequence)
+get_assign_desc(subject_id, sequence)
+judge(subject_id, student_id, sequence)
 login_check(login_id, login_password)
 '''
 
@@ -423,7 +436,6 @@ class JudgeManager():
         return lang_id
 
     def judge(self, subject_id, student_id, sequence):
-#    def judge(self):
         lang_pri_key = self.get_lang_pri_key(subject_id)
         lang_extention = self.get_lang_extention(lang_pri_key)
         lang_lang_id = self.get_lang_lang_id(lang_pri_key)
@@ -432,15 +444,6 @@ class JudgeManager():
         config_file_path = os.path.join(os.path.join(professor_file_path, 'settings'), 'config.yml')
         init_file_path = os.path.join(os.path.join(os.path.join(professor_file_path, 'problems'), str(sequence)), 'init.yml')
         student_file_path = os.path.join(os.path.join(os.path.join(professor_file_path, 'students'), str(sequence)), student_id + "." + lang_extention)
-
-        '''
-        # This info for debug
-        config_file_path = "../judge_files/2019_1/00001/123451_01/settings/config.yml"
-        init_file_path = "../judge_files/2019_1/00001/123451_01/problems/1/init.yml"
-        sequence = "1"
-        lang_lang_id = "C"
-        student_file_path = "../samples/aplusb_sol.c"
-        '''
 
         points = []
         with open(init_file_path, 'r') as stream:
@@ -453,7 +456,6 @@ class JudgeManager():
                 print(exc)
 
         # Make parsed result of dmoj-judge
-#        a = subprocess.check_output(["dmoj-cli", "-c", config_file_path, "--no-ansi", "submit", str(sequence), "C", student_file_path ])
         a = subprocess.check_output(["dmoj-cli", "-c", config_file_path, "--no-ansi", "submit", str(sequence), lang_lang_id, student_file_path ])
         sp = a.split()
 
@@ -568,40 +570,3 @@ class JudgeManager():
         self.disconnect()
 
         return row[0]
-
-#judgeManager = JudgeManager()
-#judgeManager.construct('00001')
-#print(judgeManager.get_file_path(2))
-#print(judgeManager.get_file_path(2, '00002'))
-#judgeManager.create_problem('00002', 2)
-#judgeManager.create_autoconf()
-#print(judgeManager.get_professor_id(2))
-#print(judgeManager.judge(2, '20165157', 5))
-#judgeManager.construct_all()
-#print(judgeManager.get_sequence(2))
-#print(judgeManager.login_check('000000','00001'))
-#print(judgeManager.login_check('00000','00001'))
-#print(judgeManager.login_check('00001','00002'))
-#print(judgeManager.login_check('00001','00001'))
-#print(judgeManager.login_check('20165157','20165157'))
-#print(judgeManager.get_professor_name('00001'))
-#print(judgeManager.get_student_name('20165151'))
-#print(judgeManager.get_title(4))
-#print(judgeManager.get_class(4))
-#print(judgeManager.get_assign_name(1,1))
-#print(judgeManager.get_assign_desc(1,1))
-#print(judgeManager.get_std_file_path(2, 1, '20165151'))
-#judgeManager.add_assignment(1, "한글 제목", "한글 설명", 7)
-#judgeManager.change_score(2, 1, "20165151", 10)
-#judgeManager.change_score(2, 2, "20165151", 10)
-#print(judgeManager.get_lang_extention(1))
-#print(judgeManager.get_lang_name(1))
-#print(judgeManager.get_lang_lang_id(1))
-#print(judgeManager.get_lang_extention(2))
-#print(judgeManager.get_lang_name(2))
-#print(judgeManager.get_lang_lang_id(2))
-#print(judgeManager.get_lang_extention(3))
-#print(judgeManager.get_lang_name(3))
-#print(judgeManager.get_lang_lang_id(3))
-#print(judgeManager.get_lang_name(judgeManager.get_lang_pri_key(1)))
-#print(judgeManager.judge())
