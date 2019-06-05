@@ -11,7 +11,7 @@
   - [Docker](https://github.com/BJ-Lim/Frameworks/blob/master/Docker.md)(선택)
     - 이 프로젝트는 Docker 제공을 목표로 했지만, 아직 Docker는 제공하지 않습니다.
 
-## 문서
+## 핵심 문서
 문서명 | 설명
 ---- | ----
 [URL 패턴](https://github.com/BJ-Lim/Capstone_Design/blob/master/docs/URL_pattern.md) | 웹 페이지의 URL을 정의해 놓은 문서
@@ -21,3 +21,10 @@
 [page_parameters](https://github.com/BJ-Lim/Capstone_Design/blob/master/docs/page_parameters.md) | 각각의 페이지에서 다른 페이지로 넘어갈 때 넘겨주는 파라미터들을 정의해 놓은 문서
 데이터베이스 | 문서 정리 및 업로드 예정
 [테스트 상황](https://github.com/BJ-Lim/Capstone_Design/blob/master/docs/test.md) | 이 프로젝트에서 테스트 하기 위한 상황을 가정하고 설명한 파일
+
+## 참고 문서
+문서명 | 설명
+---- | ----
+[오픈소스 활용 가능성 검토](https://github.com/BJ-Lim/Capstone_Design/tree/master/OSS_analysis) | 이 프로젝트를 위한 여러 오픈소스 비교 및 활용 가능성 검토
+[DB SQL](https://github.com/BJ-Lim/Capstone_Design/tree/master/database) | SQL 작성(최신화 되어있지 않음)
+[MariaDB 기본 명령어](https://github.com/BJ-Lim/Capstone_Design/blob/master/database/db_command.md) | 마리아 DB의 기본 명령어 및 설치법
