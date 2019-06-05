@@ -1,5 +1,0 @@
-- 이클립스를 통해 html 연습 /
-- Django 사용을 위해 html -> Django 변환 연습 /
-- Django 공부 
-- 이클립스 css 완료
-- Django 관련 도서 읽기
