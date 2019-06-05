@@ -143,3 +143,4 @@ judge_files/                                      프로젝트가 관리되는 �
 
 ## 참고사항
 - .pyc 파일은 class import시 사용되는 파일로, 프로젝트 진행시 무시해도 무관함
+- 각각의 파일 위치는 이 프로젝트의 Capstone_Design/src의 하위 파일 위치에서 확인 가능
