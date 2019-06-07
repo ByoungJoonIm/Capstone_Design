@@ -10,3 +10,5 @@ for i in "language" "student" "professor" "subject" "signup_class" "subject_has_
 
 python manage.py loaddata test/$i.yaml
 done
+
+rm -r ~/judge_files
