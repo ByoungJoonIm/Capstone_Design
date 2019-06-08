@@ -64,7 +64,6 @@ trouble_shooting    프로젝트를 진행하며 발생한 문제사항들 정�
 ---- | ----
 [URL 패턴](https://github.com/BJ-Lim/Capstone_Design/blob/master/docs/URL_pattern.md) | 웹 페이지의 URL을 정의해 놓은 문서
 [Django 폴더 구조](https://github.com/BJ-Lim/Capstone_Design/blob/master/docs/directory_structure.md) | 이 프로젝트에 사용된 Django의 디렉토리 구조
-[파일 관리 구조](https://github.com/BJ-Lim/Capstone_Design/blob/master/docs/directory_structure) | 이 프로젝트에서 사용한 파일 관리용 디렉토리 구조
 [judgeManager.py](https://github.com/BJ-Lim/Capstone_Design/blob/master/docs/judgeManager.md) | 이 프로젝트와 오픈소스 프로젝트인 [dmoj-judge](https://github.com/DMOJ/judge)를 연결하기 위한 클래스
 [page_parameters](https://github.com/BJ-Lim/Capstone_Design/blob/master/docs/page_parameters.md) | 각각의 페이지에서 다른 페이지로 넘어갈 때 넘겨주는 파라미터들을 정의해 놓은 문서
 [데이터베이스(스키마)](https://github.com/BJ-Lim/Capstone_Design/blob/master/database/database.md) | 스키마 구조를 정의해 놓은 문서
@@ -76,7 +75,6 @@ trouble_shooting    프로젝트를 진행하며 발생한 문제사항들 정�
 문서명 | 설명
 ---- | ----
 [오픈소스 활용 가능성 검토](https://github.com/BJ-Lim/Capstone_Design/tree/master/OSS_analysis) | 이 프로젝트를 위한 여러 오픈소스 비교 및 활용 가능성 검토
-[DB SQL](https://github.com/BJ-Lim/Capstone_Design/tree/master/database) | SQL 작성(최신화 되어있지 않음)
 [MariaDB 기본 명령어](https://github.com/BJ-Lim/Capstone_Design/blob/master/database/db_command.md) | 마리아 DB의 기본 명령어 및 설치법
 
 ## 개선 해야할 점
