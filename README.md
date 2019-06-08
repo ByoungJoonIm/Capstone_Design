@@ -103,3 +103,5 @@ trouble_shooting    프로젝트를 진행하며 발생한 문제사항들 정�
   - 현재 로그인 방법은 Django에서 제공하는 기능을 사용하지 않습니다. 마찬가지로 Mixin 기능도 사용하지 않으며, 페이지별로 권한을 체크하지 않아 보안상 취약점이 존재합니다. 따라서 이 기능을 개선하여 Django에서 제공하는 로그인 기능을 사용하고, Mixin 기능을 사용하여 보안을 향상시킬 수 있습니다.
 - 디자인
   - 현재는 기능 중심의 사이트를 만들기 바빴습니다. 디자인적인 요소가 추가된다면 훨씬 좋은 프로젝트가 될 것입니다.
+- 문서화
+  - DB의 일부 문서가 아직 문서화 되지 않았습니다. 최신 DB의 스키마 정보는 [models.py](https://github.com/BJ-Lim/Capstone_Design/blob/master/src/Django/scode/judge/models.py)에서 확인 가능합니다.
